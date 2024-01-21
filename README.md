@@ -17,6 +17,6 @@ ninja
 ## 运行
 
 ```shell
-cd build/Plants-vs-Zombies
-./Plants-vs-Zombies
+cd build/PlantsVsZombies
+./PlantsVsZombies
 ```

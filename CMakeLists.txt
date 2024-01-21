@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.1)
 
-project(Plants-vs-Zombies)
+project(PlantsVsZombies)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
