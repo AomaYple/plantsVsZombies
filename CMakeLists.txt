@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28.1)
 
 project(PlantsVsZombies)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
 
 qt_add_executable(${PROJECT_NAME})
 
@@ -31,6 +31,7 @@ target_link_options(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt6::Quick
+        Qt6::Multimedia
 )
 
 qt_add_qml_module(${PROJECT_NAME}
@@ -44,6 +45,9 @@ qt_add_qml_module(${PROJECT_NAME}
 
         RESOURCES
         resources/images/favicon.ico
+        resources/images/popCapLogo.png
+        resources/images/titleScreen.png
+        resources/music/crazyDave.flac
 
         NO_RESOURCE_TARGET_PATH
 )
