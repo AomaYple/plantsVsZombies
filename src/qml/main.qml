@@ -10,46 +10,60 @@ Window {
 
     Component.onCompleted: backgroundMusic.play()
 
-    Image {
-        id: popCapLogo
+    Loader {
+        id: background
 
         anchors.fill: parent
         asynchronous: true
-        mipmap: true
-        opacity: 0
-        source: '../../resources/images/popCapLogo.png'
+        sourceComponent: popCapLogoComponent
+    }
+    Component {
+        id: popCapLogoComponent
 
-        SequentialAnimation {
-            running: true
+        Image {
+            id: popCapLogo
 
-            onStopped: titleScreen.source = '../../resources/images/titleScreen.png'
+            anchors.centerIn: parent
+            asynchronous: true
+            mipmap: true
+            opacity: 0
+            source: '../../resources/images/popCapLogo.png'
 
-            NumberAnimation {
-                duration: 2000
-                properties: 'opacity'
-                target: popCapLogo
-                to: 1
-            }
-            NumberAnimation {
-                duration: 2000
-                properties: 'opacity'
-                target: popCapLogo
-                to: 0
+            SequentialAnimation {
+                running: true
+
+                onStopped: background.sourceComponent = titleScreenComponent
+
+                NumberAnimation {
+                    duration: 2000
+                    properties: 'opacity'
+                    target: popCapLogo
+                    to: 1
+                }
+                NumberAnimation {
+                    duration: 2000
+                    properties: 'opacity'
+                    target: popCapLogo
+                    to: 0
+                }
             }
         }
     }
-    Image {
-        id: titleScreen
+    Component {
+        id: titleScreenComponent
 
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
+        Image {
+            anchors.fill: parent
+            asynchronous: true
+            mipmap: true
+            source: '../../resources/images/titleScreen.png'
+        }
     }
     MediaPlayer {
         id: backgroundMusic
 
         loops: MediaPlayer.Infinite
-        source: '../../resources/music/crazyDave.flac'
+        source: '../../resources/music/CrazyDave.flac'
 
         audioOutput: AudioOutput {
         }

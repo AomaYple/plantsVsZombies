@@ -47,7 +47,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/favicon.ico
         resources/images/popCapLogo.png
         resources/images/titleScreen.png
-        resources/music/crazyDave.flac
+        resources/music/CrazyDave.flac
 
         NO_RESOURCE_TARGET_PATH
 )
