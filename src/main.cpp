@@ -7,5 +7,6 @@ auto main(int argc, char *argv[]) -> int {
     QGuiApplication::setWindowIcon(QIcon{"resources/images/favicon.ico"});
 
     const QQmlApplicationEngine engine{"src/qml/main.qml"};
+
     return QGuiApplication::exec();
 }
