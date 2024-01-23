@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtMultimedia
 
 Item {
     id: root
@@ -71,6 +72,7 @@ Item {
                 sodRollCap.source = '';
                 startButton.enabled = true;
                 startButtonText.text = '点击开始！';
+                loadFinishedSound.play();
             }
         }
     }
@@ -86,7 +88,7 @@ Item {
         contentItem: Text {
             id: startButtonText
 
-            color: parent.hovered ? '#ff0000' : '#ffcf00'
+            color: parent.enabled && parent.hovered ? '#ff0000' : '#ffcf00'
             font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.15 : 1
             horizontalAlignment: Text.AlignHCenter
             text: '加载中...'
@@ -98,6 +100,14 @@ Item {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: root.clicked()
+        }
+    }
+    MediaPlayer {
+        id: loadFinishedSound
+
+        source: '../../resources/music/groan.flac'
+
+        audioOutput: AudioOutput {
         }
     }
 }

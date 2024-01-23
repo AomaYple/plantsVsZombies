@@ -53,6 +53,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/titleScreen.png
 
         resources/music/CrazyDave.flac
+        resources/music/groan.flac
 
         NO_RESOURCE_TARGET_PATH
 )
