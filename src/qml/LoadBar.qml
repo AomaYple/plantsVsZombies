@@ -69,35 +69,35 @@ Item {
 
             onStopped: {
                 sodRollCap.source = '';
-                startButtonLoader.active = true;
+                startButton.enabled = true;
+                startButtonText.text = '点击开始！';
             }
         }
     }
-    Loader {
-        id: startButtonLoader
+    Button {
+        id: startButton
 
-        active: false
         anchors.centerIn: loadBarDirt
-        asynchronous: true
+        enabled: false
 
-        sourceComponent: Button {
-            background: Rectangle {
-                color: 'transparent'
-            }
-            contentItem: Text {
-                color: parent.hovered ? '#ff0000' : '#ffffff'
-                font.pointSize: loadBarDirt.height * 0.15
-                horizontalAlignment: Text.AlignHCenter
-                text: '点击开始'
-                verticalAlignment: Text.AlignVCenter
-            }
+        background: Rectangle {
+            color: 'transparent'
+        }
+        contentItem: Text {
+            id: startButtonText
 
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
+            color: parent.hovered ? '#ff0000' : '#ffcf00'
+            font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.15 : 1
+            horizontalAlignment: Text.AlignHCenter
+            text: '加载中...'
+            verticalAlignment: Text.AlignVCenter
+        }
 
-                onClicked: root.clicked()
-            }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: root.clicked()
         }
     }
 }
