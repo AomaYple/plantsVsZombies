@@ -10,54 +10,59 @@ Window {
 
     Component.onCompleted: backgroundMusic.play()
 
-    Image {
-        id: background
-
-        property real fadeTime: 2000
+    Loader {
+        id: backgroundLoader
 
         anchors.fill: parent
-        asynchronous: true
-        cache: false
-        mipmap: true
-        opacity: 0
-        source: '../../resources/images/popCapLogo.png'
 
-        OpacityAnimator {
-            duration: background.fadeTime
-            running: true
-            target: background
-            to: 1
+        sourceComponent: Image {
+            id: popCapLogo
 
-            onStopped: popCapLogoFadeOut.start()
-        }
-        OpacityAnimator {
-            id: popCapLogoFadeOut
+            property real fadeTime: 2000
 
-            duration: background.fadeTime
-            target: background
-            to: 0
+            asynchronous: true
+            mipmap: true
+            opacity: 0
+            source: '../../resources/images/popCapLogo.png'
 
-            onStopped: {
-                background.opacity = 1;
-                background.source = '../../resources/images/titleScreen.png';
-                loadBarLoader.active = true;
+            OpacityAnimator {
+                duration: popCapLogo.fadeTime
+                running: true
+                target: popCapLogo
+                to: 1
+
+                onStopped: popCapLogoFadeOut.start()
+            }
+            OpacityAnimator {
+                id: popCapLogoFadeOut
+
+                duration: popCapLogo.fadeTime
+                target: popCapLogo
+                to: 0
+
+                onStopped: backgroundLoader.sourceComponent = titleScreenComponent
             }
         }
-        Loader {
-            id: loadBarLoader
 
-            active: false
-            height: parent.height * 0.15
-            width: parent.width * 0.4
+        Component {
+            id: titleScreenComponent
 
-            sourceComponent: LoadBar {
-                loadTime: 12000
-            }
+            Image {
+                asynchronous: true
+                mipmap: true
+                source: '../../resources/images/titleScreen.png'
 
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: parent.height * 0.1
-                horizontalCenter: parent.horizontalCenter
+                LoadBar {
+                    height: parent.height * 0.15
+                    loadTime: 12000
+                    width: parent.width * 0.4
+
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: parent.height * 0.1
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                }
             }
         }
     }
