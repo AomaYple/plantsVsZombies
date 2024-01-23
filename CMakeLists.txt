@@ -41,6 +41,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
+        src/qml/LoadBar.qml
         src/qml/main.qml
 
         RESOURCES
