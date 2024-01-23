@@ -48,6 +48,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/favicon.ico
         resources/images/loadBarDirt.png
         resources/images/loadBarGrass.png
+        resources/images/mainMenu.png
         resources/images/popCapLogo.png
         resources/images/sodRollCap.png
         resources/images/titleScreen.png

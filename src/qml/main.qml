@@ -1,5 +1,6 @@
 import QtQuick
 import QtMultimedia
+import QtQuick.Controls
 
 Window {
     color: '#000000'
@@ -18,7 +19,7 @@ Window {
         sourceComponent: Image {
             id: popCapLogo
 
-            property real fadeTime: 2000
+            property real fadeTime: 1
 
             asynchronous: true
             mipmap: true
@@ -54,13 +55,81 @@ Window {
 
                 LoadBar {
                     height: parent.height * 0.15
-                    loadTime: 12000
+                    loadTime: 1
                     width: parent.width * 0.4
+
+                    onClicked: backgroundLoader.sourceComponent = mainMenuComponent
 
                     anchors {
                         bottom: parent.bottom
                         bottomMargin: parent.height * 0.1
                         horizontalCenter: parent.horizontalCenter
+                    }
+                }
+            }
+        }
+        Component {
+            id: mainMenuComponent
+
+            Image {
+                id: mainMenu
+
+                asynchronous: true
+                mipmap: true
+                source: '../../resources/images/mainMenu.png'
+
+                Button {
+                    x: parent.width * 0.73
+                    y: parent.height * 0.8
+
+                    background: Rectangle {
+                        color: 'transparent'
+                    }
+                    contentItem: Text {
+                        color: parent.hovered ? '#ffffff' : '#000000'
+                        font.pointSize: mainMenu.height * 0.03
+                        text: '选项'
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                }
+                Button {
+                    x: parent.width * 0.82
+                    y: parent.height * 0.85
+
+                    background: Rectangle {
+                        color: 'transparent'
+                    }
+                    contentItem: Text {
+                        color: parent.hovered ? '#ffffff' : '#000000'
+                        font.pointSize: mainMenu.height * 0.03
+                        text: '帮助'
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                }
+                Button {
+                    x: parent.width * 0.9
+                    y: parent.height * 0.83
+
+                    background: Rectangle {
+                        color: 'transparent'
+                    }
+                    contentItem: Text {
+                        color: parent.hovered ? '#ffffff' : '#000000'
+                        font.pointSize: mainMenu.height * 0.03
+                        text: '退出'
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
                     }
                 }
             }
