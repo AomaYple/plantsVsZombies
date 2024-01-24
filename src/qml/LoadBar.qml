@@ -14,7 +14,7 @@ Item {
 
         anchors.bottom: parent.bottom
         asynchronous: true
-        height: parent.height * 0.7
+        height: width * (sourceSize.height / sourceSize.width)
         mipmap: true
         source: '../../resources/images/loadBarDirt.png'
         width: parent.width
@@ -24,12 +24,12 @@ Item {
 
         clip: true
         color: 'transparent'
-        height: parent.height - loadBarDirt.height
+        height: loadBarGrass.height
         width: 0
 
         NumberAnimation on width {
             duration: root.loadTime
-            to: loadBarDirt.width
+            to: loadBarGrass.width
         }
 
         anchors {
@@ -37,11 +37,13 @@ Item {
             bottomMargin: loadBarDirt.height * 0.7
         }
         Image {
+            id: loadBarGrass
+
             asynchronous: true
-            height: parent.height
+            height: width * (sourceSize.height / sourceSize.width)
             mipmap: true
             source: '../../resources/images/loadBarGrass.png'
-            width: loadBarDirt.width * 0.97
+            width: loadBarDirt.width * 0.96
         }
     }
     Image {
@@ -49,12 +51,12 @@ Item {
 
         asynchronous: true
         cache: false
-        height: width
+        height: width * (sourceSize.height / sourceSize.width)
         mipmap: true
         source: '../../resources/images/sodRollCap.png'
         width: parent.width * 0.15
-        x: 0
-        y: (loadBarDirt.y + loadBarGrassRectangle.height - height) / 2
+        x: -width / 2
+        y: 0
 
         RotationAnimator on rotation {
             duration: root.loadTime
@@ -62,11 +64,11 @@ Item {
         }
         ScaleAnimator on scale {
             duration: root.loadTime
-            to: 0.4
+            to: 0.5
         }
         XAnimator on x {
             duration: root.loadTime
-            to: loadBarDirt.width * 0.9
+            to: loadBarDirt.width * 0.85
 
             onStopped: {
                 sodRollCap.source = '';

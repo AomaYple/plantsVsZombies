@@ -54,9 +54,9 @@ Window {
                 source: '../../resources/images/titleScreen.png'
 
                 LoadBar {
-                    height: parent.height * 0.15
-                    loadTime: 1
-                    width: parent.width * 0.4
+                    height: width * 0.25
+                    loadTime: 10000
+                    width: parent.width * 0.3
 
                     onClicked: backgroundLoader.sourceComponent = mainMenuComponent
 
@@ -78,58 +78,32 @@ Window {
                 mipmap: true
                 source: '../../resources/images/mainMenu.png'
 
-                Button {
-                    x: parent.width * 0.73
-                    y: parent.height * 0.8
+                Image {
+                    asynchronous: true
+                    height: width * (sourceSize.height / sourceSize.width)
+                    mipmap: true
+                    source: quitButton.hovered ? '../../resources/images/quitHovered.png' : '../../resources/images/quit.png'
+                    width: parent.width * 0.04
 
-                    background: Rectangle {
-                        color: 'transparent'
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: parent.height * 0.1
+                        right: parent.right
+                        rightMargin: parent.width * 0.05
                     }
-                    contentItem: Text {
-                        color: parent.hovered ? '#ffffff' : '#000000'
-                        font.pointSize: mainMenu.height * 0.03
-                        text: '选项'
-                    }
+                    Button {
+                        id: quitButton
 
-                    MouseArea {
                         anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                    }
-                }
-                Button {
-                    x: parent.width * 0.82
-                    y: parent.height * 0.85
 
-                    background: Rectangle {
-                        color: 'transparent'
-                    }
-                    contentItem: Text {
-                        color: parent.hovered ? '#ffffff' : '#000000'
-                        font.pointSize: mainMenu.height * 0.03
-                        text: '帮助'
-                    }
+                        background: Rectangle {
+                            color: 'transparent'
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                    }
-                }
-                Button {
-                    x: parent.width * 0.9
-                    y: parent.height * 0.83
-
-                    background: Rectangle {
-                        color: 'transparent'
-                    }
-                    contentItem: Text {
-                        color: parent.hovered ? '#ffffff' : '#000000'
-                        font.pointSize: mainMenu.height * 0.03
-                        text: '退出'
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                        }
                     }
                 }
             }

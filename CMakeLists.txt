@@ -38,6 +38,7 @@ qt_add_qml_module(${PROJECT_NAME}
         URI ${PROJECT_NAME}
 
         SOURCES
+        src/Archive.cpp
         src/main.cpp
 
         QML_FILES
@@ -45,13 +46,24 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/main.qml
 
         RESOURCES
+        resources/images/button.png
+        resources/images/changeUser.png
+        resources/images/changeUserHovered.png
         resources/images/favicon.ico
+        resources/images/help.png
+        resources/images/helpHovered.png
         resources/images/loadBarDirt.png
         resources/images/loadBarGrass.png
         resources/images/mainMenu.png
+        resources/images/options.png
+        resources/images/optionsHovered.png
         resources/images/popCapLogo.png
+        resources/images/quit.png
+        resources/images/quitHovered.png
         resources/images/sodRollCap.png
         resources/images/titleScreen.png
+        resources/images/welcome.png
+        resources/images/woodSign.png
 
         resources/music/CrazyDave.flac
         resources/music/groan.flac
