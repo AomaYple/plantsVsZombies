@@ -92,6 +92,8 @@ Window {
                         rightMargin: parent.width * 0.05
                     }
                     Button {
+                        id: quitButton
+
                         anchors.fill: parent
 
                         background: Rectangle {
@@ -118,6 +120,8 @@ Window {
                         rightMargin: parent.width * 0.14
                     }
                     Button {
+                        id: startButton
+
                         anchors.fill: parent
 
                         background: Rectangle {
@@ -144,6 +148,8 @@ Window {
                         rightMargin: parent.width * 0.215
                     }
                     Button {
+                        id: helpButton
+
                         anchors.fill: parent
 
                         background: Rectangle {
