@@ -19,7 +19,7 @@ Window {
         sourceComponent: Image {
             id: popCapLogo
 
-            property real fadeTime: 1
+            property real fadeTime: 2000
 
             asynchronous: true
             mipmap: true
@@ -54,7 +54,7 @@ Window {
                 source: '../../resources/images/titleScreen.png'
 
                 LoadBar {
-                    height: width * 0.25
+                    height: parent.height * 0.14
                     loadTime: 1000
                     width: parent.width * 0.3
 
@@ -80,7 +80,7 @@ Window {
 
                 Image {
                     asynchronous: true
-                    height: width * (sourceSize.height / sourceSize.width)
+                    height: parent.height * 0.05
                     mipmap: true
                     source: quitButton.hovered ? '../../resources/images/quitHovered.png' : '../../resources/images/quit.png'
                     width: parent.width * 0.04
@@ -92,8 +92,6 @@ Window {
                         rightMargin: parent.width * 0.05
                     }
                     Button {
-                        id: quitButton
-
                         anchors.fill: parent
 
                         background: Rectangle {
@@ -108,7 +106,7 @@ Window {
                 }
                 Image {
                     asynchronous: true
-                    height: width * (sourceSize.height / sourceSize.width)
+                    height: parent.height * 0.04
                     mipmap: true
                     source: startButton.hovered ? '../../resources/images/helpHovered.png' : '../../resources/images/help.png'
                     width: parent.width * 0.04
@@ -120,8 +118,6 @@ Window {
                         rightMargin: parent.width * 0.14
                     }
                     Button {
-                        id: startButton
-
                         anchors.fill: parent
 
                         background: Rectangle {
@@ -136,7 +132,7 @@ Window {
                 }
                 Image {
                     asynchronous: true
-                    height: width * (sourceSize.height / sourceSize.width)
+                    height: parent.height * 0.05
                     mipmap: true
                     source: helpButton.hovered ? '../../resources/images/optionsHovered.png' : '../../resources/images/options.png'
                     width: parent.width * 0.06
@@ -145,11 +141,9 @@ Window {
                         bottom: parent.bottom
                         bottomMargin: parent.height * 0.13
                         right: parent.right
-                        rightMargin: parent.width * 0.21
+                        rightMargin: parent.width * 0.215
                     }
                     Button {
-                        id: helpButton
-
                         anchors.fill: parent
 
                         background: Rectangle {

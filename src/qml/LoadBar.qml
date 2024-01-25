@@ -14,17 +14,15 @@ Item {
 
         anchors.bottom: parent.bottom
         asynchronous: true
-        height: width * (sourceSize.height / sourceSize.width)
+        height: parent.height * 0.6
         mipmap: true
         source: '../../resources/images/loadBarDirt.png'
         width: parent.width
     }
     Rectangle {
-        id: loadBarGrassRectangle
-
         clip: true
         color: 'transparent'
-        height: loadBarGrass.height
+        height: parent.height - loadBarDirt.height
         width: 0
 
         NumberAnimation on width {
@@ -40,7 +38,7 @@ Item {
             id: loadBarGrass
 
             asynchronous: true
-            height: width * (sourceSize.height / sourceSize.width)
+            height: parent.height
             mipmap: true
             source: '../../resources/images/loadBarGrass.png'
             width: loadBarDirt.width * 0.96
@@ -51,7 +49,7 @@ Item {
 
         asynchronous: true
         cache: false
-        height: width * (sourceSize.height / sourceSize.width)
+        height: parent.height * 0.6
         mipmap: true
         source: '../../resources/images/sodRollCap.png'
         width: parent.width * 0.15
@@ -73,6 +71,7 @@ Item {
             onStopped: {
                 sodRollCap.source = '';
                 startButton.enabled = true;
+                startButton.hoverEnabled = true;
                 startButtonText.text = '点击开始！';
                 loadFinishedSound.play();
             }
@@ -83,6 +82,7 @@ Item {
 
         anchors.centerIn: loadBarDirt
         enabled: false
+        hoverEnabled: false
 
         background: Rectangle {
             color: 'transparent'
@@ -90,8 +90,8 @@ Item {
         contentItem: Text {
             id: startButtonText
 
-            color: parent.enabled && parent.hovered ? '#ff0000' : '#ffcf00'
-            font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.15 : 1
+            color: parent.hovered ? '#ff0000' : '#ffcf00'
+            font.pointSize: Math.min(loadBarDirt.width, loadBarDirt.height) === 0 ? 1 : Math.min(loadBarDirt.width, loadBarDirt.height) * 0.2
             horizontalAlignment: Text.AlignHCenter
             text: '加载中...'
             verticalAlignment: Text.AlignVCenter
