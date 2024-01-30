@@ -9,9 +9,9 @@ public:
 
     ~Archive() override;
 
-    Q_INVOKABLE [[nodiscard]] QJsonArray get() const;
+    Q_INVOKABLE [[nodiscard]] QJsonArray load() const;
 
-    Q_INVOKABLE void set(const QJsonArray &newArchive);
+    Q_INVOKABLE void save(QJsonArray newArchive);
 
 private:
     QJsonArray archive;

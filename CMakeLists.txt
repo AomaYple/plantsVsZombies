@@ -44,11 +44,15 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/qml/LoadBar.qml
         src/qml/main.qml
+        src/qml/MainMenu.qml
+        src/qml/PopCapLogo.qml
+        src/qml/TitleScreen.qml
 
         RESOURCES
         resources/images/button.png
         resources/images/changeUser.png
         resources/images/changeUserHovered.png
+        resources/images/dialog.png
         resources/images/favicon.ico
         resources/images/help.png
         resources/images/helpHovered.png

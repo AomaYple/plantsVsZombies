@@ -23,6 +23,6 @@ Archive::~Archive() {
     file.write(QJsonDocument{this->archive}.toJson());
 }
 
-auto Archive::get() const -> QJsonArray { return this->archive; }
+auto Archive::load() const -> QJsonArray { return this->archive; }
 
-auto Archive::set(const QJsonArray &newArchive) -> void { this->archive = newArchive; }
+auto Archive::save(QJsonArray newArchive) -> void { this->archive = newArchive; }

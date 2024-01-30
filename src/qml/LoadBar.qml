@@ -9,12 +9,14 @@ Item {
 
     signal clicked
 
+    height: loadBarDirt.height + loadBarGrass.height
+
     Image {
         id: loadBarDirt
 
         anchors.bottom: parent.bottom
         asynchronous: true
-        height: parent.height * 0.6
+        height: width * (sourceSize.height / sourceSize.width)
         mipmap: true
         source: '../../resources/images/loadBarDirt.png'
         width: parent.width
@@ -22,7 +24,7 @@ Item {
     Rectangle {
         clip: true
         color: 'transparent'
-        height: parent.height - loadBarDirt.height
+        height: loadBarGrass.height
         width: 0
 
         NumberAnimation on width {
@@ -38,7 +40,7 @@ Item {
             id: loadBarGrass
 
             asynchronous: true
-            height: parent.height
+            height: width * (sourceSize.height / sourceSize.width)
             mipmap: true
             source: '../../resources/images/loadBarGrass.png'
             width: loadBarDirt.width * 0.96
@@ -49,10 +51,10 @@ Item {
 
         asynchronous: true
         cache: false
-        height: parent.height * 0.6
+        height: width * (sourceSize.height / sourceSize.width)
         mipmap: true
         source: '../../resources/images/sodRollCap.png'
-        width: parent.width * 0.15
+        width: parent.width * 0.17
         x: -width / 2
         y: 0
 
@@ -62,7 +64,7 @@ Item {
         }
         ScaleAnimator on scale {
             duration: root.loadTime
-            to: 0.5
+            to: 0.65
         }
         XAnimator on x {
             duration: root.loadTime
