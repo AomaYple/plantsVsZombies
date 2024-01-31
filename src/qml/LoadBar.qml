@@ -46,14 +46,11 @@ Item {
             width: loadBarDirt.width * 0.96
         }
     }
-    Image {
-        id: sodRollCap
+    Loader {
+        id: sodRollCapLoader
 
         asynchronous: true
-        cache: false
-        height: width * (sourceSize.height / sourceSize.width)
-        mipmap: true
-        source: '../../resources/images/sodRollCap.png'
+        height: active && status === Loader.Ready ? width * (item.sourceSize.height / item.sourceSize.width) : 0
         width: parent.width * 0.17
         x: -width / 2
         y: 0
@@ -66,12 +63,17 @@ Item {
             duration: root.loadTime
             to: 0.65
         }
+        sourceComponent: Image {
+            asynchronous: true
+            mipmap: true
+            source: '../../resources/images/sodRollCap.png'
+        }
         XAnimator on x {
             duration: root.loadTime
             to: loadBarDirt.width * 0.85
 
             onStopped: {
-                sodRollCap.source = '';
+                sodRollCapLoader.active = false;
                 startButton.enabled = true;
                 startButton.hoverEnabled = true;
                 startButtonText.text = '点击开始！';
