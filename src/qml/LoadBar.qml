@@ -95,7 +95,7 @@ Item {
             id: startButtonText
 
             color: parent.hovered ? '#ff0000' : '#ffcf00'
-            font.pointSize: Math.min(loadBarDirt.width, loadBarDirt.height) === 0 ? 1 : Math.min(loadBarDirt.width, loadBarDirt.height) * 0.2
+            font.pointSize: loadBarDirt.height === 0 ? 1 : loadBarDirt.height * 0.2
             horizontalAlignment: Text.AlignHCenter
             text: '加载中...'
             verticalAlignment: Text.AlignVCenter
