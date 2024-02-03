@@ -46,6 +46,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
+        src/qml/QuitDialog.qml
         src/qml/TitleScreen.qml
 
         RESOURCES

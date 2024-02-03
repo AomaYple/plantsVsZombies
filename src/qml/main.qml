@@ -2,6 +2,8 @@ import QtQuick
 import QtMultimedia
 
 Window {
+    id: root
+
     color: '#000000'
     title: '植物大战僵尸'
     visibility: Window.FullScreen
@@ -15,7 +17,7 @@ Window {
         asynchronous: true
 
         sourceComponent: PopCapLogo {
-            fadeTime: 2000
+            fadeTime: 0
 
             onStopped: backgroundLoader.sourceComponent = titleScreenComponent
         }
@@ -24,7 +26,7 @@ Window {
             id: titleScreenComponent
 
             TitleScreen {
-                loadTime: 9000
+                loadTime: 0
 
                 onClicked: backgroundLoader.sourceComponent = mainMenuComponent
             }
@@ -33,6 +35,7 @@ Window {
             id: mainMenuComponent
 
             MainMenu {
+                onQuitted: root.close()
             }
         }
     }

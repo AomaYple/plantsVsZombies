@@ -50,7 +50,7 @@ Item {
         id: sodRollCapLoader
 
         asynchronous: true
-        height: active && status === Loader.Ready ? width * (item.sourceSize.height / item.sourceSize.width) : 0
+        height: active && status === Loader.Ready ? width / item.aspectRatio : 0
         width: parent.width * 0.17
         x: -width / 2
         y: 0
@@ -64,6 +64,8 @@ Item {
             to: 0.65
         }
         sourceComponent: Image {
+            property real aspectRatio: sourceSize.width / sourceSize.height
+
             asynchronous: true
             mipmap: true
             source: '../../resources/images/sodRollCap.png'
@@ -95,10 +97,8 @@ Item {
             id: startButtonText
 
             color: parent.hovered ? '#ff0000' : '#ffcf00'
-            font.pointSize: loadBarDirt.height === 0 ? 1 : loadBarDirt.height * 0.2
-            horizontalAlignment: Text.AlignHCenter
+            font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.2 : 1
             text: '加载中...'
-            verticalAlignment: Text.AlignVCenter
         }
 
         MouseArea {
