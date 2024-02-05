@@ -41,7 +41,7 @@ Item {
         MediaPlayer {
             id: helpPaperSound
 
-            source: '../../resources/music/paper.flac'
+            source: '../../resources/sound/paper.flac'
 
             audioOutput: AudioOutput {
             }

@@ -72,8 +72,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/woodSign.png
 
         resources/music/CrazyDave.flac
-        resources/music/groan.flac
-        resources/music/paper.flac
+
+        resources/sound/bleep.wav
+        resources/sound/loadingBarZombie.flac
+        resources/sound/paper.flac
 
         NO_RESOURCE_TARGET_PATH
 )

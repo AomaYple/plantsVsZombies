@@ -111,7 +111,7 @@ Item {
     MediaPlayer {
         id: loadFinishedSound
 
-        source: '../../resources/music/groan.flac'
+        source: '../../resources/sound/loadingBarZombie.flac'
 
         audioOutput: AudioOutput {
         }

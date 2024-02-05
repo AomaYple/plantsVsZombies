@@ -44,8 +44,10 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
 
                             onClicked: quitDialog.active = true
+                            onEntered: bleepSound.play()
                         }
                     }
                 }
@@ -79,8 +81,10 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
 
                             onClicked: loader.sourceComponent = helpPaperComponent
+                            onEntered: bleepSound.play()
                         }
                     }
                 }
@@ -105,7 +109,18 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
+
+                            onEntered: bleepSound.play()
                         }
+                    }
+                }
+                MediaPlayer {
+                    id: bleepSound
+
+                    source: '../../resources/sound/bleep.wav'
+
+                    audioOutput: AudioOutput {
                     }
                 }
             }
