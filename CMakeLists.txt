@@ -61,15 +61,11 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/loadBarGrass.png
         resources/images/mainMenu.png
         resources/images/mainMenuButton.png
-        resources/images/options.png
-        resources/images/optionsHovered.png
         resources/images/popCapLogo.png
         resources/images/quit.png
         resources/images/quitHovered.png
         resources/images/sodRollCap.png
         resources/images/titleScreen.png
-        resources/images/welcome.png
-        resources/images/woodSign.png
 
         resources/music/CrazyDave.flac
 

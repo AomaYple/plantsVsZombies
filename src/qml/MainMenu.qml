@@ -88,33 +88,6 @@ Item {
                         }
                     }
                 }
-                Image {
-                    asynchronous: true
-                    height: width * (sourceSize.height / sourceSize.width)
-                    mipmap: true
-                    source: optionsButton.hovered ? '../../resources/images/optionsHovered.png' : '../../resources/images/options.png'
-                    width: parent.width * 0.07
-                    x: parent.width * 0.72
-                    y: parent.height * 0.81
-
-                    Button {
-                        id: optionsButton
-
-                        anchors.fill: parent
-
-                        background: Rectangle {
-                            color: 'transparent'
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            hoverEnabled: true
-
-                            onEntered: bleepSound.play()
-                        }
-                    }
-                }
                 MediaPlayer {
                     id: bleepSound
 

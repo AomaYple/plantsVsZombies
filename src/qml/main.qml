@@ -17,7 +17,7 @@ Window {
         asynchronous: true
 
         sourceComponent: PopCapLogo {
-            fadeTime: 0
+            fadeTime: 1000
 
             onStopped: backgroundLoader.sourceComponent = titleScreenComponent
         }
@@ -26,7 +26,7 @@ Window {
             id: titleScreenComponent
 
             TitleScreen {
-                loadTime: 0
+                loadTime: 8000
 
                 onClicked: backgroundLoader.sourceComponent = mainMenuComponent
             }
