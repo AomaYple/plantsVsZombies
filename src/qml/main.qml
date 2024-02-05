@@ -38,14 +38,14 @@ Window {
                 onQuitted: root.close()
             }
         }
-    }
-    MediaPlayer {
-        id: backgroundMusic
+        MediaPlayer {
+            id: backgroundMusic
 
-        loops: MediaPlayer.Infinite
-        source: '../../resources/music/CrazyDave.flac'
+            loops: MediaPlayer.Infinite
+            source: '../../resources/music/CrazyDave.flac'
 
-        audioOutput: AudioOutput {
+            audioOutput: AudioOutput {
+            }
         }
     }
 }

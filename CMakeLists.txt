@@ -51,15 +51,15 @@ qt_add_qml_module(${PROJECT_NAME}
 
         RESOURCES
         resources/images/button.png
-        resources/images/changeUser.png
-        resources/images/changeUserHovered.png
         resources/images/dialog.png
         resources/images/favicon.ico
         resources/images/help.png
         resources/images/helpHovered.png
+        resources/images/helpPaper.png
         resources/images/loadBarDirt.png
         resources/images/loadBarGrass.png
         resources/images/mainMenu.png
+        resources/images/mainMenuButton.png
         resources/images/options.png
         resources/images/optionsHovered.png
         resources/images/popCapLogo.png
@@ -72,6 +72,7 @@ qt_add_qml_module(${PROJECT_NAME}
 
         resources/music/CrazyDave.flac
         resources/music/groan.flac
+        resources/music/paper.flac
 
         NO_RESOURCE_TARGET_PATH
 )
