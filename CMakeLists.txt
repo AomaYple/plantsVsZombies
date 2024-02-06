@@ -38,7 +38,6 @@ qt_add_qml_module(${PROJECT_NAME}
         URI ${PROJECT_NAME}
 
         SOURCES
-        src/Archive.cpp
         src/main.cpp
 
         QML_FILES
@@ -72,6 +71,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/music/CrazyDave.flac
 
         resources/sound/bleep.wav
+        resources/sound/evilLaugh.flac
         resources/sound/loadingBarZombie.flac
         resources/sound/paper.flac
 

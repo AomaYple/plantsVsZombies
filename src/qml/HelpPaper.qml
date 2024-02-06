@@ -4,7 +4,7 @@ import QtMultimedia
 Item {
     id: root
 
-    signal clickedMainMenuButton
+    signal mainMenuButtonClicked
 
     Image {
         anchors.fill: parent
@@ -12,7 +12,7 @@ Item {
         mipmap: true
         source: '../../resources/images/helpPaper.png'
 
-        Component.onCompleted: helpPaperSound.play()
+        Component.onCompleted: paperSound.play()
 
         Image {
             asynchronous: true
@@ -27,11 +27,11 @@ Item {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
 
-                onClicked: root.clickedMainMenuButton()
+                onClicked: root.mainMenuButtonClicked()
             }
         }
         MediaPlayer {
-            id: helpPaperSound
+            id: paperSound
 
             source: '../../resources/sound/paper.flac'
 

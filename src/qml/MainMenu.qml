@@ -4,6 +4,7 @@ import QtMultimedia
 Item {
     id: root
 
+    signal adventureStarted
     signal quitted
 
     Loader {
@@ -57,18 +58,25 @@ Item {
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onClicked: quitDialog.active = true
+                        onClicked: quitDialogLoader.active = true
                         onEntered: bleepSound.play()
                     }
                 }
-                QuitDialog {
-                    id: quitDialog
+                Loader {
+                    id: quitDialogLoader
 
+                    active: false
                     anchors.centerIn: parent
+                    asynchronous: true
+                    height: active && status === Loader.Ready ? width / item.aspectRatio : 0
                     width: parent.width * 0.3
 
-                    onCanceled: active = false
-                    onQuitted: root.quitted()
+                    sourceComponent: QuitDialog {
+                        id: quitDialog
+
+                        onCanceled: quitDialogLoader.active = false
+                        onQuitted: root.quitted()
+                    }
                 }
                 Image {
                     asynchronous: true
@@ -104,7 +112,7 @@ Item {
             id: helpPaperComponent
 
             HelpPaper {
-                onClickedMainMenuButton: loader.sourceComponent = mainMenuComponent
+                onMainMenuButtonClicked: loader.sourceComponent = mainMenuComponent
             }
         }
     }
