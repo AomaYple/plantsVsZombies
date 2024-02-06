@@ -26,7 +26,7 @@ Window {
             id: titleScreenComponent
 
             TitleScreen {
-                loadTime: 8000
+                loadTime: 5000
 
                 onClicked: backgroundLoader.sourceComponent = mainMenuComponent
             }

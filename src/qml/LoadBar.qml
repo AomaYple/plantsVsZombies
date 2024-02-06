@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtMultimedia
 
 Item {
@@ -76,32 +75,25 @@ Item {
 
             onStopped: {
                 sodRollCapLoader.active = false;
-                startButton.enabled = true;
-                startButton.hoverEnabled = true;
-                startButtonText.text = '点击开始！';
+                startText.enabled = true;
+                startMouseArea.hoverEnabled = true;
+                startText.text = '点击开始！';
                 loadFinishedSound.play();
             }
         }
     }
-    Button {
-        id: startButton
+    Text {
+        id: startText
 
         anchors.centerIn: loadBarDirt
+        color: startMouseArea.containsMouse ? '#ff0000' : '#ffcf00'
         enabled: false
-        hoverEnabled: false
-
-        background: Rectangle {
-            color: 'transparent'
-        }
-        contentItem: Text {
-            id: startButtonText
-
-            color: parent.hovered ? '#ff0000' : '#ffcf00'
-            font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.2 : 1
-            text: '加载中...'
-        }
+        font.pointSize: loadBarDirt.height > 0 ? loadBarDirt.height * 0.2 : 1
+        text: '加载中...'
 
         MouseArea {
+            id: startMouseArea
+
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
 

@@ -57,30 +57,24 @@ Item {
                     topMargin: parent.height * 0.4
                 }
             }
-            Button {
-                height: width * (quitButtonBackground.sourceSize.height / quitButtonBackground.sourceSize.width)
+            Image {
+                asynchronous: true
+                height: width * (sourceSize.height / sourceSize.width)
+                mipmap: true
+                source: '../../resources/images/button.png'
                 width: parent.width * 0.4
-
-                background: Image {
-                    id: quitButtonBackground
-
-                    asynchronous: true
-                    mipmap: true
-                    source: '../../resources/images/button.png'
-
-                    Text {
-                        anchors.centerIn: parent
-                        color: '#008000'
-                        font.pointSize: height > 0 ? height * 9 : 1
-                        text: '退出游戏'
-                    }
-                }
 
                 anchors {
                     bottom: parent.bottom
                     bottomMargin: height * 0.13
                     left: parent.left
                     leftMargin: width * 0.15
+                }
+                Text {
+                    anchors.centerIn: parent
+                    color: '#008000'
+                    font.pointSize: height > 0 ? height * 9 : 1
+                    text: '退出游戏'
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -89,30 +83,24 @@ Item {
                     onClicked: root.quitted()
                 }
             }
-            Button {
-                height: width * (cancelButtonBackground.sourceSize.height / cancelButtonBackground.sourceSize.width)
+            Image {
+                asynchronous: true
+                height: width * (sourceSize.height / sourceSize.width)
+                mipmap: true
+                source: '../../resources/images/button.png'
                 width: parent.width * 0.4
-
-                background: Image {
-                    id: cancelButtonBackground
-
-                    asynchronous: true
-                    mipmap: true
-                    source: '../../resources/images/button.png'
-
-                    Text {
-                        anchors.centerIn: parent
-                        color: '#008000'
-                        font.pointSize: height > 0 ? height * 9 : 1
-                        text: '取消'
-                    }
-                }
 
                 anchors {
                     bottom: parent.bottom
                     bottomMargin: height * 0.13
                     right: parent.right
                     rightMargin: width * 0.15
+                }
+                Text {
+                    anchors.centerIn: parent
+                    color: '#008000'
+                    font.pointSize: height > 0 ? height * 9 : 1
+                    text: '取消'
                 }
                 MouseArea {
                     anchors.fill: parent

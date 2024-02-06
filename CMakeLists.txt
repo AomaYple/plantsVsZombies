@@ -65,6 +65,8 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/quit.png
         resources/images/quitHovered.png
         resources/images/sodRollCap.png
+        resources/images/startAdventure.png
+        resources/images/startAdventureHovered.png
         resources/images/titleScreen.png
 
         resources/music/CrazyDave.flac

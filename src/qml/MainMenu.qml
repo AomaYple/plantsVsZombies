@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtMultimedia
 
 Item {
@@ -27,28 +26,39 @@ Item {
                     asynchronous: true
                     height: width * (sourceSize.height / sourceSize.width)
                     mipmap: true
-                    source: quitButton.hovered ? '../../resources/images/quitHovered.png' : '../../resources/images/quit.png'
+                    source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHovered.png' : '../../resources/images/startAdventure.png'
+                    width: parent.width * 0.3
+                    x: parent.width * 0.56
+                    y: parent.height * 0.09
+
+                    MouseArea {
+                        id: startAdventureMouseArea
+
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+
+                        onEntered: bleepSound.play()
+                    }
+                }
+                Image {
+                    asynchronous: true
+                    height: width * (sourceSize.height / sourceSize.width)
+                    mipmap: true
+                    source: quitMouseArea.containsMouse ? '../../resources/images/quitHovered.png' : '../../resources/images/quit.png'
                     width: parent.width * 0.045
                     x: parent.width * 0.91
                     y: parent.height * 0.85
 
-                    Button {
-                        id: quitButton
+                    MouseArea {
+                        id: quitMouseArea
 
                         anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
 
-                        background: Rectangle {
-                            color: 'transparent'
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            hoverEnabled: true
-
-                            onClicked: quitDialog.active = true
-                            onEntered: bleepSound.play()
-                        }
+                        onClicked: quitDialog.active = true
+                        onEntered: bleepSound.play()
                     }
                 }
                 QuitDialog {
@@ -64,28 +74,20 @@ Item {
                     asynchronous: true
                     height: width * (sourceSize.height / sourceSize.width)
                     mipmap: true
-                    source: helpButton.hovered ? '../../resources/images/helpHovered.png' : '../../resources/images/help.png'
+                    source: helpMouseArea.containsMouse ? '../../resources/images/helpHovered.png' : '../../resources/images/help.png'
                     width: parent.width * 0.05
                     x: parent.width * 0.815
                     y: parent.height * 0.86
 
-                    Button {
-                        id: helpButton
+                    MouseArea {
+                        id: helpMouseArea
 
                         anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
 
-                        background: Rectangle {
-                            color: 'transparent'
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            hoverEnabled: true
-
-                            onClicked: loader.sourceComponent = helpPaperComponent
-                            onEntered: bleepSound.play()
-                        }
+                        onClicked: loader.sourceComponent = helpPaperComponent
+                        onEntered: bleepSound.play()
                     }
                 }
                 MediaPlayer {
