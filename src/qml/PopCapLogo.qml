@@ -15,6 +15,7 @@ Item {
         mipmap: true
         opacity: 0
         source: '../../resources/images/popCapLogo.png'
+        sourceSize: Qt.size(width, height)
 
         OpacityAnimator {
             duration: root.fadeTime

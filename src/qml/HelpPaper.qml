@@ -11,6 +11,7 @@ Item {
         asynchronous: true
         mipmap: true
         source: '../../resources/images/helpPaper.png'
+        sourceSize: Qt.size(width, height)
 
         Component.onCompleted: paperSound.play()
 
@@ -22,6 +23,11 @@ Item {
             width: parent.width * 0.1
             x: parent.width * 0.45
             y: parent.height * 0.9
+
+            onStatusChanged: if (status === Image.Ready) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(width, width / aspectRatio);
+            }
 
             MouseArea {
                 anchors.fill: parent

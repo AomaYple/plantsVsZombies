@@ -12,6 +12,7 @@ Item {
         height: parent.height
         mipmap: true
         source: '../../resources/images/titleScreen.png'
+        sourceSize: Qt.size(width, height)
         width: parent.width
 
         LoadBar {

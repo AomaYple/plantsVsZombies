@@ -47,6 +47,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
         src/qml/QuitDialog.qml
+        src/qml/StartAdventure.qml
         src/qml/TitleScreen.qml
 
         RESOURCES
@@ -67,6 +68,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/startAdventure.png
         resources/images/startAdventureHovered.png
         resources/images/titleScreen.png
+        resources/images/zombieHand.png
 
         resources/music/CrazyDave.flac
 

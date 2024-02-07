@@ -19,6 +19,11 @@ Item {
         mipmap: true
         source: '../../resources/images/loadBarDirt.png'
         width: parent.width
+
+        onStatusChanged: if (status === Image.Ready) {
+            const aspectRatio = sourceSize.width / sourceSize.height;
+            sourceSize = Qt.size(width, width / aspectRatio);
+        }
     }
     Rectangle {
         clip: true
@@ -43,6 +48,11 @@ Item {
             mipmap: true
             source: '../../resources/images/loadBarGrass.png'
             width: loadBarDirt.width * 0.96
+
+            onStatusChanged: if (status === Image.Ready) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(width, width / aspectRatio);
+            }
         }
     }
     Image {
@@ -76,6 +86,20 @@ Item {
                 loadFinishedSound.play();
             }
         }
+
+        onStatusChanged: if (status === Image.Ready) {
+            const aspectRatio = sourceSize.width / sourceSize.height;
+            sourceSize = Qt.size(width, width / aspectRatio);
+        }
+
+        MediaPlayer {
+            id: loadFinishedSound
+
+            source: '../../resources/sound/loadingBarZombie.flac'
+
+            audioOutput: AudioOutput {
+            }
+        }
     }
     Text {
         id: startText
@@ -93,14 +117,6 @@ Item {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: root.clicked()
-        }
-    }
-    MediaPlayer {
-        id: loadFinishedSound
-
-        source: '../../resources/sound/loadingBarZombie.flac'
-
-        audioOutput: AudioOutput {
         }
     }
 }

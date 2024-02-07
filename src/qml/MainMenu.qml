@@ -18,29 +18,28 @@ Item {
             id: mainMenuComponent
 
             Image {
+                id: mainMenu
+
                 anchors.fill: parent
                 asynchronous: true
                 mipmap: true
                 source: '../../resources/images/mainMenu.png'
+                sourceSize: Qt.size(width, height)
 
-                Image {
-                    asynchronous: true
-                    height: width * (sourceSize.height / sourceSize.width)
-                    mipmap: true
-                    source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHovered.png' : '../../resources/images/startAdventure.png'
+                StartAdventure {
+                    id: startAdventure
+
                     width: parent.width * 0.3
                     x: parent.width * 0.56
                     y: parent.height * 0.09
 
-                    MouseArea {
-                        id: startAdventureMouseArea
-
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        hoverEnabled: true
-
-                        onEntered: bleepSound.play()
+                    onClicked: {
+                        mainMenu.enabled = false;
+                        quitMouseArea.hoverEnabled = false;
+                        helpMouseArea.hoverEnabled = false;
                     }
+                    onEntered: bleepSound.play()
+                    onSoundEnded: root.adventureStarted()
                 }
                 Image {
                     asynchronous: true
@@ -50,6 +49,11 @@ Item {
                     width: parent.width * 0.045
                     x: parent.width * 0.91
                     y: parent.height * 0.85
+
+                    onStatusChanged: if (status === Image.Ready) {
+                        const aspectRatio = sourceSize.width / sourceSize.height;
+                        sourceSize = Qt.size(width, width / aspectRatio);
+                    }
 
                     MouseArea {
                         id: quitMouseArea
@@ -86,6 +90,11 @@ Item {
                     width: parent.width * 0.05
                     x: parent.width * 0.815
                     y: parent.height * 0.86
+
+                    onStatusChanged: if (status === Image.Ready) {
+                        const aspectRatio = sourceSize.width / sourceSize.height;
+                        sourceSize = Qt.size(width, width / aspectRatio);
+                    }
 
                     MouseArea {
                         id: helpMouseArea

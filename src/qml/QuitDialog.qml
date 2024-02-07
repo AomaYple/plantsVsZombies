@@ -24,6 +24,11 @@ Item {
             asynchronous: true
             mipmap: true
             source: '../../resources/images/dialog.png'
+
+            onStatusChanged: if (status === Image.Ready) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(width, width / aspectRatio);
+            }
         }
 
         Text {
@@ -55,6 +60,11 @@ Item {
             source: '../../resources/images/button.png'
             width: parent.width * 0.4
 
+            onStatusChanged: if (status === Image.Ready && width > 0) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(width, width / aspectRatio);
+            }
+
             anchors {
                 bottom: parent.bottom
                 bottomMargin: height * 0.13
@@ -80,6 +90,11 @@ Item {
             mipmap: true
             source: '../../resources/images/button.png'
             width: parent.width * 0.4
+
+            onStatusChanged: if (status === Image.Ready && width > 0) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(width, width / aspectRatio);
+            }
 
             anchors {
                 bottom: parent.bottom
