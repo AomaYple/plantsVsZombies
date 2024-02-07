@@ -37,9 +37,34 @@ Item {
                         mainMenu.enabled = false;
                         quitMouseArea.hoverEnabled = false;
                         helpMouseArea.hoverEnabled = false;
+                        zombieTimer.running = true;
                     }
                     onEntered: bleepSound.play()
                     onSoundEnded: root.adventureStarted()
+                }
+                Image {
+                    height: width * (sourceSize.height / sourceSize.width)
+                    mipmap: true
+                    width: parent.width * 0.3
+                    x: parent.width * 0.25
+                    y: parent.height * 0.45
+
+                    onStatusChanged: if (status === Image.Ready) {
+                        const aspectRatio = sourceSize.width / sourceSize.height;
+                        sourceSize = Qt.size(width, width / aspectRatio);
+                    }
+
+                    Timer {
+                        id: zombieTimer
+
+                        property int zombineHandNumber: 1
+
+                        interval: 60
+                        repeat: true
+
+                        onTriggered: if (zombineHandNumber < 8)
+                            parent.source = '../../resources/images/zombieHand' + zombineHandNumber++ + '.png'
+                    }
                 }
                 Image {
                     asynchronous: true
