@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.2)
+cmake_minimum_required(VERSION 3.28.3)
 
 project(PlantsVsZombies)
 
@@ -41,32 +41,20 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
-        src/qml/HelpPaper.qml
-        src/qml/LoadBar.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
-        src/qml/QuitDialog.qml
-        src/qml/StartAdventure.qml
         src/qml/TitleScreen.qml
 
         RESOURCES
-        resources/images/button.png
-        resources/images/dialog.png
         resources/images/favicon.ico
-        resources/images/help.png
-        resources/images/helpHovered.png
-        resources/images/helpPaper.png
-        resources/images/loadBarDirt.png
-        resources/images/loadBarGrass.png
+        resources/images/loadBar.png
         resources/images/mainMenu.png
-        resources/images/mainMenuButton.png
         resources/images/popCapLogo.png
         resources/images/quit.png
-        resources/images/quitHovered.png
-        resources/images/sodRollCap.png
+        resources/images/quitHighlight.png
         resources/images/startAdventure.png
-        resources/images/startAdventureHovered.png
+        resources/images/startAdventureHighlight.png
         resources/images/titleScreen.png
         resources/images/zombieHand1.png
         resources/images/zombieHand2.png
@@ -78,10 +66,8 @@ qt_add_qml_module(${PROJECT_NAME}
 
         resources/music/CrazyDave.flac
 
-        resources/sound/bleep.wav
-        resources/sound/evilLaugh.flac
-        resources/sound/loadingBarZombie.flac
-        resources/sound/paper.flac
+        resources/sounds/bleep.wav
+        resources/sounds/evilLaugh.flac
 
         NO_RESOURCE_TARGET_PATH
 )

@@ -5,7 +5,7 @@ Item {
 
     required property real fadeTime
 
-    signal stopped
+    signal finished
 
     Image {
         id: popCapLogo
@@ -18,21 +18,23 @@ Item {
         sourceSize: Qt.size(width, height)
 
         OpacityAnimator {
+            id: fadeIn
+
             duration: root.fadeTime
             running: true
             target: popCapLogo
             to: 1
 
-            onStopped: popCapLogoFadeOut.start()
+            onFinished: fadeOut.start()
         }
         OpacityAnimator {
-            id: popCapLogoFadeOut
+            id: fadeOut
 
             duration: root.fadeTime
             target: popCapLogo
             to: 0
 
-            onStopped: root.stopped()
+            onFinished: root.finished()
         }
     }
 }

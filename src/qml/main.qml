@@ -13,22 +13,22 @@ Window {
     Loader {
         id: backgroundLoader
 
-        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         asynchronous: true
+        height: parent.height
+        width: height / 3 * 4
 
         sourceComponent: PopCapLogo {
-            fadeTime: 1000
+            fadeTime: 0
 
-            onStopped: backgroundLoader.sourceComponent = titleScreenComponent
+            onFinished: backgroundLoader.sourceComponent = titleScreenComponent
         }
 
         Component {
             id: titleScreenComponent
 
             TitleScreen {
-                loadTime: 5000
-
-                onClicked: backgroundLoader.sourceComponent = mainMenuComponent
+                onStartClicked: backgroundLoader.sourceComponent = mainMenuComponent
             }
         }
         Component {

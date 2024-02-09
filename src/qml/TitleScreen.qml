@@ -3,28 +3,34 @@ import QtQuick
 Item {
     id: root
 
-    required property real loadTime
-
-    signal clicked
+    signal startClicked
 
     Image {
+        anchors.fill: parent
         asynchronous: true
-        height: parent.height
         mipmap: true
         source: '../../resources/images/titleScreen.png'
         sourceSize: Qt.size(width, height)
-        width: parent.width
 
-        LoadBar {
-            loadTime: root.loadTime
-            width: parent.width * 0.3
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            asynchronous: true
+            height: parent.height * 0.1
+            mipmap: true
+            source: '../../resources/images/loadBar.png'
+            width: height / sourceSize.height * sourceSize.width
+            y: parent.height * 0.8
 
-            onClicked: root.clicked()
+            onStatusChanged: if (status === Image.Ready) {
+                const aspectRatio = sourceSize.width / sourceSize.height;
+                sourceSize = Qt.size(height * aspectRatio, height);
+            }
 
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: parent.height * 0.1
-                horizontalCenter: parent.horizontalCenter
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.startClicked()
             }
         }
     }
