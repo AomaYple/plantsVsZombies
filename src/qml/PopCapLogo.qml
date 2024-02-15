@@ -17,24 +17,18 @@ Item {
         source: '../../resources/images/popCapLogo.png'
         sourceSize: Qt.size(width, height)
 
-        OpacityAnimator {
-            id: fadeIn
-
+        OpacityAnimator on opacity {
             duration: root.fadeTime
             running: true
-            target: popCapLogo
             to: 1
 
-            onFinished: fadeOut.start()
-        }
-        OpacityAnimator {
-            id: fadeOut
-
-            duration: root.fadeTime
-            target: popCapLogo
-            to: 0
-
-            onFinished: root.finished()
+            onFinished: {
+                if (to === 1) {
+                    to = 0;
+                    restart();
+                } else
+                    root.finished();
+            }
         }
     }
 }

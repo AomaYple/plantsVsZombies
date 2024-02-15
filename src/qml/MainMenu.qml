@@ -4,11 +4,10 @@ import QtMultimedia
 Item {
     id: root
 
+    signal adventureStarted
     signal quitted
 
     Image {
-        id: mainMenu
-
         anchors.fill: parent
         asynchronous: true
         mipmap: true
@@ -33,11 +32,11 @@ Item {
                 id: startAdventureMouseArea
 
                 anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
+                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                enabled: hoverEnabled
                 hoverEnabled: true
 
                 onClicked: {
-                    mainMenu.enabled = false;
                     hoverEnabled = false;
                     quitMouseArea.hoverEnabled = false;
                     evilLaughSound.play();
@@ -53,6 +52,9 @@ Item {
 
                 audioOutput: AudioOutput {
                 }
+
+                onPlaybackStateChanged: if (playbackState === MediaPlayer.StoppedState)
+                    root.adventureStarted()
             }
             Timer {
                 id: startAdventureTimer
@@ -111,7 +113,8 @@ Item {
                 id: quitMouseArea
 
                 anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
+                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                enabled: hoverEnabled
                 hoverEnabled: true
 
                 onClicked: root.quitted()

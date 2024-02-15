@@ -41,12 +41,14 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
+        src/qml/DaytimeGrass.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
         src/qml/TitleScreen.qml
 
         RESOURCES
+        resources/images/daytimeGrass.png
         resources/images/favicon.ico
         resources/images/loadBar.png
         resources/images/mainMenu.png
@@ -65,6 +67,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/zombieHand7.png
 
         resources/music/CrazyDave.flac
+        resources/music/GrassWalk.flac
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.flac

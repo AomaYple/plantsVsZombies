@@ -35,7 +35,18 @@ Window {
             id: mainMenuComponent
 
             MainMenu {
+                onAdventureStarted: backgroundLoader.sourceComponent = daytimeGrassComponent
                 onQuitted: root.close()
+            }
+        }
+        Component {
+            id: daytimeGrassComponent
+
+            DaytimeGrass {
+                Component.onCompleted: {
+                    backgroundMusic.source = '../../resources/music/GrassWalk.flac';
+                    backgroundMusic.play();
+                }
             }
         }
         MediaPlayer {
