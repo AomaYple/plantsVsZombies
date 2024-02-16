@@ -3,20 +3,26 @@ import QtQuick
 Item {
     id: root
 
+    signal chooseStarted
+    signal chose
+
     clip: true
 
     Image {
         id: daytimeGrass
 
+        readonly property real leftPadding: width * 0.157
+
         asynchronous: true
+        fillMode: Image.PreserveAspectFit
         height: parent.height
         mipmap: true
         source: '../../resources/images/daytimeGrass.png'
-        width: height / sourceSize.height * sourceSize.width
+        sourceSize: Qt.size(width, height)
+        width: implicitWidth
 
         onStatusChanged: if (status === Image.Ready) {
-            const aspectRatio = sourceSize.width / sourceSize.height;
-            sourceSize = Qt.size(height * aspectRatio, height);
+            parent.chooseStarted();
             waitTimer.start();
         }
 
@@ -26,8 +32,12 @@ Item {
             duration: 2000
             target: daytimeGrass
 
-            onFinished: if (to === root.width - daytimeGrass.width)
-                waitTimer.start()
+            onFinished: {
+                if (to === root.width - daytimeGrass.width)
+                    waitTimer.start();
+                else
+                    root.chose();
+            }
         }
         Timer {
             id: waitTimer
@@ -37,8 +47,10 @@ Item {
             onTriggered: {
                 if (moveAnimator.to === 0)
                     moveAnimator.to = root.width - daytimeGrass.width;
-                else
-                    moveAnimator.to = -daytimeGrass.width * 0.157;
+                else {
+                    moveAnimator.duration = 1500;
+                    moveAnimator.to = -parent.leftPadding;
+                }
                 moveAnimator.start();
             }
         }

@@ -16,29 +16,24 @@ Item {
 
         Image {
             asynchronous: true
+            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.25
             mipmap: true
             source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
-            width: height / sourceSize.height * sourceSize.width
+            sourceSize: Qt.size(width, height)
             x: parent.width * 0.5
             y: parent.height * 0.1
-
-            onStatusChanged: if (status === Image.Ready) {
-                const aspectRatio = sourceSize.width / sourceSize.height;
-                sourceSize = Qt.size(height * aspectRatio, height);
-            }
 
             MouseArea {
                 id: startAdventureMouseArea
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: hoverEnabled
-                hoverEnabled: true
+                hoverEnabled: enabled
 
                 onClicked: {
-                    hoverEnabled = false;
-                    quitMouseArea.hoverEnabled = false;
+                    enabled = false;
+                    quitMouseArea.enabled = false;
                     evilLaughSound.play();
                     startAdventureTimer.start();
                     zomebieHandTimer.start();
@@ -72,16 +67,12 @@ Item {
         }
         Image {
             asynchronous: true
+            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.5
             mipmap: true
-            width: height / sourceSize.height * sourceSize.width
+            sourceSize: Qt.size(width, height)
             x: parent.width * 0.2
             y: parent.height * 0.45
-
-            onStatusChanged: if (status === Image.Ready) {
-                const aspectRatio = sourceSize.width / sourceSize.height;
-                sourceSize = Qt.size(height * aspectRatio, height);
-            }
 
             Timer {
                 id: zomebieHandTimer
@@ -97,25 +88,20 @@ Item {
         }
         Image {
             asynchronous: true
+            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.04
             mipmap: true
             source: quitMouseArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
-            width: height / sourceSize.height * sourceSize.width
+            sourceSize: Qt.size(width, height)
             x: parent.width * 0.905
             y: parent.height * 0.86
-
-            onStatusChanged: if (status === Image.Ready) {
-                const aspectRatio = sourceSize.width / sourceSize.height;
-                sourceSize = Qt.size(height * aspectRatio, height);
-            }
 
             MouseArea {
                 id: quitMouseArea
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: hoverEnabled
-                hoverEnabled: true
+                hoverEnabled: enabled
 
                 onClicked: root.quitted()
                 onEntered: bleepSound.play()

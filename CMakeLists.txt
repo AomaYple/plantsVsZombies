@@ -66,6 +66,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/zombieHand6.png
         resources/images/zombieHand7.png
 
+        resources/music/ChooseYourSeeds.flac
         resources/music/CrazyDave.flac
         resources/music/GrassWalk.flac
 

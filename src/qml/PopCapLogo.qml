@@ -8,8 +8,6 @@ Item {
     signal finished
 
     Image {
-        id: popCapLogo
-
         anchors.fill: parent
         asynchronous: true
         mipmap: true
@@ -19,7 +17,6 @@ Item {
 
         OpacityAnimator on opacity {
             duration: root.fadeTime
-            running: true
             to: 1
 
             onFinished: {

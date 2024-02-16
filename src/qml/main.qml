@@ -19,7 +19,7 @@ Window {
         width: height / 3 * 4
 
         sourceComponent: PopCapLogo {
-            fadeTime: 0
+            fadeTime: 2000
 
             onFinished: backgroundLoader.sourceComponent = titleScreenComponent
         }
@@ -43,7 +43,11 @@ Window {
             id: daytimeGrassComponent
 
             DaytimeGrass {
-                Component.onCompleted: {
+                onChooseStarted: {
+                    backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
+                    backgroundMusic.play();
+                }
+                onChose: {
                     backgroundMusic.source = '../../resources/music/GrassWalk.flac';
                     backgroundMusic.play();
                 }
