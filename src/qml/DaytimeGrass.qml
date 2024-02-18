@@ -14,12 +14,11 @@ Item {
         readonly property real leftPadding: width * 0.157
 
         asynchronous: true
-        fillMode: Image.PreserveAspectFit
         height: parent.height
         mipmap: true
         source: '../../resources/images/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
-        width: implicitWidth
+        width: height / 2400 * 5600
 
         onStatusChanged: if (status === Image.Ready) {
             parent.chooseStarted();
@@ -46,7 +45,7 @@ Item {
 
             onTriggered: {
                 if (moveAnimator.to === 0)
-                    moveAnimator.to = root.width - daytimeGrass.width;
+                    moveAnimator.to = root.width - parent.width;
                 else {
                     moveAnimator.duration = 1500;
                     moveAnimator.to = -parent.leftPadding;

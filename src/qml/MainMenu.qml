@@ -16,11 +16,11 @@ Item {
 
         Image {
             asynchronous: true
-            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.25
             mipmap: true
             source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
             sourceSize: Qt.size(width, height)
+            width: height / 584 * 1324
             x: parent.width * 0.5
             y: parent.height * 0.1
 
@@ -67,10 +67,10 @@ Item {
         }
         Image {
             asynchronous: true
-            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.5
             mipmap: true
             sourceSize: Qt.size(width, height)
+            width: height
             x: parent.width * 0.2
             y: parent.height * 0.45
 
@@ -88,11 +88,11 @@ Item {
         }
         Image {
             asynchronous: true
-            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.04
             mipmap: true
             source: quitMouseArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
             sourceSize: Qt.size(width, height)
+            width: height / 108 * 188
             x: parent.width * 0.905
             y: parent.height * 0.86
 

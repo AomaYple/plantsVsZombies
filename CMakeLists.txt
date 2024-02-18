@@ -48,6 +48,9 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/TitleScreen.qml
 
         RESOURCES
+        resources/gif/basicZombieStand1.gif
+        resources/gif/basicZombieStand2.gif
+
         resources/images/daytimeGrass.png
         resources/images/favicon.ico
         resources/images/loadBar.png

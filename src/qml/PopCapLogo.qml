@@ -8,6 +8,8 @@ Item {
     signal finished
 
     Image {
+        id: popCapLogo
+
         anchors.fill: parent
         asynchronous: true
         mipmap: true
@@ -15,8 +17,14 @@ Item {
         source: '../../resources/images/popCapLogo.png'
         sourceSize: Qt.size(width, height)
 
-        OpacityAnimator on opacity {
+        onStatusChanged: if (status === Image.Ready)
+            fade.start()
+
+        OpacityAnimator {
+            id: fade
+
             duration: root.fadeTime
+            target: popCapLogo
             to: 1
 
             onFinished: {

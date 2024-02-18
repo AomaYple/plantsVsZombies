@@ -15,11 +15,11 @@ Item {
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
-            fillMode: Image.PreserveAspectFit
             height: parent.height * 0.1
             mipmap: true
             source: '../../resources/images/loadBar.png'
             sourceSize: Qt.size(width, height)
+            width: height / 376 * 1328
             y: parent.height * 0.8
 
             MouseArea {
