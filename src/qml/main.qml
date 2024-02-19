@@ -19,7 +19,7 @@ Window {
         width: height / 3 * 4
 
         sourceComponent: PopCapLogo {
-            fadeTime: 2000
+            fadeTime: 0
 
             onFinished: backgroundLoader.sourceComponent = titleScreenComponent
         }
@@ -48,6 +48,10 @@ Window {
                     backgroundMusic.play();
                 }
                 onChose: {
+                    backgroundMusic.source = '../../resources/sounds/readySetPlant.flac';
+                    backgroundMusic.play();
+                }
+                onStarted: {
                     backgroundMusic.source = '../../resources/music/GrassWalk.flac';
                     backgroundMusic.play();
                 }

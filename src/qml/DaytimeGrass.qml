@@ -1,10 +1,12 @@
 import QtQuick
+import QtMultimedia
 
 Item {
     id: root
 
     signal chooseStarted
     signal chose
+    signal started
 
     clip: true
 
@@ -34,14 +36,21 @@ Item {
             onFinished: {
                 if (to === root.width - daytimeGrass.width)
                     waitTimer.start();
-                else
+                else {
                     root.chose();
+                    basicZombieStand1.source = '';
+                    basicZombieStand2.source = '';
+                    basicZombieStand3.source = '';
+                    basicZombieStand4.source = '';
+                    startImage.source = '../../resources/images/startReady.png';
+                    startTimer.start();
+                }
             }
         }
         Timer {
             id: waitTimer
 
-            interval: 1000
+            interval: 2000
 
             onTriggered: {
                 if (moveAnimator.to === 0)
@@ -51,6 +60,83 @@ Item {
                     moveAnimator.to = -parent.leftPadding;
                 }
                 moveAnimator.start();
+            }
+        }
+        AnimatedImage {
+            id: basicZombieStand1
+
+            asynchronous: true
+            height: parent.height * 0.32
+            mipmap: true
+            source: '../../resources/gif/basicZombieStand1.gif'
+            sourceSize: Qt.size(width, height)
+            width: height
+            x: parent.width * 0.8
+            y: parent.height * 0.5
+        }
+        AnimatedImage {
+            id: basicZombieStand2
+
+            asynchronous: true
+            height: parent.height * 0.32
+            mipmap: true
+            source: '../../resources/gif/basicZombieStand2.gif'
+            sourceSize: Qt.size(width, height)
+            width: height
+            x: parent.width * 0.85
+            y: parent.height * 0.3
+        }
+        AnimatedImage {
+            id: basicZombieStand3
+
+            asynchronous: true
+            height: parent.height * 0.32
+            mipmap: true
+            source: '../../resources/gif/basicZombieStand2.gif'
+            sourceSize: Qt.size(width, height)
+            width: height
+            x: parent.width * 0.83
+            y: parent.height * 0.4
+        }
+        AnimatedImage {
+            id: basicZombieStand4
+
+            asynchronous: true
+            height: parent.height * 0.32
+            mipmap: true
+            source: '../../resources/gif/basicZombieStand1.gif'
+            sourceSize: Qt.size(width, height)
+            width: height
+            x: parent.width * 0.75
+            y: parent.height * 0.2
+        }
+        Image {
+            id: startImage
+
+            anchors.centerIn: parent
+            asynchronous: true
+            height: parent.height * 0.3
+            mipmap: true
+            sourceSize: Qt.size(width, height)
+            width: height / 532 * 1200
+
+            Timer {
+                id: startTimer
+
+                interval: 700
+
+                onTriggered: {
+                    if (parent.source.toString() === '../../resources/images/startReady.png') {
+                        parent.source = '../../resources/images/startSet.png';
+                        start();
+                    } else if (parent.source.toString() === '../../resources/images/startSet.png') {
+                        parent.source = '../../resources/images/startPlant.png';
+                        start();
+                    } else if (parent.source.toString() === '../../resources/images/startPlant.png') {
+                        parent.source = '';
+                        root.started();
+                    }
+                }
             }
         }
     }

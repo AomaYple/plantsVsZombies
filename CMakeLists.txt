@@ -60,6 +60,9 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/quitHighlight.png
         resources/images/startAdventure.png
         resources/images/startAdventureHighlight.png
+        resources/images/startPlant.png
+        resources/images/startReady.png
+        resources/images/startSet.png
         resources/images/titleScreen.png
         resources/images/zombieHand1.png
         resources/images/zombieHand2.png
@@ -75,6 +78,7 @@ qt_add_qml_module(${PROJECT_NAME}
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.flac
+        resources/sounds/readySetPlant.flac
 
         NO_RESOURCE_TARGET_PATH
 )
