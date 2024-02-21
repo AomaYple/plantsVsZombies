@@ -3,7 +3,7 @@ import QtQuick
 Item {
     id: root
 
-    signal startClicked
+    signal started
 
     Image {
         anchors.fill: parent
@@ -26,7 +26,7 @@ Item {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
 
-                onClicked: root.startClicked()
+                onClicked: root.started()
             }
         }
     }

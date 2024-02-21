@@ -21,29 +21,29 @@ Window {
         sourceComponent: PopCapLogo {
             fadeTime: 0
 
-            onFinished: backgroundLoader.sourceComponent = titleScreenComponent
+            onFinished: backgroundLoader.sourceComponent = titleScreen
         }
 
         Component {
-            id: titleScreenComponent
+            id: titleScreen
 
             TitleScreen {
-                onStartClicked: backgroundLoader.sourceComponent = mainMenuComponent
+                onStarted: backgroundLoader.sourceComponent = mainMenu
             }
         }
         Component {
-            id: mainMenuComponent
+            id: mainMenu
 
             MainMenu {
-                onAdventureStarted: backgroundLoader.sourceComponent = daytimeGrassComponent
-                onQuitted: root.close()
+                onAdventured: backgroundLoader.sourceComponent = daytimeGrass
+                onQuit: root.close()
             }
         }
         Component {
-            id: daytimeGrassComponent
+            id: daytimeGrass
 
             DaytimeGrass {
-                onChooseStarted: {
+                onChoose: {
                     backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
                     backgroundMusic.play();
                 }

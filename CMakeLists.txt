@@ -58,6 +58,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/popCapLogo.png
         resources/images/quit.png
         resources/images/quitHighlight.png
+        resources/images/seedBank.png
         resources/images/startAdventure.png
         resources/images/startAdventureHighlight.png
         resources/images/startPlant.png

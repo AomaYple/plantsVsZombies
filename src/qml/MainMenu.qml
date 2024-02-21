@@ -4,8 +4,8 @@ import QtMultimedia
 Item {
     id: root
 
-    signal adventureStarted
-    signal quitted
+    signal adventured
+    signal quit
 
     Image {
         anchors.fill: parent
@@ -34,14 +34,14 @@ Item {
                 onClicked: {
                     enabled = false;
                     quitMouseArea.enabled = false;
-                    evilLaughSound.play();
+                    evilLaugh.play();
                     startAdventureTimer.start();
                     zomebieHandTimer.start();
                 }
-                onEntered: bleepSound.play()
+                onEntered: bleep.play()
             }
             MediaPlayer {
-                id: evilLaughSound
+                id: evilLaugh
 
                 source: '../../resources/sounds/evilLaugh.flac'
 
@@ -49,7 +49,7 @@ Item {
                 }
 
                 onPlaybackStateChanged: if (playbackState === MediaPlayer.StoppedState)
-                    root.adventureStarted()
+                    root.adventured()
             }
             Timer {
                 id: startAdventureTimer
@@ -77,13 +77,13 @@ Item {
             Timer {
                 id: zomebieHandTimer
 
-                property int zombineHandNumber: 1
+                property int index: 1
 
                 interval: 60
                 repeat: true
 
-                onTriggered: if (zombineHandNumber < 8)
-                    parent.source = '../../resources/images/zombieHand' + zombineHandNumber++ + '.png'
+                onTriggered: if (index < 8)
+                    parent.source = '../../resources/images/zombieHand' + index++ + '.png'
             }
         }
         Image {
@@ -103,12 +103,12 @@ Item {
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                 hoverEnabled: enabled
 
-                onClicked: root.quitted()
-                onEntered: bleepSound.play()
+                onClicked: root.quit()
+                onEntered: bleep.play()
             }
         }
         MediaPlayer {
-            id: bleepSound
+            id: bleep
 
             source: '../../resources/sounds/bleep.wav'
 
