@@ -45,6 +45,8 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
+        src/qml/SeedBank.qml
+        src/qml/ShovelBank.qml
         src/qml/TitleScreen.qml
         src/qml/Zombie.qml
 
@@ -56,6 +58,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/favicon.ico
         resources/images/loadBar.png
         resources/images/mainMenu.png
+        resources/images/menuBack.png
         resources/images/popCapLogo.png
         resources/images/quit.png
         resources/images/quitHighlight.png

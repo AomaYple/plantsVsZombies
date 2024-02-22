@@ -38,7 +38,7 @@ Item {
             x: parent.leftMargin
 
             onPositionChanged: {
-                if (parent.shoveling) {
+                if (shovelBank.shoveling) {
                     shovel.x = mouseX - shovel.width / 2 + parent.leftMargin;
                     shovel.y = mouseY - shovel.height / 2;
                 }
@@ -158,88 +158,31 @@ Item {
                 onFinished: readySetPlant.scale = 1
             }
         }
-        Image {
+        SeedBank {
             id: seedBank
 
-            asynchronous: true
             height: parent.height * 0.15
-            mipmap: true
-            sourceSize: Qt.size(width, height)
             width: height / 348 * 1784
             x: parent.width * 0.01 + parent.leftMargin
             y: -height
-
-            onStatusChanged: if (status === Image.Ready)
-                seedBankEmerge.start()
-
-            YAnimator {
-                id: seedBankEmerge
-
-                duration: 500
-                target: seedBank
-                to: 0
-            }
-            Text {
-                id: sunlightCount
-
-                color: '#000000'
-                text: '0'
-                x: parent.width * 0.075
-                y: parent.height * 0.7
-
-                font {
-                    bold: true
-                    pointSize: height > 0 ? height * 10 : 1
-                }
-            }
         }
-        Image {
+        ShovelBank {
             id: shovelBank
 
             anchors.left: seedBank.right
-            asynchronous: true
+            enabled: overall.enabled
             height: seedBank.height * 0.8
-            mipmap: true
             source: seedBank.source.toString() === '' ? '' : '../../resources/images/shovelBank.png'
-            sourceSize: Qt.size(width, height)
             width: height / 288 * 280
             y: -height
 
-            onStatusChanged: if (status === Image.Ready)
-                shovelBankEmerge.start()
-
-            YAnimator {
-                id: shovelBankEmerge
-
-                duration: seedBankEmerge.duration
-                target: shovelBank
-                to: seedBankEmerge.to
-            }
-            MouseArea {
-                id: shovelArea
-
-                anchors.fill: parent
-                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: overall.enabled
-
-                onClicked: {
-                    if (daytimeGrass.shoveling) {
-                        daytimeGrass.shoveling = false;
-                        shovel.x = parent.x + (parent.width - shovel.width) / 2;
-                        shovel.y = parent.y + (parent.height - shovel.height) / 2;
-                    } else
-                        daytimeGrass.shoveling = true;
-                    shovelSound.play();
-                }
-
-                MediaPlayer {
-                    id: shovelSound
-
-                    source: '../../resources/sounds/shovel.flac'
-
-                    audioOutput: AudioOutput {
-                    }
-                }
+            onClicked: {
+                if (shoveling) {
+                    shoveling = false;
+                    shovel.x = x + (width - shovel.width) / 2;
+                    shovel.y = y + (height - shovel.height) / 2;
+                } else
+                    shoveling = true;
             }
         }
         Image {
@@ -260,7 +203,7 @@ Item {
             YAnimator {
                 id: shovelEmerge
 
-                duration: shovelBankEmerge.duration
+                duration: 500
                 target: shovel
                 to: (shovelBank.height - shovel.height) / 2
             }
