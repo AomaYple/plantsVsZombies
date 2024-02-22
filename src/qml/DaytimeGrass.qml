@@ -1,5 +1,4 @@
 import QtQuick
-import QtMultimedia
 
 Item {
     id: root
@@ -25,13 +24,12 @@ Item {
 
         onStatusChanged: if (status === Image.Ready) {
             parent.choose();
-            rollOverTimer.start();
+            leftPause.start();
         }
 
         MouseArea {
-            id: overall
+            id: globalArea
 
-            enabled: false
             height: root.height
             hoverEnabled: true
             width: root.width
@@ -42,36 +40,6 @@ Item {
                     shovel.x = mouseX - shovel.width / 2 + parent.leftMargin;
                     shovel.y = mouseY - shovel.height / 2;
                 }
-            }
-        }
-        XAnimator {
-            id: rollOverAnimator
-
-            duration: 2000
-            target: daytimeGrass
-
-            onFinished: {
-                if (to === root.width - daytimeGrass.width)
-                    rollOverTimer.start();
-                else {
-                    root.chose();
-                    basicZombie1.source = '';
-                    readySetPlant.source = '../../resources/images/startReady.png';
-                    seedBank.source = '../../resources/images/seedBank.png';
-                }
-            }
-        }
-        Timer {
-            id: rollOverTimer
-
-            interval: 1500
-
-            onTriggered: {
-                if (rollOverAnimator.to === 0)
-                    rollOverAnimator.to = root.width - parent.width;
-                else
-                    rollOverAnimator.to = -parent.leftMargin;
-                rollOverAnimator.start();
             }
         }
         Zombie {
@@ -87,7 +55,7 @@ Item {
             id: basicZombie2
 
             height: parent.height * 0.2
-            source: basicZombie1.source.toString() === '' ? '' : '../../resources/gif/basicZombieStand1.gif'
+            source: '../../resources/gif/basicZombieStand1.gif'
             width: height / 121 * 82
             x: parent.width * 0.85
             y: parent.height * 0.3
@@ -96,7 +64,7 @@ Item {
             id: basicZombie3
 
             height: parent.height * 0.2
-            source: basicZombie2.source.toString() === '' ? '' : '../../resources/gif/basicZombieStand2.gif'
+            source: '../../resources/gif/basicZombieStand2.gif'
             width: height / 121 * 82
             x: parent.width * 0.83
             y: parent.height * 0.4
@@ -105,10 +73,49 @@ Item {
             id: basicZombie4
 
             height: parent.height * 0.2
-            source: basicZombie3.source.toString() === '' ? '' : '../../resources/gif/basicZombieStand2.gif'
+            source: '../../resources/gif/basicZombieStand2.gif'
             width: height / 125 * 82
             x: parent.width * 0.75
             y: parent.height * 0.2
+        }
+        Timer {
+            id: leftPause
+
+            interval: 1500
+
+            onTriggered: leftToRight.start()
+        }
+        XAnimator {
+            id: leftToRight
+
+            duration: 2000
+            target: daytimeGrass
+            to: root.width - daytimeGrass.width
+
+            onFinished: rightPause.start()
+        }
+        Timer {
+            id: rightPause
+
+            interval: 1500
+
+            onTriggered: rightToCenter.start()
+        }
+        XAnimator {
+            id: rightToCenter
+
+            duration: 2000
+            target: daytimeGrass
+            to: -daytimeGrass.leftMargin
+
+            onFinished: {
+                basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
+                readySetPlant.source = '../../resources/images/startReady.png';
+                seedBank.source = '../../resources/images/seedBank.png';
+                shovelBank.source = '../../resources/images/shovelBank.png';
+                menuButton.source = '../../resources/images/button.png';
+                root.chose();
+            }
         }
         Image {
             id: readySetPlant
@@ -122,34 +129,32 @@ Item {
             x: (parent.width - parent.leftMargin - width) / 2
 
             onStatusChanged: if (status === Image.Ready) {
-                readySetPlantTimer.start();
+                switchText.start();
                 if (source.toString() !== '../../resources/images/startPlant.png')
-                    readySetPlantEnlarge.start();
+                    textEnlarge.start();
             }
 
             Timer {
-                id: readySetPlantTimer
+                id: switchText
 
                 interval: 700
 
                 onTriggered: {
                     if (parent.source.toString() === '../../resources/images/startReady.png') {
-                        parent.height = daytimeGrass.height * 0.2;
                         parent.source = '../../resources/images/startSet.png';
                         start();
                     } else if (parent.source.toString() === '../../resources/images/startSet.png') {
-                        parent.height = daytimeGrass.height * 0.4;
                         parent.source = '../../resources/images/startPlant.png';
                         start();
-                    } else if (parent.source.toString() === '../../resources/images/startPlant.png') {
+                    } else {
                         parent.source = '';
-                        overall.enabled = true;
+                        shovelBank.enabled = menuButton.enabled = true;
                         root.started();
                     }
                 }
             }
             ScaleAnimator {
-                id: readySetPlantEnlarge
+                id: textEnlarge
 
                 duration: 300
                 target: readySetPlant
@@ -170,9 +175,7 @@ Item {
             id: shovelBank
 
             anchors.left: seedBank.right
-            enabled: overall.enabled
             height: seedBank.height * 0.8
-            source: seedBank.source.toString() === '' ? '' : '../../resources/images/shovelBank.png'
             width: height / 288 * 280
             y: -height
 
@@ -207,6 +210,14 @@ Item {
                 target: shovel
                 to: (shovelBank.height - shovel.height) / 2
             }
+        }
+        MenuButton {
+            id: menuButton
+
+            height: parent.height * 0.07
+            width: height / 184 * 468
+            x: parent.width * 0.65
+            y: -height
         }
     }
 }

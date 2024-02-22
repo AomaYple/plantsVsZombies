@@ -15,6 +15,7 @@ Window {
 
         anchors.horizontalCenter: parent.horizontalCenter
         asynchronous: true
+        focus: true
         height: parent.height
         width: height / 3 * 4
 

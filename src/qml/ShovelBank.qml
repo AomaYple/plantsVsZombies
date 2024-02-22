@@ -9,6 +9,8 @@ Item {
 
     signal clicked
 
+    enabled: false
+
     Image {
         id: shovelBank
 

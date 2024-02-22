@@ -33,9 +33,10 @@ Item {
 
                 onClicked: {
                     enabled = false;
+                    quitArea.enabled = false;
                     evilLaugh.play();
                     startAdventureTwinkle.start();
-                    zomebieHandRoll.start();
+                    zomebieHandRise.start();
                 }
                 onEntered: bleep.play()
             }
@@ -74,7 +75,7 @@ Item {
             y: parent.height * 0.48
 
             Timer {
-                id: zomebieHandRoll
+                id: zomebieHandRise
 
                 property int index: 1
 
@@ -100,7 +101,6 @@ Item {
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: startAdventureArea.enabled
                 hoverEnabled: enabled
 
                 onClicked: root.quit()

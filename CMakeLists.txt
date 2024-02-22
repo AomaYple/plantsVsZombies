@@ -44,6 +44,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/DaytimeGrass.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
+        src/qml/MenuButton.qml
         src/qml/PopCapLogo.qml
         src/qml/SeedBank.qml
         src/qml/ShovelBank.qml
@@ -54,6 +55,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/gif/basicZombieStand1.gif
         resources/gif/basicZombieStand2.gif
 
+        resources/images/button.png
         resources/images/daytimeGrass.png
         resources/images/favicon.ico
         resources/images/loadBar.png
@@ -86,6 +88,7 @@ qt_add_qml_module(${PROJECT_NAME}
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.flac
+        resources/sounds/pause.flac
         resources/sounds/readySetPlant.flac
         resources/sounds/shovel.flac
 
