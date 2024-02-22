@@ -3,8 +3,6 @@ import QtQuick
 Item {
     id: root
 
-    required property real fadeTime
-
     signal finished
 
     Image {
@@ -23,7 +21,7 @@ Item {
         OpacityAnimator {
             id: fade
 
-            duration: root.fadeTime
+            duration: 0
             target: popCapLogo
             to: 1
 

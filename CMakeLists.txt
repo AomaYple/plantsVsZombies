@@ -46,6 +46,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/MainMenu.qml
         src/qml/PopCapLogo.qml
         src/qml/TitleScreen.qml
+        src/qml/Zombie.qml
 
         RESOURCES
         resources/gif/basicZombieStand1.gif
@@ -59,6 +60,9 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/quit.png
         resources/images/quitHighlight.png
         resources/images/seedBank.png
+        resources/images/shadow.png
+        resources/images/shovel.png
+        resources/images/shovelBank.png
         resources/images/startAdventure.png
         resources/images/startAdventureHighlight.png
         resources/images/startPlant.png
@@ -80,6 +84,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.flac
         resources/sounds/readySetPlant.flac
+        resources/sounds/shovel.flac
 
         NO_RESOURCE_TARGET_PATH
 )

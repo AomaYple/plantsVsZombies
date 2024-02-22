@@ -19,8 +19,6 @@ Window {
         width: height / 3 * 4
 
         sourceComponent: PopCapLogo {
-            fadeTime: 0
-
             onFinished: backgroundLoader.sourceComponent = titleScreen
         }
 
