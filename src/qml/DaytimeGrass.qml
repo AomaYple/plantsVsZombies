@@ -3,7 +3,7 @@ import QtQuick
 Item {
     id: root
 
-    signal choose
+    signal backToMainMenu
     signal chose
     signal started
 
@@ -12,9 +12,6 @@ Item {
     Image {
         id: daytimeGrass
 
-        readonly property real leftMargin: width * 0.157
-        property bool shoveling: false
-
         asynchronous: true
         height: parent.height
         mipmap: true
@@ -22,26 +19,8 @@ Item {
         sourceSize: Qt.size(width, height)
         width: height / 2400 * 5600
 
-        onStatusChanged: if (status === Image.Ready) {
-            parent.choose();
-            leftPause.start();
-        }
+        onStatusChanged: if (status === Image.Ready) pause.start();
 
-        MouseArea {
-            id: globalArea
-
-            height: root.height
-            hoverEnabled: true
-            width: root.width
-            x: parent.leftMargin
-
-            onPositionChanged: {
-                if (shovelBank.shoveling) {
-                    shovel.x = mouseX - shovel.width / 2 + parent.leftMargin;
-                    shovel.y = mouseY - shovel.height / 2;
-                }
-            }
-        }
         Zombie {
             id: basicZombie1
 
@@ -79,145 +58,162 @@ Item {
             y: parent.height * 0.2
         }
         Timer {
-            id: leftPause
+            id: pause
 
             interval: 1500
 
-            onTriggered: leftToRight.start()
+            onTriggered: leftRightMove.start()
         }
         XAnimator {
-            id: leftToRight
+            id: leftRightMove
 
             duration: 2000
             target: daytimeGrass
             to: root.width - daytimeGrass.width
 
-            onFinished: rightPause.start()
-        }
-        Timer {
-            id: rightPause
-
-            interval: 1500
-
-            onTriggered: rightToCenter.start()
-        }
-        XAnimator {
-            id: rightToCenter
-
-            duration: 2000
-            target: daytimeGrass
-            to: -daytimeGrass.leftMargin
-
             onFinished: {
-                basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
-                readySetPlant.source = '../../resources/images/startReady.png';
-                seedBank.source = '../../resources/images/seedBank.png';
-                shovelBank.source = '../../resources/images/shovelBank.png';
-                menuButton.source = '../../resources/images/button.png';
-                root.chose();
-            }
-        }
-        Image {
-            id: readySetPlant
-
-            anchors.verticalCenter: parent.verticalCenter
-            asynchronous: true
-            height: parent.height * 0.3
-            mipmap: true
-            sourceSize: Qt.size(width, height)
-            width: height / 408 * 864
-            x: (parent.width - parent.leftMargin - width) / 2
-
-            onStatusChanged: if (status === Image.Ready) {
-                switchText.start();
-                if (source.toString() !== '../../resources/images/startPlant.png')
-                    textEnlarge.start();
-            }
-
-            Timer {
-                id: switchText
-
-                interval: 700
-
-                onTriggered: {
-                    if (parent.source.toString() === '../../resources/images/startReady.png') {
-                        parent.source = '../../resources/images/startSet.png';
-                        start();
-                    } else if (parent.source.toString() === '../../resources/images/startSet.png') {
-                        parent.source = '../../resources/images/startPlant.png';
-                        start();
-                    } else {
-                        parent.source = '';
-                        shovelBank.enabled = menuButton.enabled = true;
-                        root.started();
-                    }
+                if (to === root.width - daytimeGrass.width) {
+                    pause.start();
+                    to = -daytimeGrass.width * 0.157;
+                } else {
+                    basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
+                    readySetPlant.source = '../../resources/images/startReady.png';
+                    seedBank.source = '../../resources/images/seedBank.png';
+                    shovelBank.source = '../../resources/images/shovelBank.png';
+                    menuButton.source = '../../resources/images/button.png';
+                    root.chose();
                 }
             }
-            ScaleAnimator {
-                id: textEnlarge
+        }
+    }
+    MouseArea {
+        id: globalArea
 
-                duration: 300
-                target: readySetPlant
-                to: 1.3
+        anchors.fill: parent
+        hoverEnabled: true
 
-                onFinished: readySetPlant.scale = 1
+        onPositionChanged: if (shovelBank.shoveling) {
+            shovel.x = mouseX - shovel.width / 2;
+            shovel.y = mouseY - shovel.height / 2;
+        }
+    }
+    Image {
+        id: readySetPlant
+
+        anchors.centerIn: parent
+        asynchronous: true
+        height: parent.height * 0.3
+        mipmap: true
+        sourceSize: Qt.size(width, height)
+        width: height / 408 * 864
+
+        onStatusChanged: if (status === Image.Ready) {
+            if (source.toString() !== '../../resources/images/startPlant.png')
+                textEnlarge.start();
+            switchText.start();
+        }
+
+        Timer {
+            id: switchText
+
+            interval: 700
+
+            onTriggered: {
+                if (parent.source.toString() === '../../resources/images/startReady.png') {
+                    textEnlarge.stop();
+                    parent.source = '../../resources/images/startSet.png';
+                    start();
+                } else if (parent.source.toString() === '../../resources/images/startSet.png') {
+                    textEnlarge.stop();
+                    parent.source = '../../resources/images/startPlant.png';
+                    start();
+                } else {
+                    parent.source = '';
+                    shovelBank.enabled = true;
+                    menuButton.forceActiveFocus();
+                    root.started();
+                }
             }
         }
-        SeedBank {
-            id: seedBank
+        ScaleAnimator {
+            id: textEnlarge
 
-            height: parent.height * 0.15
-            width: height / 348 * 1784
-            x: parent.width * 0.01 + parent.leftMargin
-            y: -height
+            duration: 300
+            target: readySetPlant
+            to: 1.3
+
+            onStopped: readySetPlant.scale = 1
         }
-        ShovelBank {
-            id: shovelBank
+    }
+    SeedBank {
+        id: seedBank
 
-            anchors.left: seedBank.right
-            height: seedBank.height * 0.8
-            width: height / 288 * 280
-            y: -height
+        height: parent.height * 0.15
+        width: height / 348 * 1784
+        x: parent.width * 0.01
+        y: -height
+    }
+    ShovelBank {
+        id: shovelBank
 
-            onClicked: {
-                if (shoveling) {
-                    shoveling = false;
-                    shovel.x = x + (width - shovel.width) / 2;
-                    shovel.y = y + (height - shovel.height) / 2;
-                } else
-                    shoveling = true;
-            }
+        anchors.left: seedBank.right
+        height: parent.height * 0.12
+        width: height / 288 * 280
+        y: -height
+
+        onClicked: {
+            if (shoveling) {
+                shoveling = false;
+                shovel.x = x + (width - shovel.width) / 2;
+                shovel.y = y + (height - shovel.height) / 2;
+            } else
+                shoveling = true;
         }
-        Image {
-            id: shovel
+    }
+    Image {
+        id: shovel
 
-            asynchronous: true
-            height: shovelBank.height * 0.8
-            mipmap: true
-            source: shovelBank.source.toString() === '' ? '' : '../../resources/images/shovel.png'
-            sourceSize: Qt.size(width, height)
-            width: height / 256 * 244
-            x: shovelBank.x + (shovelBank.width - width) / 2
-            y: shovelBank.y + (shovelBank.height - height) / 2
+        asynchronous: true
+        height: shovelBank.height * 0.8
+        mipmap: true
+        source: shovelBank.source.toString() === '' ? '' : '../../resources/images/shovel.png'
+        sourceSize: Qt.size(width, height)
+        width: height / 256 * 244
+        x: shovelBank.x + (shovelBank.width - width) / 2
+        y: shovelBank.y + (shovelBank.height - height) / 2
 
-            onStatusChanged: if (status === Image.Ready)
-                shovelEmerge.start()
+        onStatusChanged: if (status === Image.Ready)
+            shovelEmerge.start()
 
-            YAnimator {
-                id: shovelEmerge
+        YAnimator {
+            id: shovelEmerge
 
-                duration: 500
-                target: shovel
-                to: (shovelBank.height - shovel.height) / 2
-            }
+            duration: 500
+            target: shovel
+            to: (shovelBank.height - shovel.height) / 2
         }
-        MenuButton {
-            id: menuButton
+    }
+    MenuButton {
+        id: menuButton
 
-            height: parent.height * 0.07
-            width: height / 184 * 468
-            x: parent.width * 0.65
-            y: -height
+        anchors.right: parent.right
+        height: parent.height * 0.07
+        width: height / 184 * 468
+        y: -height
+
+        onTriggered: menuDialog.open()
+    }
+    MenuDialog {
+        id: menuDialog
+
+        anchors.centerIn: parent
+        height: parent.height * 0.8
+        width: height / 1936 * 1660
+
+        onBackToGame: {
+            close();
+            menuButton.forceActiveFocus();
         }
+        onBackToMainMenu: root.backToMainMenu()
     }
 }

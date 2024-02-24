@@ -27,11 +27,10 @@ Item {
 
             anchors.fill: parent
             cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-            enabled: root.enabled
 
             onClicked: {
-                root.clicked();
                 shovelSound.play();
+                root.clicked();
             }
 
             MediaPlayer {
@@ -43,12 +42,5 @@ Item {
                 }
             }
         }
-    }
-    YAnimator {
-        id: emerge
-
-        duration: 500
-        target: root
-        to: 0
     }
 }

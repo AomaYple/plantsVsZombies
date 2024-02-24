@@ -11,39 +11,36 @@ Window {
     Component.onCompleted: backgroundMusic.play()
 
     Loader {
-        id: backgroundLoader
+        id: loader
 
         anchors.horizontalCenter: parent.horizontalCenter
         asynchronous: true
-        focus: true
         height: parent.height
         width: height / 3 * 4
 
-        sourceComponent: PopCapLogo {
-            onFinished: backgroundLoader.sourceComponent = titleScreen
+        sourceComponent: LoadingScreen {
+            onLoaded: loader.sourceComponent = mainMenuComponent
         }
 
         Component {
-            id: titleScreen
-
-            TitleScreen {
-                onStarted: backgroundLoader.sourceComponent = mainMenu
-            }
-        }
-        Component {
-            id: mainMenu
+            id: mainMenuComponent
 
             MainMenu {
-                onAdventured: backgroundLoader.sourceComponent = daytimeGrass
+                onAdventured: {
+                    loader.sourceComponent = daytimeGrassComponent;
+                    backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
+                    backgroundMusic.play();
+                }
                 onQuit: root.close()
             }
         }
         Component {
-            id: daytimeGrass
+            id: daytimeGrassComponent
 
             DaytimeGrass {
-                onChoose: {
-                    backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
+                onBackToMainMenu: {
+                    loader.sourceComponent = mainMenuComponent;
+                    backgroundMusic.source = '../../resources/music/CrazyDave.flac';
                     backgroundMusic.play();
                 }
                 onChose: {

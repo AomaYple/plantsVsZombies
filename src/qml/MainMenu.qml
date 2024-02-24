@@ -18,24 +18,22 @@ Item {
             asynchronous: true
             height: parent.height * 0.25
             mipmap: true
-            source: startAdventureArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
+            source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
             sourceSize: Qt.size(width, height)
             width: height / 584 * 1324
             x: parent.width * 0.5
             y: parent.height * 0.1
 
             MouseArea {
-                id: startAdventureArea
+                id: startAdventureMouseArea
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                enabled: root.enabled
                 hoverEnabled: enabled
 
                 onClicked: {
-                    enabled = false;
-                    quitArea.enabled = false;
-                    evilLaugh.play();
-                    startAdventureTwinkle.start();
+                    root.enabled = false;
                     zomebieHandRise.start();
                 }
                 onEntered: bleep.play()
@@ -56,6 +54,7 @@ Item {
 
                 interval: 100
                 repeat: true
+                triggeredOnStart: evilLaugh.play()
 
                 onTriggered: {
                     if (parent.source.toString() === '../../resources/images/startAdventure.png')
@@ -81,6 +80,7 @@ Item {
 
                 interval: 60
                 repeat: true
+                triggeredOnStart: startAdventureTwinkle.start()
 
                 onTriggered: if (index < 8)
                     parent.source = '../../resources/images/zombieHand' + index++ + '.png'
@@ -90,17 +90,18 @@ Item {
             asynchronous: true
             height: parent.height * 0.04
             mipmap: true
-            source: quitArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
+            source: quitMouseArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
             sourceSize: Qt.size(width, height)
             width: height / 92 * 176
             x: parent.width * 0.903
             y: parent.height * 0.86
 
             MouseArea {
-                id: quitArea
+                id: quitMouseArea
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                enabled: root.enabled
                 hoverEnabled: enabled
 
                 onClicked: root.quit()

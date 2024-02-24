@@ -42,9 +42,11 @@ qt_add_qml_module(${PROJECT_NAME}
 
         QML_FILES
         src/qml/DaytimeGrass.qml
+        src/qml/LoadingScreen.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/MenuButton.qml
+        src/qml/MenuDialog.qml
         src/qml/PopCapLogo.qml
         src/qml/SeedBank.qml
         src/qml/ShovelBank.qml
@@ -55,12 +57,13 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/gif/basicZombieStand1.gif
         resources/gif/basicZombieStand2.gif
 
+        resources/images/backToGame.png
         resources/images/button.png
         resources/images/daytimeGrass.png
         resources/images/favicon.ico
         resources/images/loadBar.png
         resources/images/mainMenu.png
-        resources/images/menuBack.png
+        resources/images/menuBackground.png
         resources/images/popCapLogo.png
         resources/images/quit.png
         resources/images/quitHighlight.png
