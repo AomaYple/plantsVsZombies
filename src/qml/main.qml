@@ -2,13 +2,11 @@ import QtQuick
 import QtMultimedia
 
 Window {
-    id: root
+    id: window
 
     color: '#000000'
     title: '植物大战僵尸'
     visibility: Window.FullScreen
-
-    Component.onCompleted: backgroundMusic.play()
 
     Loader {
         id: loader
@@ -26,18 +24,19 @@ Window {
             id: mainMenuComponent
 
             MainMenu {
-                onAdventured: {
-                    loader.sourceComponent = daytimeGrassComponent;
-                    backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
-                    backgroundMusic.play();
-                }
-                onQuit: root.close()
+                onAdventured: loader.sourceComponent = daytimeGrassComponent
+                onQuit: window.close()
             }
         }
         Component {
             id: daytimeGrassComponent
 
             DaytimeGrass {
+                Component.onCompleted: {
+                    forceActiveFocus();
+                    backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
+                    backgroundMusic.play();
+                }
                 onBackToMainMenu: {
                     loader.sourceComponent = mainMenuComponent;
                     backgroundMusic.source = '../../resources/music/CrazyDave.flac';
@@ -61,6 +60,8 @@ Window {
 
             audioOutput: AudioOutput {
             }
+
+            Component.onCompleted: play()
         }
     }
 }

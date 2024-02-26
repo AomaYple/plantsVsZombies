@@ -10,7 +10,7 @@ Item {
     clip: true
 
     Image {
-        id: daytimeGrass
+        id: background
 
         asynchronous: true
         height: parent.height
@@ -19,7 +19,8 @@ Item {
         sourceSize: Qt.size(width, height)
         width: height / 2400 * 5600
 
-        onStatusChanged: if (status === Image.Ready) pause.start();
+        onStatusChanged: if (status === Image.Ready)
+            pauseView.start()
 
         Zombie {
             id: basicZombie1
@@ -58,7 +59,7 @@ Item {
             y: parent.height * 0.2
         }
         Timer {
-            id: pause
+            id: pauseView
 
             interval: 1500
 
@@ -68,26 +69,24 @@ Item {
             id: leftRightMove
 
             duration: 2000
-            target: daytimeGrass
-            to: root.width - daytimeGrass.width
+            target: background
+            to: root.width - background.width
 
             onFinished: {
-                if (to === root.width - daytimeGrass.width) {
-                    pause.start();
-                    to = -daytimeGrass.width * 0.157;
+                if (to === root.width - background.width) {
+                    pauseView.start();
+                    to = -background.width * 0.157;
                 } else {
                     basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
                     readySetPlant.source = '../../resources/images/startReady.png';
-                    seedBank.source = '../../resources/images/seedBank.png';
-                    shovelBank.source = '../../resources/images/shovelBank.png';
-                    menuButton.source = '../../resources/images/button.png';
+                    seedBankEmerge.start();
                     root.chose();
                 }
             }
         }
     }
     MouseArea {
-        id: globalArea
+        id: globalMouseArea
 
         anchors.fill: parent
         hoverEnabled: true
@@ -109,34 +108,34 @@ Item {
 
         onStatusChanged: if (status === Image.Ready) {
             if (source.toString() !== '../../resources/images/startPlant.png')
-                textEnlarge.start();
-            switchText.start();
+                imageEnlarge.start();
+            switchInterval.start();
         }
 
         Timer {
-            id: switchText
+            id: switchInterval
 
             interval: 700
 
             onTriggered: {
                 if (parent.source.toString() === '../../resources/images/startReady.png') {
-                    textEnlarge.stop();
+                    imageEnlarge.stop();
                     parent.source = '../../resources/images/startSet.png';
                     start();
                 } else if (parent.source.toString() === '../../resources/images/startSet.png') {
-                    textEnlarge.stop();
+                    imageEnlarge.stop();
                     parent.source = '../../resources/images/startPlant.png';
                     start();
                 } else {
                     parent.source = '';
-                    shovelBank.enabled = true;
+                    shovelBank.visible = menuButton.visible = true;
                     menuButton.forceActiveFocus();
                     root.started();
                 }
             }
         }
         ScaleAnimator {
-            id: textEnlarge
+            id: imageEnlarge
 
             duration: 300
             target: readySetPlant
@@ -152,14 +151,25 @@ Item {
         width: height / 348 * 1784
         x: parent.width * 0.01
         y: -height
+
+        YAnimator {
+            id: seedBankEmerge
+
+            duration: 500
+            target: seedBank
+            to: 0
+        }
     }
     ShovelBank {
         id: shovelBank
 
+        property bool shoveling: false
+
         anchors.left: seedBank.right
         height: parent.height * 0.12
+        visible: false
         width: height / 288 * 280
-        y: -height
+        y: 0
 
         onClicked: {
             if (shoveling) {
@@ -176,32 +186,26 @@ Item {
         asynchronous: true
         height: shovelBank.height * 0.8
         mipmap: true
-        source: shovelBank.source.toString() === '' ? '' : '../../resources/images/shovel.png'
+        source: '../../resources/images/shovel.png'
         sourceSize: Qt.size(width, height)
+        visible: shovelBank.visible
         width: height / 256 * 244
         x: shovelBank.x + (shovelBank.width - width) / 2
         y: shovelBank.y + (shovelBank.height - height) / 2
-
-        onStatusChanged: if (status === Image.Ready)
-            shovelEmerge.start()
-
-        YAnimator {
-            id: shovelEmerge
-
-            duration: 500
-            target: shovel
-            to: (shovelBank.height - shovel.height) / 2
-        }
     }
     MenuButton {
         id: menuButton
 
         anchors.right: parent.right
         height: parent.height * 0.07
+        visible: false
         width: height / 184 * 468
-        y: -height
+        y: 0
 
-        onTriggered: menuDialog.open()
+        onTriggered: {
+            menuDialog.open();
+            menuDialog.forceActiveFocus();
+        }
     }
     MenuDialog {
         id: menuDialog

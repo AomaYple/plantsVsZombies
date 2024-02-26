@@ -7,11 +7,9 @@ Item {
     signal triggered
 
     Keys.onEscapePressed: triggered()
-    onTriggered: pause.play()
+    onTriggered: pauseSound.play()
 
     Image {
-        id: menuButton
-
         anchors.fill: parent
         asynchronous: true
         mipmap: true
@@ -30,14 +28,13 @@ Item {
         }
         MouseArea {
             anchors.fill: parent
-            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-            enabled: root.enabled
+            cursorShape: Qt.PointingHandCursor
 
             onClicked: root.triggered()
         }
     }
     MediaPlayer {
-        id: pause
+        id: pauseSound
 
         source: '../../resources/sounds/pause.flac'
 

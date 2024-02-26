@@ -47,10 +47,8 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/MainMenu.qml
         src/qml/MenuButton.qml
         src/qml/MenuDialog.qml
-        src/qml/PopCapLogo.qml
         src/qml/SeedBank.qml
         src/qml/ShovelBank.qml
-        src/qml/TitleScreen.qml
         src/qml/Zombie.qml
 
         RESOURCES

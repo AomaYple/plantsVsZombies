@@ -2,8 +2,6 @@ import QtQuick
 
 Item {
     Image {
-        id: seedBank
-
         anchors.fill: parent
         asynchronous: true
         mipmap: true

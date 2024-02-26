@@ -29,14 +29,28 @@ Item {
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: root.enabled
                 hoverEnabled: enabled
 
                 onClicked: {
-                    root.enabled = false;
+                    enabled = quitMouseArea.enabled = false;
                     zomebieHandRise.start();
+                    startAdventureTwinkle.start();
+                    evilLaugh.play();
                 }
                 onEntered: bleep.play()
+            }
+            Timer {
+                id: startAdventureTwinkle
+
+                interval: 100
+                repeat: true
+
+                onTriggered: {
+                    if (parent.source.toString() === '../../resources/images/startAdventure.png')
+                        parent.source = '../../resources/images/startAdventureHighlight.png';
+                    else
+                        parent.source = '../../resources/images/startAdventure.png';
+                }
             }
             MediaPlayer {
                 id: evilLaugh
@@ -48,20 +62,6 @@ Item {
 
                 onPlaybackStateChanged: if (playbackState === MediaPlayer.StoppedState)
                     root.adventured()
-            }
-            Timer {
-                id: startAdventureTwinkle
-
-                interval: 100
-                repeat: true
-                triggeredOnStart: evilLaugh.play()
-
-                onTriggered: {
-                    if (parent.source.toString() === '../../resources/images/startAdventure.png')
-                        parent.source = '../../resources/images/startAdventureHighlight.png';
-                    else
-                        parent.source = '../../resources/images/startAdventure.png';
-                }
             }
         }
         Image {
@@ -80,7 +80,6 @@ Item {
 
                 interval: 60
                 repeat: true
-                triggeredOnStart: startAdventureTwinkle.start()
 
                 onTriggered: if (index < 8)
                     parent.source = '../../resources/images/zombieHand' + index++ + '.png'
@@ -101,7 +100,6 @@ Item {
 
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: root.enabled
                 hoverEnabled: enabled
 
                 onClicked: root.quit()

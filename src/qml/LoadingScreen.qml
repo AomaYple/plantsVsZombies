@@ -1,6 +1,8 @@
 import QtQuick
 
 Item {
+    id: root
+
     signal loaded
 
     Image {
@@ -13,7 +15,7 @@ Item {
         source: '../../resources/images/popCapLogo.png'
         sourceSize: Qt.size(width, height)
 
-        onStatusChanged: if (background.toString() === '../../resources/images/popCapLogo.png' && status === Image.Ready)
+        onStatusChanged: if (background.source.toString() === '../../resources/images/popCapLogo.png' && status === Image.Ready)
             fade.start()
 
         OpacityAnimator {
@@ -28,25 +30,25 @@ Item {
                     to = 0;
                     restart();
                 } else {
+                    background.opacity = 1;
                     background.source = '../../resources/images/titleScreen.png';
-                    loadBar.source = '../../resources/images/loadBar.png';
                 }
             }
         }
         Image {
-            id: loadBar
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
-            mipmap: true
-            sourceSize: Qt.size(width, height)
             height: parent.height * 0.1
+            mipmap: true
+            source: parent.source.toString() === '../../resources/images/titleScreen.png' ? '../../resources/images/loadBar.png' : ''
+            sourceSize: Qt.size(width, height)
             width: height / 376 * 1328
             y: parent.height * 0.8
 
             MouseArea {
                 anchors.fill: parent
                 cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: parent.source.toString() !== ''
+                enabled: parent.status === Image.Ready
 
                 onClicked: root.loaded()
             }
