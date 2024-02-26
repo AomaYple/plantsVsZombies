@@ -11,8 +11,8 @@ Item {
         Text {
             color: '#000000'
             text: '0'
-            x: parent.width * 0.075
-            y: parent.height * 0.7
+            x: parent.width * 0.078
+            y: parent.height * 0.74
 
             font {
                 bold: true

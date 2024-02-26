@@ -33,7 +33,6 @@ Window {
 
             DaytimeGrass {
                 Component.onCompleted: {
-                    forceActiveFocus();
                     backgroundMusic.source = '../../resources/music/ChooseYourSeeds.flac';
                     backgroundMusic.play();
                 }
