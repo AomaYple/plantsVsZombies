@@ -22,42 +22,6 @@ Item {
         onStatusChanged: if (status === Image.Ready)
             pauseView.start()
 
-        Zombie {
-            id: basicZombie1
-
-            height: parent.height * 0.2
-            source: '../../resources/gif/basicZombieStand1.gif'
-            width: height / 125 * 82
-            x: parent.width * 0.8
-            y: parent.height * 0.5
-        }
-        Zombie {
-            id: basicZombie2
-
-            height: parent.height * 0.2
-            source: '../../resources/gif/basicZombieStand1.gif'
-            width: height / 121 * 82
-            x: parent.width * 0.85
-            y: parent.height * 0.3
-        }
-        Zombie {
-            id: basicZombie3
-
-            height: parent.height * 0.2
-            source: '../../resources/gif/basicZombieStand2.gif'
-            width: height / 121 * 82
-            x: parent.width * 0.83
-            y: parent.height * 0.4
-        }
-        Zombie {
-            id: basicZombie4
-
-            height: parent.height * 0.2
-            source: '../../resources/gif/basicZombieStand2.gif'
-            width: height / 125 * 82
-            x: parent.width * 0.75
-            y: parent.height * 0.2
-        }
         Timer {
             id: pauseView
 
@@ -77,7 +41,6 @@ Item {
                     to = -background.width * 0.157;
                     pauseView.start();
                 } else {
-                    basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
                     readySetPlant.start();
                     seedBankEmerge.start();
                     root.chose();

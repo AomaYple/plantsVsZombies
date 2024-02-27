@@ -53,12 +53,10 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/SeedBank.qml
         src/qml/ShovelBank.qml
         src/qml/StartAdventure.qml
-        src/qml/Zombie.qml
         src/qml/ZombieHand.qml
 
         RESOURCES
-        resources/gif/basicZombieStand1.gif
-        resources/gif/basicZombieStand2.gif
+        resources/gif/sunflower.gif
 
         resources/images/backToGame.png
         resources/images/button.png
@@ -71,6 +69,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/quit.png
         resources/images/quitHighlight.png
         resources/images/seedBank.png
+        resources/images/seedPacket.png
         resources/images/shadow.png
         resources/images/shovel.png
         resources/images/shovelBank.png
@@ -79,6 +78,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/images/startPlant.png
         resources/images/startReady.png
         resources/images/startSet.png
+        resources/images/sunflower.png
         resources/images/titleScreen.png
         resources/images/zombieHand1.png
         resources/images/zombieHand2.png
