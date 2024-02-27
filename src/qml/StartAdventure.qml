@@ -12,7 +12,7 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: mouseArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
+        source: mouseArea.containsMouse ? '../../resources/scenes/startAdventureHighlight.png' : '../../resources/scenes/startAdventure.png'
         sourceSize: Qt.size(width, height)
 
         MouseArea {
@@ -37,10 +37,10 @@ Item {
             repeat: true
 
             onTriggered: {
-                if (parent.source.toString() === '../../resources/images/startAdventure.png')
-                    parent.source = '../../resources/images/startAdventureHighlight.png';
+                if (parent.source.toString() === '../../resources/scenes/startAdventure.png')
+                    parent.source = '../../resources/scenes/startAdventureHighlight.png';
                 else
-                    parent.source = '../../resources/images/startAdventure.png';
+                    parent.source = '../../resources/scenes/startAdventure.png';
             }
         }
         MediaPlayer {

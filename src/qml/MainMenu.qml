@@ -11,7 +11,7 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: '../../resources/images/mainMenu.png'
+        source: '../../resources/scenes/mainMenu.png'
         sourceSize: Qt.size(width, height)
 
         StartAdventure {

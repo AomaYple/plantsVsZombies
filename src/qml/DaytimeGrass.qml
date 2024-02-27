@@ -15,7 +15,7 @@ Item {
         asynchronous: true
         height: parent.height
         mipmap: true
-        source: '../../resources/images/daytimeGrass.png'
+        source: '../../resources/scenes/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
         width: height / 2400 * 5600
 
@@ -114,7 +114,7 @@ Item {
         asynchronous: true
         height: shovelBank.height * 0.8
         mipmap: true
-        source: '../../resources/images/shovel.png'
+        source: '../../resources/scenes/shovel.png'
         sourceSize: Qt.size(width, height)
         visible: shovelBank.visible
         width: height / 256 * 244

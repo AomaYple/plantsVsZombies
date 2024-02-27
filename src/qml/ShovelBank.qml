@@ -10,7 +10,7 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: '../../resources/images/shovelBank.png'
+        source: '../../resources/scenes/shovelBank.png'
         sourceSize: Qt.size(width, height)
 
         MouseArea {

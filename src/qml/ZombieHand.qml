@@ -20,7 +20,7 @@ Item {
             repeat: true
 
             onTriggered: if (index < 8)
-                parent.source = '../../resources/images/zombieHand' + index++ + '.png'
+                parent.source = '../../resources/scenes/zombieHand' + index++ + '.png'
         }
     }
 }

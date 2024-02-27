@@ -14,7 +14,7 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: '../../resources/images/button.png'
+        source: '../../resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
 
         Text {

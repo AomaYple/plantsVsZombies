@@ -25,7 +25,7 @@ Item {
         background: Image {
             asynchronous: true
             mipmap: true
-            source: '../../resources/images/menuBackground.png'
+            source: '../../resources/scenes/menuBackground.png'
             sourceSize: Qt.size(width, height)
         }
 
@@ -36,7 +36,7 @@ Item {
             asynchronous: true
             height: parent.height * 0.15
             mipmap: true
-            source: '../../resources/images/button.png'
+            source: '../../resources/scenes/button.png'
             sourceSize: Qt.size(width, height)
             width: height / 184 * 468
             y: parent.height * 0.63
@@ -63,7 +63,7 @@ Item {
             asynchronous: true
             height: parent.height * 0.21
             mipmap: true
-            source: '../../resources/images/backToGame.png'
+            source: '../../resources/scenes/backToGame.png'
             sourceSize: Qt.size(width, height)
             width: height / 400 * 1440
             y: parent.height * 0.79

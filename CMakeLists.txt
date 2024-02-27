@@ -56,41 +56,41 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/ZombieHand.qml
 
         RESOURCES
-        resources/gif/sunflower.gif
-
-        resources/images/backToGame.png
-        resources/images/button.png
-        resources/images/daytimeGrass.png
-        resources/images/favicon.ico
-        resources/images/loadBar.png
-        resources/images/mainMenu.png
-        resources/images/menuBackground.png
-        resources/images/popCapLogo.png
-        resources/images/quit.png
-        resources/images/quitHighlight.png
-        resources/images/seedBank.png
-        resources/images/seedPacket.png
-        resources/images/shadow.png
-        resources/images/shovel.png
-        resources/images/shovelBank.png
-        resources/images/startAdventure.png
-        resources/images/startAdventureHighlight.png
-        resources/images/startPlant.png
-        resources/images/startReady.png
-        resources/images/startSet.png
-        resources/images/sunflower.png
-        resources/images/titleScreen.png
-        resources/images/zombieHand1.png
-        resources/images/zombieHand2.png
-        resources/images/zombieHand3.png
-        resources/images/zombieHand4.png
-        resources/images/zombieHand5.png
-        resources/images/zombieHand6.png
-        resources/images/zombieHand7.png
-
         resources/music/ChooseYourSeeds.flac
         resources/music/CrazyDave.flac
         resources/music/GrassWalk.flac
+
+        resources/plants/sunflower.gif
+        resources/plants/sunflower.png
+
+        resources/scenes/backToGame.png
+        resources/scenes/button.png
+        resources/scenes/daytimeGrass.png
+        resources/scenes/favicon.ico
+        resources/scenes/loadBar.png
+        resources/scenes/mainMenu.png
+        resources/scenes/menuBackground.png
+        resources/scenes/popCapLogo.png
+        resources/scenes/quit.png
+        resources/scenes/quitHighlight.png
+        resources/scenes/seedBank.png
+        resources/scenes/seedPacket.png
+        resources/scenes/shadow.png
+        resources/scenes/shovel.png
+        resources/scenes/shovelBank.png
+        resources/scenes/startAdventure.png
+        resources/scenes/startAdventureHighlight.png
+        resources/scenes/startPlant.png
+        resources/scenes/startReady.png
+        resources/scenes/startSet.png
+        resources/scenes/titleScreen.png
+        resources/scenes/zombieHand1.png
+        resources/scenes/zombieHand2.png
+        resources/scenes/zombieHand3.png
+        resources/scenes/zombieHand4.png
+        resources/scenes/zombieHand5.png
+        resources/scenes/zombieHand6.png
+        resources/scenes/zombieHand7.png
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.flac

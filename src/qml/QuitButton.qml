@@ -10,7 +10,7 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: mouseArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
+        source: mouseArea.containsMouse ? '../../resources/scenes/quitHighlight.png' : '../../resources/scenes/quit.png'
         sourceSize: Qt.size(width, height)
 
         MouseArea {

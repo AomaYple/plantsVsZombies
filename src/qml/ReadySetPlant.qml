@@ -6,7 +6,7 @@ Item {
     signal finished
 
     function start() {
-        background.source = '../../resources/images/startReady.png';
+        background.source = '../../resources/scenes/startReady.png';
     }
 
     Image {
@@ -18,7 +18,7 @@ Item {
         sourceSize: Qt.size(width, height)
 
         onStatusChanged: if (status === Image.Ready) {
-            if (source.toString() !== '../../resources/images/startPlant.png')
+            if (source.toString() !== '../../resources/scenes/startPlant.png')
                 enlarge.start();
             interval.start();
         }
@@ -29,13 +29,13 @@ Item {
             interval: 700
 
             onTriggered: {
-                if (parent.source.toString() === '../../resources/images/startReady.png') {
+                if (parent.source.toString() === '../../resources/scenes/startReady.png') {
                     enlarge.stop();
-                    parent.source = '../../resources/images/startSet.png';
+                    parent.source = '../../resources/scenes/startSet.png';
                     start();
-                } else if (parent.source.toString() === '../../resources/images/startSet.png') {
+                } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
                     enlarge.stop();
-                    parent.source = '../../resources/images/startPlant.png';
+                    parent.source = '../../resources/scenes/startPlant.png';
                     start();
                 } else {
                     parent.source = '';
