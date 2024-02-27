@@ -6,8 +6,9 @@ Item {
 
     signal triggered
 
-    Keys.onEscapePressed: triggered()
-    onTriggered: pauseSound.play()
+    function forceActiveFocus() {
+        mouseArea.forceActiveFocus();
+    }
 
     Image {
         anchors.fill: parent
@@ -27,18 +28,27 @@ Item {
             }
         }
         MouseArea {
+            id: mouseArea
+
+            function trigger() {
+                sound.play();
+                root.triggered();
+            }
+
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
 
-            onClicked: root.triggered()
-        }
-    }
-    MediaPlayer {
-        id: pauseSound
+            Keys.onEscapePressed: trigger()
+            onClicked: trigger()
 
-        source: '../../resources/sounds/pause.flac'
+            MediaPlayer {
+                id: sound
 
-        audioOutput: AudioOutput {
+                source: '../../resources/sounds/pause.flac'
+
+                audioOutput: AudioOutput {
+                }
+            }
         }
     }
 }

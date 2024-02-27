@@ -42,14 +42,19 @@ qt_add_qml_module(${PROJECT_NAME}
 
         QML_FILES
         src/qml/DaytimeGrass.qml
+        src/qml/LoadBar.qml
         src/qml/LoadingScreen.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/MenuButton.qml
         src/qml/MenuDialog.qml
+        src/qml/QuitButton.qml
+        src/qml/ReadySetPlant.qml
         src/qml/SeedBank.qml
         src/qml/ShovelBank.qml
+        src/qml/StartAdventure.qml
         src/qml/Zombie.qml
+        src/qml/ZombieHand.qml
 
         RESOURCES
         resources/gif/basicZombieStand1.gif

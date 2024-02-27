@@ -35,23 +35,14 @@ Item {
                 }
             }
         }
-        Image {
+        LoadBar {
             anchors.horizontalCenter: parent.horizontalCenter
-            asynchronous: true
             height: parent.height * 0.1
-            mipmap: true
-            source: parent.source.toString() === '../../resources/images/titleScreen.png' ? '../../resources/images/loadBar.png' : ''
-            sourceSize: Qt.size(width, height)
+            visible: background.source.toString() === '../../resources/images/titleScreen.png'
             width: height / 376 * 1328
             y: parent.height * 0.8
 
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                enabled: parent.status === Image.Ready
-
-                onClicked: root.loaded()
-            }
+            onClicked: root.loaded()
         }
     }
 }

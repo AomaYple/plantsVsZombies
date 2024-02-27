@@ -14,97 +14,37 @@ Item {
         source: '../../resources/images/mainMenu.png'
         sourceSize: Qt.size(width, height)
 
-        Image {
-            asynchronous: true
+        StartAdventure {
             height: parent.height * 0.25
-            mipmap: true
-            source: startAdventureMouseArea.containsMouse ? '../../resources/images/startAdventureHighlight.png' : '../../resources/images/startAdventure.png'
-            sourceSize: Qt.size(width, height)
             width: height / 584 * 1324
             x: parent.width * 0.5
             y: parent.height * 0.1
 
-            MouseArea {
-                id: startAdventureMouseArea
-
-                anchors.fill: parent
-                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                hoverEnabled: enabled
-
-                onClicked: {
-                    enabled = quitMouseArea.enabled = false;
-                    zomebieHandRise.start();
-                    startAdventureTwinkle.start();
-                    evilLaugh.play();
-                }
-                onEntered: bleep.play()
+            onAdventured: root.adventured()
+            onClicked: {
+                enabled = quitButton.enabled = false;
+                zombieHand.rise();
             }
-            Timer {
-                id: startAdventureTwinkle
-
-                interval: 100
-                repeat: true
-
-                onTriggered: {
-                    if (parent.source.toString() === '../../resources/images/startAdventure.png')
-                        parent.source = '../../resources/images/startAdventureHighlight.png';
-                    else
-                        parent.source = '../../resources/images/startAdventure.png';
-                }
-            }
-            MediaPlayer {
-                id: evilLaugh
-
-                source: '../../resources/sounds/evilLaugh.flac'
-
-                audioOutput: AudioOutput {
-                }
-
-                onPlaybackStateChanged: if (playbackState === MediaPlayer.StoppedState)
-                    root.adventured()
-            }
+            onEntered: bleep.play()
         }
-        Image {
-            asynchronous: true
+        ZombieHand {
+            id: zombieHand
+
             height: parent.height * 0.5
-            mipmap: true
-            sourceSize: Qt.size(width, height)
             width: height / 1254 * 820
             x: parent.width * 0.28
             y: parent.height * 0.48
-
-            Timer {
-                id: zomebieHandRise
-
-                property int index: 1
-
-                interval: 60
-                repeat: true
-
-                onTriggered: if (index < 8)
-                    parent.source = '../../resources/images/zombieHand' + index++ + '.png'
-            }
         }
-        Image {
-            asynchronous: true
+        QuitButton {
+            id: quitButton
+
             height: parent.height * 0.04
-            mipmap: true
-            source: quitMouseArea.containsMouse ? '../../resources/images/quitHighlight.png' : '../../resources/images/quit.png'
-            sourceSize: Qt.size(width, height)
             width: height / 92 * 176
             x: parent.width * 0.903
             y: parent.height * 0.86
 
-            MouseArea {
-                id: quitMouseArea
-
-                anchors.fill: parent
-                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                hoverEnabled: enabled
-
-                onClicked: root.quit()
-                onEntered: bleep.play()
-            }
+            onEntered: bleep.play()
+            onQuit: root.quit()
         }
         MediaPlayer {
             id: bleep

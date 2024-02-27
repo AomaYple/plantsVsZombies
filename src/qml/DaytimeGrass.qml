@@ -74,11 +74,11 @@ Item {
 
             onFinished: {
                 if (to === root.width - background.width) {
-                    pauseView.start();
                     to = -background.width * 0.157;
+                    pauseView.start();
                 } else {
                     basicZombie1.source = basicZombie2.source = basicZombie3.source = basicZombie4.source = '';
-                    readySetPlant.source = '../../resources/images/startReady.png';
+                    readySetPlant.start();
                     seedBankEmerge.start();
                     root.chose();
                 }
@@ -96,52 +96,17 @@ Item {
             shovel.y = mouseY - shovel.height / 2;
         }
     }
-    Image {
+    ReadySetPlant {
         id: readySetPlant
 
         anchors.centerIn: parent
-        asynchronous: true
         height: parent.height * 0.3
-        mipmap: true
-        sourceSize: Qt.size(width, height)
         width: height / 408 * 864
 
-        onStatusChanged: if (status === Image.Ready) {
-            if (source.toString() !== '../../resources/images/startPlant.png')
-                imageEnlarge.start();
-            switchInterval.start();
-        }
-
-        Timer {
-            id: switchInterval
-
-            interval: 700
-
-            onTriggered: {
-                if (parent.source.toString() === '../../resources/images/startReady.png') {
-                    imageEnlarge.stop();
-                    parent.source = '../../resources/images/startSet.png';
-                    start();
-                } else if (parent.source.toString() === '../../resources/images/startSet.png') {
-                    imageEnlarge.stop();
-                    parent.source = '../../resources/images/startPlant.png';
-                    start();
-                } else {
-                    parent.source = '';
-                    shovelBank.visible = menuButton.visible = true;
-                    menuButton.forceActiveFocus();
-                    root.started();
-                }
-            }
-        }
-        ScaleAnimator {
-            id: imageEnlarge
-
-            duration: 300
-            target: readySetPlant
-            to: 1.3
-
-            onStopped: readySetPlant.scale = 1
+        onFinished: {
+            shovelBank.visible = menuButton.visible = true;
+            menuButton.forceActiveFocus();
+            root.started();
         }
     }
     SeedBank {
@@ -202,10 +167,7 @@ Item {
         width: height / 184 * 468
         y: 0
 
-        onTriggered: {
-            menuDialog.open();
-            menuDialog.forceActiveFocus();
-        }
+        onTriggered: menuDialog.open()
     }
     MenuDialog {
         id: menuDialog
@@ -218,6 +180,9 @@ Item {
             close();
             menuButton.forceActiveFocus();
         }
-        onBackToMainMenu: root.backToMainMenu()
+        onBackToMainMenu: {
+            close();
+            root.backToMainMenu();
+        }
     }
 }

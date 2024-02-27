@@ -18,12 +18,12 @@ Item {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: {
-                shovelSound.play();
+                sound.play();
                 root.clicked();
             }
 
             MediaPlayer {
-                id: shovelSound
+                id: sound
 
                 source: '../../resources/sounds/shovel.flac'
 

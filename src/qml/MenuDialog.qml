@@ -6,17 +6,18 @@ Item {
 
     signal backToGame
     signal backToMainMenu
-    signal close
-    signal open
 
-    Keys.onEscapePressed: backToGame()
-    onClose: dialog.close()
-    onOpen: dialog.open()
+    function close() {
+        dialog.close();
+    }
+    function open() {
+        dialog.open();
+    }
 
     Dialog {
         id: dialog
 
-        closePolicy: Dialog.NoAutoClose
+        closePolicy: Popup.CloseOnEscape
         height: parent.height
         modal: true
         width: parent.width
@@ -27,6 +28,8 @@ Item {
             source: '../../resources/images/menuBackground.png'
             sourceSize: Qt.size(width, height)
         }
+
+        onClosed: root.backToGame()
 
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
