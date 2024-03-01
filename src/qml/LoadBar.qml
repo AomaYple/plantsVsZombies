@@ -7,6 +7,7 @@ Item {
 
     Image {
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/loadBar.png'
         sourceSize: Qt.size(width, height)

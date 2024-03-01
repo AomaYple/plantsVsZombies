@@ -9,6 +9,7 @@ Item {
         id: background
 
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         opacity: 0
         source: '../../resources/scenes/popCapLogo.png'

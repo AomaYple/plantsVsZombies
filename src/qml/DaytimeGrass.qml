@@ -12,6 +12,7 @@ Item {
     Image {
         id: background
 
+        asynchronous: true
         height: parent.height
         mipmap: true
         source: '../../resources/scenes/daytimeGrass.png'
@@ -116,6 +117,7 @@ Item {
     Image {
         id: shovel
 
+        asynchronous: true
         height: shovelBank.height * 0.8
         mipmap: true
         source: '../../resources/scenes/shovel.png'

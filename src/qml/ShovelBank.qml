@@ -8,6 +8,7 @@ Item {
 
     Image {
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/shovelBank.png'
         sourceSize: Qt.size(width, height)
@@ -17,12 +18,12 @@ Item {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: {
-                sound.play();
+                shovel.play();
                 root.clicked();
             }
 
             SoundEffect {
-                id: sound
+                id: shovel
 
                 source: '../../resources/sounds/shovel.wav'
             }

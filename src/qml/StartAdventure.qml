@@ -1,10 +1,8 @@
 import QtQuick
-import QtMultimedia
 
 Item {
     id: root
 
-    signal adventured
     signal clicked
     signal entered
 
@@ -25,7 +23,6 @@ Item {
 
             onClicked: {
                 twinkle.start();
-                evilLaugh.play();
                 root.clicked();
             }
             onEntered: root.entered()
@@ -43,15 +40,6 @@ Item {
                 else
                     parent.source = '../../resources/scenes/startAdventure.png';
             }
-        }
-
-        SoundEffect {
-            id: evilLaugh
-
-            source: '../../resources/sounds/evilLaugh.wav'
-
-            onPlayingChanged: if (!playing)
-                root.adventured()
         }
     }
 }

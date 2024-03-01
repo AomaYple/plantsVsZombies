@@ -12,6 +12,7 @@ Item {
 
     Image {
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
@@ -31,7 +32,7 @@ Item {
             id: mouseArea
 
             function trigger() {
-                sound.play();
+                pauseSound.play();
                 root.triggered();
             }
 
@@ -42,7 +43,7 @@ Item {
             onClicked: trigger()
 
             SoundEffect {
-                id: sound
+                id: pauseSound
 
                 source: '../../resources/sounds/pause.wav'
             }

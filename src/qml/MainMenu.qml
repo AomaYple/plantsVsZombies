@@ -9,22 +9,22 @@ Item {
 
     Image {
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/mainMenu.png'
         sourceSize: Qt.size(width, height)
 
         StartAdventure {
-            height: parent.height * 0.25
+            height: parent.height * 0.23
             width: height / 142 * 331
-            x: parent.width * 0.5
+            x: parent.width * 0.52
             y: parent.height * 0.1
 
-            onAdventured: root.adventured()
             onClicked: {
                 enabled = quitButton.enabled = false;
                 zombieHand.rise();
             }
-            onEntered: bleep.play()
+            onEntered: bleepSound.play()
         }
 
         ZombieHand {
@@ -34,6 +34,8 @@ Item {
             width: height
             x: parent.width * 0.28
             y: parent.height * 0.48
+
+            onRose: root.adventured()
         }
 
         QuitButton {
@@ -44,12 +46,12 @@ Item {
             x: parent.width * 0.903
             y: parent.height * 0.86
 
-            onEntered: bleep.play()
+            onEntered: bleepSound.play()
             onQuit: root.quit()
         }
 
         SoundEffect {
-            id: bleep
+            id: bleepSound
 
             source: '../../resources/sounds/bleep.wav'
         }

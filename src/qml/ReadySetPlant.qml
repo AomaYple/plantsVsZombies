@@ -8,13 +8,14 @@ Item {
 
     function start() {
         background.source = '../../resources/scenes/startReady.png';
-        sound.play();
+        readySetPlantSound.play();
     }
 
     Image {
         id: background
 
         anchors.fill: parent
+        asynchronous: true
         mipmap: true
         sourceSize: Qt.size(width, height)
 
@@ -56,7 +57,7 @@ Item {
         }
 
         SoundEffect {
-            id: sound
+            id: readySetPlantSound
 
             source: '../../resources/sounds/readySetPlant.wav'
         }

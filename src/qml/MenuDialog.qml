@@ -24,6 +24,7 @@ Item {
         width: parent.width
 
         background: Image {
+            asynchronous: true
             mipmap: true
             source: '../../resources/scenes/optionsMenuBackground.png'
             sourceSize: Qt.size(width, height)
@@ -33,6 +34,7 @@ Item {
 
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
+            asynchronous: true
             height: parent.height * 0.15
             mipmap: true
             source: '../../resources/scenes/button.png'
@@ -61,6 +63,7 @@ Item {
 
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
+            asynchronous: true
             height: parent.height * 0.17
             mipmap: true
             source: '../../resources/scenes/optionsMenuButton.png'
