@@ -10,6 +10,7 @@ Item {
     function close() {
         dialog.close();
     }
+
     function open() {
         dialog.open();
     }
@@ -23,9 +24,8 @@ Item {
         width: parent.width
 
         background: Image {
-            asynchronous: true
             mipmap: true
-            source: '../../resources/scenes/menuBackground.png'
+            source: '../../resources/scenes/optionsMenuBackground.png'
             sourceSize: Qt.size(width, height)
         }
 
@@ -33,13 +33,12 @@ Item {
 
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            asynchronous: true
             height: parent.height * 0.15
             mipmap: true
             source: '../../resources/scenes/button.png'
             sourceSize: Qt.size(width, height)
-            width: height / 184 * 468
-            y: parent.height * 0.63
+            width: height / 109 * 291
+            y: parent.height * 0.62
 
             Text {
                 anchors.centerIn: parent
@@ -48,9 +47,10 @@ Item {
 
                 font {
                     bold: true
-                    pointSize: height > 0 ? height * 13 : 1
+                    pointSize: height > 0 ? height * 14 : 1
                 }
             }
+
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
@@ -58,15 +58,15 @@ Item {
                 onClicked: root.backToMainMenu()
             }
         }
+
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            asynchronous: true
-            height: parent.height * 0.21
+            height: parent.height * 0.17
             mipmap: true
-            source: '../../resources/scenes/backToGame.png'
+            source: '../../resources/scenes/optionsMenuButton.png'
             sourceSize: Qt.size(width, height)
-            width: height / 400 * 1440
-            y: parent.height * 0.79
+            width: height / 79 * 341
+            y: parent.height * 0.82
 
             Text {
                 anchors.centerIn: parent
@@ -75,9 +75,10 @@ Item {
 
                 font {
                     bold: true
-                    pointSize: height > 0 ? height * 18 : 1
+                    pointSize: height > 0 ? height * 23 : 1
                 }
             }
+
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor

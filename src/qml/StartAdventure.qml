@@ -30,6 +30,7 @@ Item {
             }
             onEntered: root.entered()
         }
+
         Timer {
             id: twinkle
 
@@ -43,15 +44,13 @@ Item {
                     parent.source = '../../resources/scenes/startAdventure.png';
             }
         }
-        MediaPlayer {
+
+        SoundEffect {
             id: evilLaugh
 
-            source: '../../resources/sounds/evilLaugh.flac'
+            source: '../../resources/sounds/evilLaugh.wav'
 
-            audioOutput: AudioOutput {
-            }
-
-            onPlaybackStateChanged: if (playbackState === MediaPlayer.StoppedState)
+            onPlayingChanged: if (!playing)
                 root.adventured()
         }
     }

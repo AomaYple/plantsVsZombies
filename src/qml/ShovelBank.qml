@@ -8,7 +8,6 @@ Item {
 
     Image {
         anchors.fill: parent
-        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/shovelBank.png'
         sourceSize: Qt.size(width, height)
@@ -22,13 +21,10 @@ Item {
                 root.clicked();
             }
 
-            MediaPlayer {
+            SoundEffect {
                 id: sound
 
-                source: '../../resources/sounds/shovel.flac'
-
-                audioOutput: AudioOutput {
-                }
+                source: '../../resources/sounds/shovel.wav'
             }
         }
     }

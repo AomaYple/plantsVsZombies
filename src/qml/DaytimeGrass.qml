@@ -12,12 +12,11 @@ Item {
     Image {
         id: background
 
-        asynchronous: true
         height: parent.height
         mipmap: true
         source: '../../resources/scenes/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
-        width: height / 2400 * 5600
+        width: height / 600 * 1400
 
         onStatusChanged: if (status === Image.Ready)
             pauseView.start()
@@ -29,6 +28,7 @@ Item {
 
             onTriggered: leftRightMove.start()
         }
+
         XAnimator {
             id: leftRightMove
 
@@ -48,6 +48,7 @@ Item {
             }
         }
     }
+
     MouseArea {
         id: globalMouseArea
 
@@ -59,12 +60,13 @@ Item {
             shovel.y = mouseY - shovel.height / 2;
         }
     }
+
     ReadySetPlant {
         id: readySetPlant
 
         anchors.centerIn: parent
         height: parent.height * 0.3
-        width: height / 408 * 864
+        width: height / 99 * 210
 
         onFinished: {
             shovelBank.visible = menuButton.visible = true;
@@ -72,11 +74,12 @@ Item {
             root.started();
         }
     }
+
     SeedBank {
         id: seedBank
 
         height: parent.height * 0.15
-        width: height / 348 * 1784
+        width: height / 87 * 446
         x: parent.width * 0.01
         y: -height
 
@@ -88,6 +91,7 @@ Item {
             to: 0
         }
     }
+
     ShovelBank {
         id: shovelBank
 
@@ -96,7 +100,7 @@ Item {
         anchors.left: seedBank.right
         height: parent.height * 0.12
         visible: false
-        width: height / 288 * 280
+        width: height / 72 * 70
         y: 0
 
         onClicked: {
@@ -108,36 +112,38 @@ Item {
                 shoveling = true;
         }
     }
+
     Image {
         id: shovel
 
-        asynchronous: true
         height: shovelBank.height * 0.8
         mipmap: true
         source: '../../resources/scenes/shovel.png'
         sourceSize: Qt.size(width, height)
         visible: shovelBank.visible
-        width: height / 256 * 244
+        width: height / 63 * 59
         x: shovelBank.x + (shovelBank.width - width) / 2
         y: shovelBank.y + (shovelBank.height - height) / 2
     }
+
     MenuButton {
         id: menuButton
 
         anchors.right: parent.right
         height: parent.height * 0.07
         visible: false
-        width: height / 184 * 468
+        width: height / 109 * 291
         y: 0
 
         onTriggered: menuDialog.open()
     }
+
     MenuDialog {
         id: menuDialog
 
         anchors.centerIn: parent
         height: parent.height * 0.8
-        width: height / 1936 * 1660
+        width: height / 476 * 402
 
         onBackToGame: {
             close();

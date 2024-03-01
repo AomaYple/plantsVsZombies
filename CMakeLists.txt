@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.29.0-rc2)
 
 project(PlantsVsZombies)
 
@@ -43,7 +43,7 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/qml/DaytimeGrass.qml
         src/qml/LoadBar.qml
-        src/qml/LoadingScreen.qml
+        src/qml/LoadScreen.qml
         src/qml/main.qml
         src/qml/MainMenu.qml
         src/qml/MenuButton.qml
@@ -56,26 +56,21 @@ qt_add_qml_module(${PROJECT_NAME}
         src/qml/ZombieHand.qml
 
         RESOURCES
-        resources/music/ChooseYourSeeds.flac
-        resources/music/CrazyDave.flac
-        resources/music/GrassWalk.flac
+        resources/music/chooseYourSeeds.flac
+        resources/music/crazyDave.flac
+        resources/music/grassWalk.flac
 
-        resources/plants/sunflower.gif
-        resources/plants/sunflower.png
-
-        resources/scenes/backToGame.png
         resources/scenes/button.png
         resources/scenes/daytimeGrass.png
         resources/scenes/favicon.ico
         resources/scenes/loadBar.png
         resources/scenes/mainMenu.png
-        resources/scenes/menuBackground.png
+        resources/scenes/optionsMenuBackground.png
+        resources/scenes/optionsMenuButton.png
         resources/scenes/popCapLogo.png
         resources/scenes/quit.png
         resources/scenes/quitHighlight.png
         resources/scenes/seedBank.png
-        resources/scenes/seedPacket.png
-        resources/scenes/shadow.png
         resources/scenes/shovel.png
         resources/scenes/shovelBank.png
         resources/scenes/startAdventure.png
@@ -93,10 +88,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/zombieHand7.png
 
         resources/sounds/bleep.wav
-        resources/sounds/evilLaugh.flac
-        resources/sounds/pause.flac
-        resources/sounds/readySetPlant.flac
-        resources/sounds/shovel.flac
+        resources/sounds/evilLaugh.wav
+        resources/sounds/pause.wav
+        resources/sounds/readySetPlant.wav
+        resources/sounds/shovel.wav
 
         NO_RESOURCE_TARGET_PATH
 )

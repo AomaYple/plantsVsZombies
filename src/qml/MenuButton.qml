@@ -12,7 +12,6 @@ Item {
 
     Image {
         anchors.fill: parent
-        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
@@ -27,6 +26,7 @@ Item {
                 pointSize: height > 0 ? height * 12 : 1
             }
         }
+
         MouseArea {
             id: mouseArea
 
@@ -41,13 +41,10 @@ Item {
             Keys.onEscapePressed: trigger()
             onClicked: trigger()
 
-            MediaPlayer {
+            SoundEffect {
                 id: sound
 
-                source: '../../resources/sounds/pause.flac'
-
-                audioOutput: AudioOutput {
-                }
+                source: '../../resources/sounds/pause.wav'
             }
         }
     }

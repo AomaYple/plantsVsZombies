@@ -1,4 +1,5 @@
 import QtQuick
+import QtMultimedia
 
 Item {
     id: root
@@ -7,13 +8,13 @@ Item {
 
     function start() {
         background.source = '../../resources/scenes/startReady.png';
+        sound.play();
     }
 
     Image {
         id: background
 
         anchors.fill: parent
-        asynchronous: true
         mipmap: true
         sourceSize: Qt.size(width, height)
 
@@ -43,6 +44,7 @@ Item {
                 }
             }
         }
+
         ScaleAnimator {
             id: enlarge
 
@@ -51,6 +53,12 @@ Item {
             to: 1.3
 
             onStopped: background.scale = 1
+        }
+
+        SoundEffect {
+            id: sound
+
+            source: '../../resources/sounds/readySetPlant.wav'
         }
     }
 }

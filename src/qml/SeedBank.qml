@@ -3,7 +3,6 @@ import QtQuick
 Item {
     Image {
         anchors.fill: parent
-        asynchronous: true
         mipmap: true
         source: '../../resources/scenes/seedBank.png'
         sourceSize: Qt.size(width, height)
