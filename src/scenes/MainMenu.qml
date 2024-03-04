@@ -22,22 +22,20 @@ Item {
 
             onClicked: {
                 enabled = quitButton.enabled = false;
-                zombieHand.rise();
+                zombieHandRise.rise();
             }
             onEntered: bleepSound.play()
         }
-
-        ZombieHand {
-            id: zombieHand
+        ZombieHandRise {
+            id: zombieHandRise
 
             height: parent.height * 0.5
-            width: height
-            x: parent.width * 0.28
-            y: parent.height * 0.48
+            width: height / 315 * 230
+            x: parent.width * 0.25
+            y: parent.height * 0.47
 
             onRose: root.adventured()
         }
-
         QuitButton {
             id: quitButton
 
@@ -49,7 +47,6 @@ Item {
             onEntered: bleepSound.play()
             onQuit: root.quit()
         }
-
         SoundEffect {
             id: bleepSound
 

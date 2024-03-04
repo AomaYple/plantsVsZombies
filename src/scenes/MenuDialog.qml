@@ -10,7 +10,6 @@ Item {
     function close() {
         dialog.close();
     }
-
     function open() {
         dialog.open();
     }
@@ -49,10 +48,9 @@ Item {
 
                 font {
                     bold: true
-                    pointSize: height > 0 ? height * 14 : 1
+                    pointSize: height > 0 ? height * 9 : 1
                 }
             }
-
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
@@ -60,7 +58,6 @@ Item {
                 onClicked: root.backToMainMenu()
             }
         }
-
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
@@ -78,10 +75,9 @@ Item {
 
                 font {
                     bold: true
-                    pointSize: height > 0 ? height * 23 : 1
+                    pointSize: height > 0 ? height * 14 : 1
                 }
             }
-
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor

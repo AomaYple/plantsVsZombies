@@ -12,11 +12,11 @@ Item {
             color: '#000000'
             text: '0'
             x: parent.width * 0.078
-            y: parent.height * 0.74
+            y: parent.height * 0.72
 
             font {
                 bold: true
-                pointSize: height > 0 ? height * 10 : 1
+                pointSize: height > 0 ? height * 5 : 1
             }
         }
     }

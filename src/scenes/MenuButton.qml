@@ -24,10 +24,9 @@ Item {
 
             font {
                 bold: true
-                pointSize: height > 0 ? height * 12 : 1
+                pointSize: height > 0 ? height * 7 : 1
             }
         }
-
         MouseArea {
             id: mouseArea
 

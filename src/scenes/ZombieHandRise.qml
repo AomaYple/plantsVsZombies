@@ -7,27 +7,21 @@ Item {
     signal rose
 
     function rise() {
-        rise.start();
+        background.source = '../../resources/scenes/zombieHandRise.gif';
         evilLaughSound.play();
     }
 
-    Image {
+    AnimatedImage {
+        id: background
+
         anchors.fill: parent
         asynchronous: true
         mipmap: true
         sourceSize: Qt.size(width, height)
+        speed: 2
 
-        Timer {
-            id: rise
-
-            property int index: 1
-
-            interval: 70
-            repeat: true
-
-            onTriggered: if (index < 8)
-                parent.source = '../../resources/scenes/zombieHand' + index++ + '.png'
-        }
+        onCurrentFrameChanged: if (currentFrame === frameCount - 1)
+            playing = false
 
         SoundEffect {
             id: evilLaughSound

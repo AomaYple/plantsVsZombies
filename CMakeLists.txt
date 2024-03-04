@@ -41,19 +41,20 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
-        src/qml/DaytimeGrass.qml
-        src/qml/LoadBar.qml
-        src/qml/LoadScreen.qml
-        src/qml/main.qml
-        src/qml/MainMenu.qml
-        src/qml/MenuButton.qml
-        src/qml/MenuDialog.qml
-        src/qml/QuitButton.qml
-        src/qml/ReadySetPlant.qml
-        src/qml/SeedBank.qml
-        src/qml/ShovelBank.qml
-        src/qml/StartAdventure.qml
-        src/qml/ZombieHand.qml
+        src/scenes/BasicZombieStand.qml
+        src/scenes/DaytimeGrass.qml
+        src/scenes/LoadBar.qml
+        src/scenes/LoadScreen.qml
+        src/scenes/main.qml
+        src/scenes/MainMenu.qml
+        src/scenes/MenuButton.qml
+        src/scenes/MenuDialog.qml
+        src/scenes/QuitButton.qml
+        src/scenes/ReadySetPlant.qml
+        src/scenes/SeedBank.qml
+        src/scenes/ShovelBank.qml
+        src/scenes/StartAdventure.qml
+        src/scenes/ZombieHandRise.qml
 
         RESOURCES
         resources/music/chooseYourSeeds.flac
@@ -71,6 +72,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/quit.png
         resources/scenes/quitHighlight.png
         resources/scenes/seedBank.png
+        resources/scenes/shadow.png
         resources/scenes/shovel.png
         resources/scenes/shovelBank.png
         resources/scenes/startAdventure.png
@@ -79,19 +81,19 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/startReady.png
         resources/scenes/startSet.png
         resources/scenes/titleScreen.png
-        resources/scenes/zombieHand1.png
-        resources/scenes/zombieHand2.png
-        resources/scenes/zombieHand3.png
-        resources/scenes/zombieHand4.png
-        resources/scenes/zombieHand5.png
-        resources/scenes/zombieHand6.png
-        resources/scenes/zombieHand7.png
+        resources/scenes/zombieHandRise.gif
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.wav
         resources/sounds/pause.wav
         resources/sounds/readySetPlant.wav
         resources/sounds/shovel.wav
+
+        resources/zombies/basicZombieAttack.gif
+        resources/zombies/basicZombieStand0.gif
+        resources/zombies/basicZombieStand1.gif
+        resources/zombies/basicZombieWalk0.gif
+        resources/zombies/basicZombieWalk1.gif
 
         NO_RESOURCE_TARGET_PATH
 )
