@@ -1,6 +1,8 @@
 import QtQuick
 
 Item {
+    height: width / 446 * 87
+
     Image {
         anchors.fill: parent
         asynchronous: true

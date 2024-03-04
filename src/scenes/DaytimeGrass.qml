@@ -12,6 +12,41 @@ Item {
     Image {
         id: background
 
+        property list<QtObject> previewZombies
+
+        function createPreviewZombies() {
+            const component = Qt.createComponent('BasicZombieStand.qml');
+            previewZombies.push(component.createObject(background, {
+                height: background.height * 0.1,
+                width: height / 126 * 84,
+                x: background.width * 0.7,
+                y: background.height * 0.3
+            }));
+            previewZombies.push(component.createObject(background, {
+                height: background.height * 0.1,
+                width: height / 126 * 84,
+                x: background.width * 0.75,
+                y: background.height * 0.5
+            }));
+            previewZombies.push(component.createObject(background, {
+                height: background.height * 0.1,
+                width: height / 126 * 84,
+                x: background.width * 0.73,
+                y: background.height * 0.7
+            }));
+            previewZombies.push(component.createObject(background, {
+                height: background.height * 0.1,
+                width: height / 126 * 84,
+                x: background.width * 0.77,
+                y: background.height * 0.9
+            }));
+        }
+        function destroyPreviewZombies() {
+            for (let i = 0; i < previewZombies.length; ++i)
+                previewZombies[i].destroy();
+            previewZombies = [];
+        }
+
         asynchronous: true
         height: parent.height
         mipmap: true
@@ -19,8 +54,10 @@ Item {
         sourceSize: Qt.size(width, height)
         width: height / 600 * 1400
 
-        onStatusChanged: if (status === Image.Ready)
-            pauseView.start()
+        onStatusChanged: if (status === Image.Ready) {
+            pauseView.start();
+            createPreviewZombies();
+        }
 
         Timer {
             id: pauseView
@@ -29,7 +66,6 @@ Item {
 
             onTriggered: leftRightMove.start()
         }
-
         XAnimator {
             id: leftRightMove
 
@@ -44,12 +80,12 @@ Item {
                 } else {
                     readySetPlant.start();
                     seedBankEmerge.start();
+                    background.destroyPreviewZombies();
                     root.chose();
                 }
             }
         }
     }
-
     MouseArea {
         id: globalMouseArea
 
@@ -61,13 +97,11 @@ Item {
             shovel.y = mouseY - shovel.height / 2;
         }
     }
-
     ReadySetPlant {
         id: readySetPlant
 
         anchors.centerIn: parent
-        height: parent.height * 0.3
-        width: height / 99 * 210
+        width: parent.width * 0.7
 
         onFinished: {
             shovelBank.visible = menuButton.visible = true;
@@ -75,12 +109,10 @@ Item {
             root.started();
         }
     }
-
     SeedBank {
         id: seedBank
 
-        height: parent.height * 0.15
-        width: height / 87 * 446
+        width: parent.width * 0.6
         x: parent.width * 0.01
         y: -height
 
@@ -92,16 +124,14 @@ Item {
             to: 0
         }
     }
-
     ShovelBank {
         id: shovelBank
 
         property bool shoveling: false
 
         anchors.left: seedBank.right
-        height: parent.height * 0.12
         visible: false
-        width: height / 72 * 70
+        width: parent.width * 0.09
         y: 0
 
         onClicked: {
@@ -113,39 +143,34 @@ Item {
                 shoveling = true;
         }
     }
-
     Image {
         id: shovel
 
         asynchronous: true
-        height: shovelBank.height * 0.8
+        height: width / 59 * 63
         mipmap: true
         source: '../../resources/scenes/shovel.png'
         sourceSize: Qt.size(width, height)
         visible: shovelBank.visible
-        width: height / 63 * 59
+        width: shovelBank.width * 0.8
         x: shovelBank.x + (shovelBank.width - width) / 2
         y: shovelBank.y + (shovelBank.height - height) / 2
     }
-
     MenuButton {
         id: menuButton
 
         anchors.right: parent.right
-        height: parent.height * 0.07
         visible: false
-        width: height / 109 * 291
+        width: parent.width * 0.15
         y: 0
 
         onTriggered: menuDialog.open()
     }
-
     MenuDialog {
         id: menuDialog
 
         anchors.centerIn: parent
-        height: parent.height * 0.8
-        width: height / 476 * 402
+        width: parent.width * 0.55
 
         onBackToGame: {
             close();

@@ -6,9 +6,9 @@ Item {
 
     signal triggered
 
-    function forceActiveFocus() {
-        mouseArea.forceActiveFocus();
-    }
+    height: width / 291 * 109
+
+    Keys.onEscapePressed: mouseArea.trigger()
 
     Image {
         anchors.fill: parent
@@ -38,7 +38,6 @@ Item {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
 
-            Keys.onEscapePressed: trigger()
             onClicked: trigger()
 
             SoundEffect {

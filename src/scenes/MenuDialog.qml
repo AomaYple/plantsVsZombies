@@ -14,6 +14,8 @@ Item {
         dialog.open();
     }
 
+    height: width / 402 * 479
+
     Dialog {
         id: dialog
 
@@ -34,11 +36,11 @@ Item {
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
-            height: parent.height * 0.15
+            height: width / 291 * 109
             mipmap: true
             source: '../../resources/scenes/button.png'
             sourceSize: Qt.size(width, height)
-            width: height / 109 * 291
+            width: parent.width * 0.45
             y: parent.height * 0.62
 
             Text {
@@ -61,11 +63,11 @@ Item {
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             asynchronous: true
-            height: parent.height * 0.17
+            height: width / 341 * 79
             mipmap: true
             source: '../../resources/scenes/optionsMenuButton.png'
             sourceSize: Qt.size(width, height)
-            width: height / 79 * 341
+            width: parent.width * 0.85
             y: parent.height * 0.82
 
             Text {

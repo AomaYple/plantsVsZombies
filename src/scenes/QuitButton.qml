@@ -6,6 +6,8 @@ Item {
     signal entered
     signal quit
 
+    height: width / 43 * 23
+
     Image {
         anchors.fill: parent
         asynchronous: true

@@ -11,6 +11,8 @@ Item {
         evilLaughSound.play();
     }
 
+    height: width / 230 * 315
+
     AnimatedImage {
         id: background
 

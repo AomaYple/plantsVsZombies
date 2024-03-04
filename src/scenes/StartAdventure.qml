@@ -6,6 +6,8 @@ Item {
     signal clicked
     signal entered
 
+    height: width / 331 * 142
+
     Image {
         anchors.fill: parent
         asynchronous: true
@@ -27,7 +29,6 @@ Item {
             }
             onEntered: root.entered()
         }
-
         Timer {
             id: twinkle
 

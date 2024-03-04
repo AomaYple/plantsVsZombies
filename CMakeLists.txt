@@ -41,7 +41,6 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
-        src/scenes/BasicZombieStand.qml
         src/scenes/DaytimeGrass.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
@@ -52,9 +51,12 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/QuitButton.qml
         src/scenes/ReadySetPlant.qml
         src/scenes/SeedBank.qml
+        src/scenes/Shadow.qml
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
         src/scenes/ZombieHandRise.qml
+
+        src/zombies/BasicZombieStand.qml
 
         RESOURCES
         resources/music/chooseYourSeeds.flac

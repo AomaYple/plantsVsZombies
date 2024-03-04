@@ -15,8 +15,7 @@ Item {
         sourceSize: Qt.size(width, height)
 
         StartAdventure {
-            height: parent.height * 0.23
-            width: height / 142 * 331
+            width: parent.width * 0.4
             x: parent.width * 0.52
             y: parent.height * 0.1
 
@@ -29,8 +28,7 @@ Item {
         ZombieHandRise {
             id: zombieHandRise
 
-            height: parent.height * 0.5
-            width: height / 315 * 230
+            width: parent.width * 0.27
             x: parent.width * 0.25
             y: parent.height * 0.47
 
@@ -39,8 +37,7 @@ Item {
         QuitButton {
             id: quitButton
 
-            height: parent.height * 0.04
-            width: height / 23 * 43
+            width: parent.width * 0.06
             x: parent.width * 0.903
             y: parent.height * 0.86
 

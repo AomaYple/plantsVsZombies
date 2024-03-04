@@ -32,7 +32,6 @@ Window {
                 onQuit: window.close()
             }
         }
-
         Component {
             id: daytimeGrassComponent
 
@@ -53,7 +52,6 @@ Window {
                 }
             }
         }
-
         MediaPlayer {
             id: backgroundMusic
 

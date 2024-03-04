@@ -11,6 +11,8 @@ Item {
         readySetPlantSound.play();
     }
 
+    height: width / 210 * 99
+
     Image {
         id: background
 
@@ -45,7 +47,6 @@ Item {
                 }
             }
         }
-
         ScaleAnimator {
             id: enlarge
 
@@ -55,7 +56,6 @@ Item {
 
             onStopped: background.scale = 1
         }
-
         SoundEffect {
             id: readySetPlantSound
 

@@ -6,6 +6,8 @@ Item {
 
     signal clicked
 
+    height: width / 70 * 72
+
     Image {
         anchors.fill: parent
         asynchronous: true
