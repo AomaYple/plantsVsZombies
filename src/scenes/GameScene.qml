@@ -7,8 +7,6 @@ Item {
     signal chose
     signal started
 
-    clip: true
-
     DaytimeGrass {
         anchors.fill: parent
 
