@@ -28,14 +28,14 @@ Window {
             id: mainMenuComponent
 
             MainMenu {
-                onAdventured: loader.sourceComponent = daytimeGrassComponent
+                onAdventured: loader.sourceComponent = gameSceneComponent
                 onQuit: window.close()
             }
         }
         Component {
-            id: daytimeGrassComponent
+            id: gameSceneComponent
 
-            DaytimeGrass {
+            GameScene {
                 Component.onCompleted: {
                     backgroundMusic.source = '../../resources/music/chooseYourSeeds.flac';
                     backgroundMusic.play();
@@ -45,7 +45,7 @@ Window {
                     backgroundMusic.source = '../../resources/music/crazyDave.flac';
                     backgroundMusic.play();
                 }
-                onChose: backgroundMusic.source = ''
+                onChose: backgroundMusic.stop()
                 onStarted: {
                     backgroundMusic.source = '../../resources/music/grassWalk.flac';
                     backgroundMusic.play();

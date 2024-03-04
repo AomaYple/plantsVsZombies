@@ -42,6 +42,7 @@ qt_add_qml_module(${PROJECT_NAME}
 
         QML_FILES
         src/scenes/DaytimeGrass.qml
+        src/scenes/GameScene.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
         src/scenes/main.qml

@@ -1,6 +1,12 @@
 import QtQuick
 
 Item {
+    id: root
+
+    function emerge() {
+        emerge.start();
+    }
+
     height: width / 446 * 87
 
     Image {
@@ -21,5 +27,12 @@ Item {
                 pointSize: height > 0 ? height * 5 : 1
             }
         }
+    }
+    YAnimator {
+        id: emerge
+
+        duration: 500
+        target: root
+        to: 0
     }
 }
