@@ -7,6 +7,9 @@ Item {
     signal quit
 
     height: width / 43 * 23
+    width: parent.width * 0.06
+    x: parent.width * 0.903
+    y: parent.height * 0.86
 
     Image {
         anchors.fill: parent

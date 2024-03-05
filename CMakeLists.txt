@@ -55,6 +55,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/Shadow.qml
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
+        src/scenes/Sunlight.qml
         src/scenes/ZombieHandRise.qml
 
         src/zombies/BasicZombieStand.qml
@@ -83,12 +84,14 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/startPlant.png
         resources/scenes/startReady.png
         resources/scenes/startSet.png
+        resources/scenes/sunlight.gif
         resources/scenes/titleScreen.png
         resources/scenes/zombieHandRise.gif
 
         resources/sounds/bleep.wav
         resources/sounds/evilLaugh.wav
         resources/sounds/pause.wav
+        resources/sounds/points.wav
         resources/sounds/readySetPlant.wav
         resources/sounds/shovel.wav
 

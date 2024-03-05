@@ -4,9 +4,15 @@ import QtMultimedia
 Item {
     id: root
 
+    property bool shoveling: false
+
     signal clicked
 
+    anchors.left: seedBank.right
     height: width / 70 * 72
+    visible: false
+    width: parent.width * 0.09
+    y: 0
 
     Image {
         anchors.fill: parent

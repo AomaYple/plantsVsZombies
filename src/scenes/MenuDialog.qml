@@ -14,7 +14,9 @@ Item {
         dialog.open();
     }
 
+    anchors.centerIn: parent
     height: width / 402 * 479
+    width: parent.width * 0.55
 
     Dialog {
         id: dialog

@@ -11,7 +11,9 @@ Item {
         readySetPlantSound.play();
     }
 
+    anchors.centerIn: parent
     height: width / 210 * 99
+    width: parent.width * 0.7
 
     Image {
         id: background

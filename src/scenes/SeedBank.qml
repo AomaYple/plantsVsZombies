@@ -8,6 +8,9 @@ Item {
     }
 
     height: width / 446 * 87
+    width: parent.width * 0.6
+    x: parent.width * 0.01
+    y: -height
 
     Image {
         anchors.fill: parent
@@ -18,7 +21,7 @@ Item {
 
         Text {
             color: '#000000'
-            text: '0'
+            text: '50'
             x: parent.width * 0.078
             y: parent.height * 0.72
 

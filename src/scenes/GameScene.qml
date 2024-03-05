@@ -3,13 +3,13 @@ import QtQuick
 Item {
     id: root
 
+    property bool paused: true
+
     signal backToMainMenu
     signal chose
     signal started
 
     DaytimeGrass {
-        anchors.fill: parent
-
         onFinished: {
             readySetPlant.start();
             seedBank.emerge();
@@ -30,31 +30,19 @@ Item {
     ReadySetPlant {
         id: readySetPlant
 
-        anchors.centerIn: parent
-        width: parent.width * 0.7
-
         onFinished: {
             shovelBank.visible = menuButton.visible = true;
             menuButton.forceActiveFocus();
+            parent.paused = false;
             root.started();
         }
     }
     SeedBank {
         id: seedBank
 
-        width: parent.width * 0.6
-        x: parent.width * 0.01
-        y: -height
     }
     ShovelBank {
         id: shovelBank
-
-        property bool shoveling: false
-
-        anchors.left: seedBank.right
-        visible: false
-        width: parent.width * 0.09
-        y: 0
 
         onClicked: {
             if (shoveling) {
@@ -81,26 +69,33 @@ Item {
     MenuButton {
         id: menuButton
 
-        anchors.right: parent.right
-        visible: false
-        width: parent.width * 0.15
-        y: 0
-
-        onTriggered: menuDialog.open()
+        onTriggered: {
+            parent.paused = true;
+            menuDialog.open();
+        }
     }
     MenuDialog {
         id: menuDialog
 
-        anchors.centerIn: parent
-        width: parent.width * 0.55
-
         onBackToGame: {
             close();
             menuButton.forceActiveFocus();
+            parent.paused = false;
         }
         onBackToMainMenu: {
             close();
             root.backToMainMenu();
         }
+    }
+    Timer {
+        id: sunlightTimer
+
+        property list<QtObject> sunlights
+
+        interval: 6000
+        repeat: true
+        running: !parent.paused
+
+        onTriggered: sunlights.push(Qt.createComponent('Sunlight.qml').createObject(root))
     }
 }

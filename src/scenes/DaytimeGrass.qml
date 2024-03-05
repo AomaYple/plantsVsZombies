@@ -4,6 +4,7 @@ Item {
     id: root
 
     signal finished
+    anchors.fill: parent
 
     Image {
         id: background

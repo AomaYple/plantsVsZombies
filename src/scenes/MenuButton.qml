@@ -6,7 +6,11 @@ Item {
 
     signal triggered
 
+    anchors.right: parent.right
     height: width / 291 * 109
+    visible: false
+    width: parent.width * 0.15
+    y: 0
 
     Keys.onEscapePressed: mouseArea.trigger()
 

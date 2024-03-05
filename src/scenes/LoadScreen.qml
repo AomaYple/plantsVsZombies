@@ -36,10 +36,7 @@ Item {
             }
         }
         LoadBar {
-            anchors.horizontalCenter: parent.horizontalCenter
             visible: background.source.toString() === '../../resources/scenes/titleScreen.png'
-            width: parent.width * 0.3
-            y: parent.height * 0.8
 
             onClicked: root.loaded()
         }

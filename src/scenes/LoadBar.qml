@@ -5,7 +5,10 @@ Item {
 
     signal clicked
 
+    anchors.horizontalCenter: parent.horizontalCenter
     height: width / 332 * 94
+    width: parent.width * 0.3
+    y: parent.height * 0.8
 
     Image {
         anchors.fill: parent

@@ -7,6 +7,9 @@ Item {
     signal entered
 
     height: width / 331 * 142
+    width: parent.width * 0.4
+    x: parent.width * 0.52
+    y: parent.height * 0.1
 
     Image {
         anchors.fill: parent

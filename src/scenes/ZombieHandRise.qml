@@ -12,6 +12,9 @@ Item {
     }
 
     height: width / 230 * 315
+    width: parent.width * 0.27
+    x: parent.width * 0.25
+    y: parent.height * 0.47
 
     AnimatedImage {
         id: background
