@@ -1,40 +1,33 @@
 import QtQuick
 import QtMultimedia
 
-Item {
-    id: root
-
+Image {
     property bool shoveling: false
 
     signal clicked
 
-    anchors.left: seedBank.right
-    height: width / 70 * 72
+    asynchronous: true
+    height: parent.height * 0.13
+    mipmap: true
+    source: '../../resources/scenes/shovelBank.png'
+    sourceSize: Qt.size(width, height)
     visible: false
-    width: parent.width * 0.09
+    width: height / 72 * 70
     y: 0
 
-    Image {
+    MouseArea {
         anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: '../../resources/scenes/shovelBank.png'
-        sourceSize: Qt.size(width, height)
+        cursorShape: Qt.PointingHandCursor
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
+        onClicked: {
+            soundEffect.play();
+            parent.clicked();
+        }
 
-            onClicked: {
-                shovel.play();
-                root.clicked();
-            }
+        SoundEffect {
+            id: soundEffect
 
-            SoundEffect {
-                id: shovel
-
-                source: '../../resources/sounds/shovel.wav'
-            }
+            source: '../../resources/sounds/shovel.wav'
         }
     }
 }

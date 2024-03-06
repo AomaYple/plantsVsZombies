@@ -1,94 +1,87 @@
 import QtQuick
 import QtMultimedia
 
-Item {
+AnimatedImage {
     id: root
 
-    property bool paused: parent.paused
+    signal collected
 
-    signal clicked
-
+    function down() {
+        x = getRandomFloat(parent.width * 0.1, parent.width * 0.9);
+        y = parent.height * 0.2;
+        downAnimation.to = getRandomFloat(parent.height * 0.4, parent.height * 0.9);
+        downAnimation.start();
+    }
     function getRandomFloat(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    height: width / 57 * 56
-    width: parent.width * 0.1
-    x: getRandomFloat(parent.width * 0.1, parent.width * 0.9)
-    y: parent.height * 0.2
+    asynchronous: true
+    height: parent.height * 0.14
+    mipmap: true
+    paused: parent.paused
+    source: '../../resources/scenes/sunlight.gif'
+    sourceSize: Qt.size(width, height)
+    width: height / 56 * 57
 
-    Component.onCompleted: {
-        down.to = getRandomFloat(parent.height * 0.4, parent.height * 0.9);
-        down.start();
-    }
-
-    AnimatedImage {
-        id: background
-
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        paused: parent.paused
-        source: '../../resources/scenes/sunlight.gif'
-        sourceSize: Qt.size(width, height)
-
-        MouseArea {
-            function collect() {
-                collectX.to = root.parent.width * 0.05;
-                collectY.to = root.parent.height * 0.05;
-                collectX.start();
-                collectY.start();
-            }
-
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-
-            onClicked: {
-                pointsSound.play();
-                collect();
-                root.clicked();
-            }
-        }
-        SoundEffect {
-            id: pointsSound
-
-            source: '../../resources/sounds/points.wav'
-        }
-        OpacityAnimator {
-            id: dissipate
-
-            duration: 500
-            paused: running && root.paused
-            target: background
-            to: 0
-
-            onFinished: root.destroy()
-        }
-    }
     NumberAnimation {
-        id: down
+        id: downAnimation
 
         duration: 3000
         paused: running && root.paused
         properties: 'y'
         target: root
     }
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+        onClicked: {
+            if (downAnimation.to !== 0)
+                downAnimation.stop();
+            enabled = false;
+            pointsSound.play();
+            xAnimation.start();
+            yAnimation.start();
+        }
+    }
+    SoundEffect {
+        id: pointsSound
+
+        source: '../../resources/sounds/points.wav'
+    }
     NumberAnimation {
-        id: collectX
+        id: xAnimation
 
         duration: 500
         paused: running && root.paused
         properties: 'x'
         target: root
+        to: parent.width * 0.008
 
-        onFinished: dissipate.start()
+        onFinished: opacityAnimation.start()
     }
     NumberAnimation {
-        id: collectY
+        id: yAnimation
 
         duration: 500
         paused: running && root.paused
         properties: 'y'
         target: root
+        to: -parent.height * 0.01
+    }
+    NumberAnimation {
+        id: opacityAnimation
+
+        duration: 500
+        paused: running && root.paused
+        properties: 'opacity'
+        target: root
+        to: 0
+
+        onFinished: {
+            root.destroy();
+            root.collected();
+        }
     }
 }

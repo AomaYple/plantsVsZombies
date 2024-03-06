@@ -1,41 +1,36 @@
 import QtQuick
 import QtMultimedia
 
-Item {
-    id: root
-
+Image {
     signal adventured
     signal quit
 
-    Image {
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: '../../resources/scenes/mainMenu.png'
-        sourceSize: Qt.size(width, height)
+    asynchronous: true
+    mipmap: true
+    source: '../../resources/scenes/mainMenu.png'
+    sourceSize: Qt.size(width, height)
 
-        StartAdventure {
-            onClicked: {
-                enabled = quitButton.enabled = false;
-                zombieHandRise.rise();
-            }
-            onEntered: bleepSound.play()
+    StartAdventure {
+        onClicked: {
+            enabled = quitButton.enabled = false;
+            zombieHandRise.rise();
         }
-        ZombieHandRise {
-            id: zombieHandRise
+        onEntered: soundEffect.play()
+    }
+    ZombieHandRise {
+        id: zombieHandRise
 
-            onRose: root.adventured()
-        }
-        QuitButton {
-            id: quitButton
+        onRose: parent.adventured()
+    }
+    QuitButton {
+        id: quitButton
 
-            onEntered: bleepSound.play()
-            onQuit: root.quit()
-        }
-        SoundEffect {
-            id: bleepSound
+        onEntered: soundEffect.play()
+        onQuit: parent.quit()
+    }
+    SoundEffect {
+        id: soundEffect
 
-            source: '../../resources/sounds/bleep.wav'
-        }
+        source: '../../resources/sounds/bleep.wav'
     }
 }

@@ -1,44 +1,37 @@
 import QtQuick
 
-Item {
+Image {
     id: root
 
     signal loaded
 
-    Image {
-        id: background
+    asynchronous: true
+    mipmap: true
+    opacity: 0
+    source: '../../resources/scenes/popCapLogo.png'
+    sourceSize: Qt.size(width, height)
 
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        opacity: 0
-        source: '../../resources/scenes/popCapLogo.png'
-        sourceSize: Qt.size(width, height)
+    onStatusChanged: if (source.toString() === '../../resources/scenes/popCapLogo.png' && status === Image.Ready)
+        opacityAnimator.start()
 
-        onStatusChanged: if (background.source.toString() === '../../resources/scenes/popCapLogo.png' && status === Image.Ready)
-            fade.start()
+    OpacityAnimator {
+        id: opacityAnimator
 
-        OpacityAnimator {
-            id: fade
+        duration: 2000
+        target: root
+        to: 1
 
-            duration: 2000
-            target: background
-            to: 1
-
-            onFinished: {
-                if (to === 1) {
-                    to = 0;
-                    restart();
-                } else {
-                    background.opacity = 1;
-                    background.source = '../../resources/scenes/titleScreen.png';
-                }
+        onFinished: {
+            if (to === 1) {
+                to = 0;
+                restart();
+            } else {
+                root.opacity = 1;
+                root.source = '../../resources/scenes/titleScreen.png';
             }
         }
-        LoadBar {
-            visible: background.source.toString() === '../../resources/scenes/titleScreen.png'
-
-            onClicked: root.loaded()
-        }
+    }
+    LoadBar {
+        onClicked: parent.loaded()
     }
 }

@@ -1,67 +1,61 @@
 import QtQuick
 import QtMultimedia
 
-Item {
+Image {
     id: root
 
     signal finished
 
     function start() {
-        background.source = '../../resources/scenes/startReady.png';
-        readySetPlantSound.play();
+        source = '../../resources/scenes/startReady.png';
+        soundEffect.play();
     }
 
     anchors.centerIn: parent
-    height: width / 210 * 99
-    width: parent.width * 0.7
+    asynchronous: true
+    height: parent.height * 0.2
+    mipmap: true
+    sourceSize: Qt.size(width, height)
+    width: height / 99 * 210
 
-    Image {
-        id: background
+    onStatusChanged: if (status === Image.Ready) {
+        if (source.toString() !== '../../resources/scenes/startPlant.png')
+            scaleAnimator.start();
+        timer.start();
+    }
 
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        sourceSize: Qt.size(width, height)
+    Timer {
+        id: timer
 
-        onStatusChanged: if (status === Image.Ready) {
-            if (source.toString() !== '../../resources/scenes/startPlant.png')
-                enlarge.start();
-            interval.start();
-        }
+        interval: 700
 
-        Timer {
-            id: interval
-
-            interval: 700
-
-            onTriggered: {
-                if (parent.source.toString() === '../../resources/scenes/startReady.png') {
-                    enlarge.stop();
-                    parent.source = '../../resources/scenes/startSet.png';
-                    start();
-                } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
-                    enlarge.stop();
-                    parent.source = '../../resources/scenes/startPlant.png';
-                    start();
-                } else {
-                    parent.source = '';
-                    root.finished();
-                }
+        onTriggered: {
+            if (parent.source.toString() === '../../resources/scenes/startReady.png') {
+                scaleAnimator.stop();
+                parent.source = '../../resources/scenes/startSet.png';
+                start();
+            } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
+                scaleAnimator.stop();
+                parent.source = '../../resources/scenes/startPlant.png';
+                start();
+            } else {
+                parent.source = '';
+                parent.finished();
             }
         }
-        ScaleAnimator {
-            id: enlarge
+    }
+    ScaleAnimator {
+        id: scaleAnimator
 
-            duration: 300
-            target: background
-            to: 1.3
+        duration: 300
+        target: root
+        to: 1.3
 
-            onStopped: background.scale = 1
-        }
-        SoundEffect {
-            id: readySetPlantSound
+        onStopped: root.scale = 1
+    }
+    SoundEffect {
+        id: soundEffect
 
-            source: '../../resources/sounds/readySetPlant.wav'
-        }
+        source: '../../resources/sounds/readySetPlant.wav'
     }
 }

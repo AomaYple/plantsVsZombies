@@ -2,7 +2,7 @@ import QtQuick
 import QtMultimedia
 
 Window {
-    id: window
+    id: root
 
     color: '#000000'
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
@@ -21,39 +21,39 @@ Window {
         anchors.fill: parent
 
         sourceComponent: LoadScreen {
-            onLoaded: loader.sourceComponent = mainMenuComponent
+            onLoaded: loader.sourceComponent = mainMenu
         }
 
         Component {
-            id: mainMenuComponent
+            id: mainMenu
 
             MainMenu {
-                onAdventured: loader.sourceComponent = gameSceneComponent
-                onQuit: window.close()
+                onAdventured: loader.sourceComponent = gameScene
+                onQuit: root.close()
             }
         }
         Component {
-            id: gameSceneComponent
+            id: gameScene
 
             GameScene {
                 Component.onCompleted: {
-                    backgroundMusic.source = '../../resources/music/chooseYourSeeds.flac';
-                    backgroundMusic.play();
+                    mediaPlayer.source = '../../resources/music/chooseYourSeeds.flac';
+                    mediaPlayer.play();
                 }
                 onBackToMainMenu: {
-                    loader.sourceComponent = mainMenuComponent;
-                    backgroundMusic.source = '../../resources/music/crazyDave.flac';
-                    backgroundMusic.play();
+                    loader.sourceComponent = mainMenu;
+                    mediaPlayer.source = '../../resources/music/crazyDave.flac';
+                    mediaPlayer.play();
                 }
-                onChose: backgroundMusic.stop()
+                onChose: mediaPlayer.stop()
                 onStarted: {
-                    backgroundMusic.source = '../../resources/music/grassWalk.flac';
-                    backgroundMusic.play();
+                    mediaPlayer.source = '../../resources/music/grassWalk.flac';
+                    mediaPlayer.play();
                 }
             }
         }
         MediaPlayer {
-            id: backgroundMusic
+            id: mediaPlayer
 
             loops: MediaPlayer.Infinite
             source: '../../resources/music/crazyDave.flac'

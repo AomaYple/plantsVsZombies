@@ -1,49 +1,43 @@
 import QtQuick
 
-Item {
-    id: root
-
+Image {
     signal clicked
     signal entered
 
-    height: width / 331 * 142
-    width: parent.width * 0.4
+    asynchronous: true
+    height: parent.height * 0.23
+    mipmap: true
+    source: mouseArea.containsMouse ? '../../resources/scenes/startAdventureHighlight.png' : '../../resources/scenes/startAdventure.png'
+    sourceSize: Qt.size(width, height)
+    width: height / 142 * 331
     x: parent.width * 0.52
     y: parent.height * 0.1
 
-    Image {
+    MouseArea {
+        id: mouseArea
+
         anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: mouseArea.containsMouse ? '../../resources/scenes/startAdventureHighlight.png' : '../../resources/scenes/startAdventure.png'
-        sourceSize: Qt.size(width, height)
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+        enabled: parent.enabled
+        hoverEnabled: enabled
 
-        MouseArea {
-            id: mouseArea
-
-            anchors.fill: parent
-            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-            enabled: root.enabled
-            hoverEnabled: enabled
-
-            onClicked: {
-                twinkle.start();
-                root.clicked();
-            }
-            onEntered: root.entered()
+        onClicked: {
+            timer.start();
+            parent.clicked();
         }
-        Timer {
-            id: twinkle
+        onEntered: parent.entered()
+    }
+    Timer {
+        id: timer
 
-            interval: 100
-            repeat: true
+        interval: 100
+        repeat: true
 
-            onTriggered: {
-                if (parent.source.toString() === '../../resources/scenes/startAdventure.png')
-                    parent.source = '../../resources/scenes/startAdventureHighlight.png';
-                else
-                    parent.source = '../../resources/scenes/startAdventure.png';
-            }
+        onTriggered: {
+            if (parent.source.toString() === '../../resources/scenes/startAdventure.png')
+                parent.source = '../../resources/scenes/startAdventureHighlight.png';
+            else
+                parent.source = '../../resources/scenes/startAdventure.png';
         }
     }
 }

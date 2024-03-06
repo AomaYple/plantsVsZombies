@@ -1,93 +1,80 @@
 import QtQuick
 import QtQuick.Controls
 
-Item {
+Dialog {
     id: root
 
     signal backToGame
     signal backToMainMenu
 
-    function close() {
-        dialog.close();
+    closePolicy: Popup.CloseOnEscape
+    height: parent.height * 0.8
+    modal: true
+    width: height / 479 * 402
+    x: (parent.width - width) / 2
+    y: (parent.height - height) / 2
+
+    background: Image {
+        asynchronous: true
+        mipmap: true
+        source: '../../resources/scenes/optionsMenuBackground.png'
+        sourceSize: Qt.size(width, height)
     }
-    function open() {
-        dialog.open();
-    }
 
-    anchors.centerIn: parent
-    height: width / 402 * 479
-    width: parent.width * 0.55
+    onClosed: backToGame()
 
-    Dialog {
-        id: dialog
+    Image {
+        anchors.horizontalCenter: parent.horizontalCenter
+        asynchronous: true
+        height: parent.height * 0.15
+        mipmap: true
+        source: '../../resources/scenes/button.png'
+        sourceSize: Qt.size(width, height)
+        width: height / 109 * 291
+        y: parent.height * 0.6
 
-        closePolicy: Popup.CloseOnEscape
-        height: parent.height
-        modal: true
-        width: parent.width
+        Text {
+            anchors.centerIn: parent
+            color: '#008000'
+            text: '主菜单'
 
-        background: Image {
-            asynchronous: true
-            mipmap: true
-            source: '../../resources/scenes/optionsMenuBackground.png'
-            sourceSize: Qt.size(width, height)
-        }
-
-        onClosed: root.backToGame()
-
-        Image {
-            anchors.horizontalCenter: parent.horizontalCenter
-            asynchronous: true
-            height: width / 291 * 109
-            mipmap: true
-            source: '../../resources/scenes/button.png'
-            sourceSize: Qt.size(width, height)
-            width: parent.width * 0.45
-            y: parent.height * 0.62
-
-            Text {
-                anchors.centerIn: parent
-                color: '#008000'
-                text: '主菜单'
-
-                font {
-                    bold: true
-                    pointSize: height > 0 ? height * 9 : 1
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.backToMainMenu()
+            font {
+                bold: true
+                pointSize: Math.max(parent.height * 0.25, 1)
             }
         }
-        Image {
-            anchors.horizontalCenter: parent.horizontalCenter
-            asynchronous: true
-            height: width / 341 * 79
-            mipmap: true
-            source: '../../resources/scenes/optionsMenuButton.png'
-            sourceSize: Qt.size(width, height)
-            width: parent.width * 0.85
-            y: parent.height * 0.82
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
 
-            Text {
-                anchors.centerIn: parent
-                color: '#008000'
-                text: '返回游戏'
+            onClicked: root.backToMainMenu()
+        }
+    }
+    Image {
+        anchors.horizontalCenter: parent.horizontalCenter
+        asynchronous: true
+        height: parent.height * 0.17
+        mipmap: true
+        source: '../../resources/scenes/optionsMenuButton.png'
+        sourceSize: Qt.size(width, height)
+        width: height / 79 * 341
+        y: parent.height * 0.82
 
-                font {
-                    bold: true
-                    pointSize: height > 0 ? height * 14 : 1
-                }
+        Text {
+            anchors.centerIn: parent
+            color: '#008000'
+            text: '返回游戏'
+
+            font {
+                bold: true
+                pointSize: Math.max(parent.height * 0.3, 1)
             }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
+        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
 
-                onClicked: root.backToGame()
-            }
+            onClicked: root.backToGame()
         }
     }
 }

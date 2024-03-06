@@ -56,6 +56,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
         src/scenes/Sunlight.qml
+        src/scenes/SunlightProducer.qml
         src/scenes/ZombieHandRise.qml
 
         src/zombies/BasicZombieStand.qml

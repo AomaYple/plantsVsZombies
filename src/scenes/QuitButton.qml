@@ -1,33 +1,27 @@
 import QtQuick
 
-Item {
-    id: root
-
+Image {
     signal entered
     signal quit
 
-    height: width / 43 * 23
-    width: parent.width * 0.06
+    asynchronous: true
+    height: parent.height * 0.04
+    mipmap: true
+    source: mouseArea.containsMouse ? '../../resources/scenes/quitHighlight.png' : '../../resources/scenes/quit.png'
+    sourceSize: Qt.size(width, height)
+    width: height / 23 * 43
     x: parent.width * 0.903
     y: parent.height * 0.86
 
-    Image {
+    MouseArea {
+        id: mouseArea
+
         anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: mouseArea.containsMouse ? '../../resources/scenes/quitHighlight.png' : '../../resources/scenes/quit.png'
-        sourceSize: Qt.size(width, height)
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+        enabled: parent.enabled
+        hoverEnabled: enabled
 
-        MouseArea {
-            id: mouseArea
-
-            anchors.fill: parent
-            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-            enabled: root.enabled
-            hoverEnabled: enabled
-
-            onClicked: root.quit()
-            onEntered: root.entered()
-        }
+        onClicked: parent.quit()
+        onEntered: parent.entered()
     }
 }

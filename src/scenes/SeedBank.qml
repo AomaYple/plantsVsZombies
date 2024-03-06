@@ -1,38 +1,39 @@
 import QtQuick
 
-Item {
+Image {
     id: root
 
+    function addSunlight() {
+        sunlightCount.text = (parseInt(sunlightCount.text) + 25).toString();
+    }
     function emerge() {
-        emerge.start();
+        yAnimator.start();
     }
 
-    height: width / 446 * 87
-    width: parent.width * 0.6
+    asynchronous: true
+    height: parent.height * 0.145
+    mipmap: true
+    source: '../../resources/scenes/seedBank.png'
+    sourceSize: Qt.size(width, height)
+    width: height / 87 * 446
     x: parent.width * 0.01
     y: -height
 
-    Image {
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: '../../resources/scenes/seedBank.png'
-        sourceSize: Qt.size(width, height)
+    Text {
+        id: sunlightCount
 
-        Text {
-            color: '#000000'
-            text: '50'
-            x: parent.width * 0.078
-            y: parent.height * 0.72
+        color: '#000000'
+        text: '50'
+        x: parent.width * 0.085 - width / 2
+        y: parent.height * 0.82 - height / 2
 
-            font {
-                bold: true
-                pointSize: height > 0 ? height * 5 : 1
-            }
+        font {
+            bold: true
+            pointSize: Math.max(parent.height * 0.1, 1)
         }
     }
     YAnimator {
-        id: emerge
+        id: yAnimator
 
         duration: 500
         target: root

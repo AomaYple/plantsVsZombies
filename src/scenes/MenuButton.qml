@@ -1,54 +1,48 @@
 import QtQuick
 import QtMultimedia
 
-Item {
-    id: root
-
+Image {
     signal triggered
 
     anchors.right: parent.right
-    height: width / 291 * 109
+    asynchronous: true
+    height: parent.height * 0.07
+    mipmap: true
+    source: '../../resources/scenes/button.png'
+    sourceSize: Qt.size(width, height)
     visible: false
-    width: parent.width * 0.15
+    width: height / 109 * 291
     y: 0
 
     Keys.onEscapePressed: mouseArea.trigger()
 
-    Image {
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: '../../resources/scenes/button.png'
-        sourceSize: Qt.size(width, height)
+    Text {
+        anchors.centerIn: parent
+        color: '#008000'
+        text: '菜单'
 
-        Text {
-            anchors.centerIn: parent
-            color: '#008000'
-            text: '菜单'
-
-            font {
-                bold: true
-                pointSize: height > 0 ? height * 7 : 1
-            }
+        font {
+            bold: true
+            pointSize: Math.max(parent.height * 0.3, 1)
         }
-        MouseArea {
-            id: mouseArea
+    }
+    MouseArea {
+        id: mouseArea
 
-            function trigger() {
-                pauseSound.play();
-                root.triggered();
-            }
+        function trigger() {
+            soundEffect.play();
+            parent.triggered();
+        }
 
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
 
-            onClicked: trigger()
+        onClicked: trigger()
 
-            SoundEffect {
-                id: pauseSound
+        SoundEffect {
+            id: soundEffect
 
-                source: '../../resources/sounds/pause.wav'
-            }
+            source: '../../resources/sounds/pause.wav'
         }
     }
 }

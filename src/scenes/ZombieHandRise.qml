@@ -1,40 +1,35 @@
 import QtQuick
 import QtMultimedia
 
-Item {
+AnimatedImage {
     id: root
 
     signal rose
 
     function rise() {
-        background.source = '../../resources/scenes/zombieHandRise.gif';
-        evilLaughSound.play();
+        source = '../../resources/scenes/zombieHandRise.gif';
+        soundEffect.play();
     }
 
-    height: width / 230 * 315
-    width: parent.width * 0.27
+    asynchronous: true
+    height: parent.height * 0.5
+    mipmap: true
+    sourceSize: Qt.size(width, height)
+    speed: 2
+    width: height / 315 * 230
     x: parent.width * 0.25
     y: parent.height * 0.47
 
-    AnimatedImage {
-        id: background
+    onCurrentFrameChanged: if (currentFrame === frameCount - 1)
+        playing = false
 
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        sourceSize: Qt.size(width, height)
-        speed: 2
+    SoundEffect {
+        id: soundEffect
 
-        onCurrentFrameChanged: if (currentFrame === frameCount - 1)
-            playing = false
+        source: '../../resources/sounds/evilLaugh.wav'
 
-        SoundEffect {
-            id: evilLaughSound
-
-            source: '../../resources/sounds/evilLaugh.wav'
-
-            onPlayingChanged: if (!playing)
-                root.rose()
-        }
+        onPlayingChanged: if (!playing)
+            root.rose()
     }
 }
+

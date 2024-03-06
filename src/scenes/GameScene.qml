@@ -1,8 +1,6 @@
 import QtQuick
 
 Item {
-    id: root
-
     property bool paused: true
 
     signal backToMainMenu
@@ -13,7 +11,7 @@ Item {
         onFinished: {
             readySetPlant.start();
             seedBank.emerge();
-            root.chose();
+            parent.chose();
         }
     }
     MouseArea {
@@ -34,7 +32,7 @@ Item {
             shovelBank.visible = menuButton.visible = true;
             menuButton.forceActiveFocus();
             parent.paused = false;
-            root.started();
+            parent.started();
         }
     }
     SeedBank {
@@ -43,6 +41,8 @@ Item {
     }
     ShovelBank {
         id: shovelBank
+
+        anchors.left: seedBank.right
 
         onClicked: {
             if (shoveling) {
@@ -57,12 +57,12 @@ Item {
         id: shovel
 
         asynchronous: true
-        height: width / 59 * 63
+        height: shovelBank.height * 0.8
         mipmap: true
         source: '../../resources/scenes/shovel.png'
         sourceSize: Qt.size(width, height)
         visible: shovelBank.visible
-        width: shovelBank.width * 0.8
+        width: height / 63 * 59
         x: shovelBank.x + (shovelBank.width - width) / 2
         y: shovelBank.y + (shovelBank.height - height) / 2
     }
@@ -84,18 +84,10 @@ Item {
         }
         onBackToMainMenu: {
             close();
-            root.backToMainMenu();
+            parent.backToMainMenu();
         }
     }
-    Timer {
-        id: sunlightTimer
-
-        property list<QtObject> sunlights
-
-        interval: 6000
-        repeat: true
-        running: !parent.paused
-
-        onTriggered: sunlights.push(Qt.createComponent('Sunlight.qml').createObject(root))
+    SunlightProducer {
+        onCollected: seedBank.addSunlight()
     }
 }

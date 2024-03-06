@@ -1,27 +1,22 @@
 import QtQuick
 
-Item {
-    id: root
-
+Image {
     signal clicked
 
     anchors.horizontalCenter: parent.horizontalCenter
-    height: width / 332 * 94
-    width: parent.width * 0.3
+    asynchronous: true
+    height: parent.height * 0.13
+    mipmap: true
+    source: '../../resources/scenes/loadBar.png'
+    sourceSize: Qt.size(width, height)
+    visible: parent.source.toString() === '../../resources/scenes/titleScreen.png'
+    width: height / 94 * 332
     y: parent.height * 0.8
 
-    Image {
+    MouseArea {
         anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: '../../resources/scenes/loadBar.png'
-        sourceSize: Qt.size(width, height)
+        cursorShape: Qt.PointingHandCursor
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-
-            onClicked: root.clicked()
-        }
+        onClicked: parent.clicked()
     }
 }
