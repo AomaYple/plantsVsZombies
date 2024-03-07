@@ -4,20 +4,18 @@ Image {
     id: root
 
     property bool paused: parent.paused
-    property int sunlightConsumeCount: 50
+    required property int sunlightConsumption
     property int sunlightSum: parent.sunlightSum
 
     signal buzzered
-    signal sunlightConsumed(int count)
+    signal sunlightDecreased(int count)
 
     anchors.verticalCenter: parent.verticalCenter
     asynchronous: true
     height: parent.height * 0.84
     mipmap: true
-    source: '../../resources/plants/sunflowerSeed.png'
     sourceSize: Qt.size(width, height)
     width: height / 140 * 100
-    x: parent.width * 0.17
 
     Rectangle {
         id: shallowCurtain
@@ -25,7 +23,7 @@ Image {
         anchors.fill: parent
         color: '#000000'
         opacity: 0.5
-        visible: curtain.height > 0 && parent.sunlightSum < parent.sunlightConsumeCount
+        visible: curtain.height > 0 || parent.sunlightSum < parent.sunlightConsumption
     }
     Rectangle {
         id: curtain
@@ -40,6 +38,7 @@ Image {
 
             duration: 7500
             paused: running && root.paused
+            properties: 'height'
             target: curtain
             to: 0
         }
@@ -54,7 +53,7 @@ Image {
             else {
                 curtain.height = parent.height;
                 numberAnimation.start();
-                parent.sunlightConsumed(parent.sunlightConsumeCount);
+                parent.sunlightDecreased(parent.sunlightConsumption);
             }
         }
     }

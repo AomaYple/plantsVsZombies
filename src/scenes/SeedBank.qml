@@ -6,13 +6,16 @@ Image {
     id: root
 
     property bool paused: parent.paused
-    property int sunlightSum: parseInt(sunlightSum.text)
+    property int sunlightSum: parseInt(text.text)
 
-    function addSunlight() {
-        sunlightSum.text = (parseInt(sunlightSum.text) + 25).toString();
+    function decreaseSunlight(count) {
+        text.text = (parseInt(text.text) - count).toString();
     }
     function emerge() {
         yAnimator.start();
+    }
+    function increaseSunlight() {
+        text.text = (parseInt(text.text) + 25).toString();
     }
 
     asynchronous: true
@@ -25,11 +28,7 @@ Image {
     y: -height
 
     Text {
-        id: sunlightSum
-
-        function decreaseSunlight(count) {
-            text = (parseInt(sunlightSum.text) - count).toString();
-        }
+        id: text
 
         color: '#000000'
         text: '50'
@@ -53,8 +52,12 @@ Image {
 
         source: '../../resources/sounds/buzzer.wav'
     }
-    Plants.SunflowerSeed {
+    Plants.Seed {
+        source: '../../resources/plants/sunflowerSeed.png'
+        sunlightConsumption: 50
+        x: parent.width * 0.17
+
         onBuzzered: soundEffect.play()
-        onSunlightConsumed: count => sunlightSum.decreaseSunlight(count)
+        onSunlightDecreased: count => parent.decreaseSunlight(count)
     }
 }

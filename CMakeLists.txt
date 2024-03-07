@@ -41,7 +41,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
-        src/plants/SunflowerSeed.qml
+        src/plants/Seed.qml
 
         src/scenes/DaytimeGrass.qml
         src/scenes/GameScene.qml
@@ -51,6 +51,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/MainMenu.qml
         src/scenes/MenuButton.qml
         src/scenes/MenuDialog.qml
+        src/scenes/PlantArea.qml
         src/scenes/QuitButton.qml
         src/scenes/ReadySetPlant.qml
         src/scenes/SeedBank.qml

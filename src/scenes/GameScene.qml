@@ -1,6 +1,8 @@
 import QtQuick
 
 Item {
+    id: root
+
     property bool paused: true
 
     signal backToMainMenu
@@ -29,7 +31,7 @@ Item {
         id: readySetPlant
 
         onFinished: {
-            shovelBank.visible = menuButton.visible = true;
+            shovelBank.visible = menuButton.visible = plantArea.enabled = true;
             menuButton.forceActiveFocus();
             parent.paused = false;
             parent.started();
@@ -88,6 +90,11 @@ Item {
         }
     }
     SunlightProducer {
-        onCollected: seedBank.addSunlight()
+        onCollected: seedBank.increaseSunlight()
+    }
+    PlantArea {
+        id: plantArea
+
+        gameScene: parent
     }
 }

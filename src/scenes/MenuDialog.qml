@@ -31,7 +31,7 @@ Dialog {
         source: '../../resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
         width: height / 109 * 291
-        y: parent.height * 0.6
+        y: parent.height * 0.64
 
         Text {
             anchors.centerIn: parent
@@ -53,12 +53,12 @@ Dialog {
     Image {
         anchors.horizontalCenter: parent.horizontalCenter
         asynchronous: true
-        height: parent.height * 0.17
+        height: parent.height * 0.18
         mipmap: true
         source: '../../resources/scenes/optionsMenuButton.png'
         sourceSize: Qt.size(width, height)
         width: height / 79 * 341
-        y: parent.height * 0.82
+        y: parent.height * 0.84
 
         Text {
             anchors.centerIn: parent
