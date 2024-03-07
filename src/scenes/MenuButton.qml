@@ -10,7 +10,7 @@ Image {
     mipmap: true
     source: '../../resources/scenes/button.png'
     sourceSize: Qt.size(width, height)
-    visible: false
+    visible: parent.enabled
     width: height / 109 * 291
     y: 0
 

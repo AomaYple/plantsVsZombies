@@ -5,8 +5,7 @@ import "../plants" as Plants
 Image {
     id: root
 
-    property bool paused: parent.paused
-    property int sunlightSum: parseInt(text.text)
+    readonly property int sunlightSum: parseInt(text.text)
 
     function decreaseSunlight(count) {
         text.text = (parseInt(text.text) - count).toString();
@@ -19,6 +18,7 @@ Image {
     }
 
     asynchronous: true
+    enabled: parent.enabled
     height: parent.height * 0.145
     mipmap: true
     source: '../../resources/scenes/seedBank.png'

@@ -11,7 +11,7 @@ Image {
     mipmap: true
     source: '../../resources/scenes/shovelBank.png'
     sourceSize: Qt.size(width, height)
-    visible: false
+    visible: parent.enabled
     width: height / 72 * 70
     y: 0
 

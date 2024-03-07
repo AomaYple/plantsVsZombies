@@ -5,6 +5,7 @@ Image {
     signal quit
 
     asynchronous: true
+    enabled: parent.enabled
     height: parent.height * 0.04
     mipmap: true
     source: mouseArea.containsMouse ? '../../resources/scenes/quitHighlight.png' : '../../resources/scenes/quit.png'

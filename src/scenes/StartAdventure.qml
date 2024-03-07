@@ -5,6 +5,7 @@ Image {
     signal entered
 
     asynchronous: true
+    enabled: parent.enabled
     height: parent.height * 0.23
     mipmap: true
     source: mouseArea.containsMouse ? '../../resources/scenes/startAdventureHighlight.png' : '../../resources/scenes/startAdventure.png'

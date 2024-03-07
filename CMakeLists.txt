@@ -56,6 +56,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/ReadySetPlant.qml
         src/scenes/SeedBank.qml
         src/scenes/Shadow.qml
+        src/scenes/Shovel.qml
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
         src/scenes/Sunlight.qml

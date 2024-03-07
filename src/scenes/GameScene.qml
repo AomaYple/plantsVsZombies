@@ -3,11 +3,11 @@ import QtQuick
 Item {
     id: root
 
-    property bool paused: true
-
     signal backToMainMenu
     signal chose
     signal started
+
+    enabled: false
 
     DaytimeGrass {
         onFinished: {
@@ -17,12 +17,11 @@ Item {
         }
     }
     MouseArea {
-        id: globalMouseArea
-
         anchors.fill: parent
+        enabled: shovelBank.shoveling
         hoverEnabled: true
 
-        onPositionChanged: if (shovelBank.shoveling) {
+        onPositionChanged: {
             shovel.x = mouseX - shovel.width / 2;
             shovel.y = mouseY - shovel.height / 2;
         }
@@ -31,9 +30,8 @@ Item {
         id: readySetPlant
 
         onFinished: {
-            shovelBank.visible = menuButton.visible = plantArea.enabled = true;
+            parent.enabled = true;
             menuButton.forceActiveFocus();
-            parent.paused = false;
             parent.started();
         }
     }
@@ -55,16 +53,11 @@ Item {
                 shoveling = true;
         }
     }
-    Image {
+    Shovel {
         id: shovel
 
-        asynchronous: true
         height: shovelBank.height * 0.8
-        mipmap: true
-        source: '../../resources/scenes/shovel.png'
-        sourceSize: Qt.size(width, height)
         visible: shovelBank.visible
-        width: height / 63 * 59
         x: shovelBank.x + (shovelBank.width - width) / 2
         y: shovelBank.y + (shovelBank.height - height) / 2
     }
@@ -72,7 +65,7 @@ Item {
         id: menuButton
 
         onTriggered: {
-            parent.paused = true;
+            parent.enabled = false;
             menuDialog.open();
         }
     }
@@ -82,7 +75,7 @@ Item {
         onBackToGame: {
             close();
             menuButton.forceActiveFocus();
-            parent.paused = false;
+            parent.enabled = true;
         }
         onBackToMainMenu: {
             close();
@@ -93,8 +86,6 @@ Item {
         onCollected: seedBank.increaseSunlight()
     }
     PlantArea {
-        id: plantArea
-
         gameScene: parent
     }
 }

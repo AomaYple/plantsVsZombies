@@ -19,7 +19,7 @@ AnimatedImage {
     asynchronous: true
     height: parent.height * 0.14
     mipmap: true
-    paused: parent.paused
+    paused: !parent.enabled
     source: '../../resources/scenes/sunlight.gif'
     sourceSize: Qt.size(width, height)
     width: height / 56 * 57

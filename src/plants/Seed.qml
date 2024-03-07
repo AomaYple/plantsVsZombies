@@ -1,17 +1,15 @@
 import QtQuick
 
 Image {
-    id: root
-
-    property bool paused: parent.paused
     required property int sunlightConsumption
-    property int sunlightSum: parent.sunlightSum
+    readonly property int sunlightSum: parent.sunlightSum
 
     signal buzzered
     signal sunlightDecreased(int count)
 
     anchors.verticalCenter: parent.verticalCenter
     asynchronous: true
+    enabled: parent.enabled
     height: parent.height * 0.84
     mipmap: true
     sourceSize: Qt.size(width, height)
@@ -23,7 +21,7 @@ Image {
         anchors.fill: parent
         color: '#000000'
         opacity: 0.5
-        visible: curtain.height > 0 || parent.sunlightSum < parent.sunlightConsumption
+        visible: !parent.enabled || curtain.height > 0 || parent.sunlightSum < parent.sunlightConsumption
     }
     Rectangle {
         id: curtain
@@ -37,7 +35,7 @@ Image {
             id: numberAnimation
 
             duration: 7500
-            paused: running && root.paused
+            paused: running && !parent.enabled
             properties: 'height'
             target: curtain
             to: 0
@@ -46,6 +44,7 @@ Image {
     MouseArea {
         anchors.fill: parent
         cursorShape: shallowCurtain.visible ? Qt.ArrowCursor : Qt.PointingHandCursor
+        enabled: parent.enabled
 
         onClicked: {
             if (shallowCurtain.visible)

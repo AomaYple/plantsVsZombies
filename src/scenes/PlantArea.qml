@@ -5,7 +5,7 @@ Row {
 
     required property Item gameScene
 
-    enabled: false
+    enabled: parent.enabled
     x: parent.width * 0.025
     y: parent.height * 0.14
 

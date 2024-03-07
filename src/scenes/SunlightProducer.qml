@@ -7,7 +7,7 @@ Timer {
 
     interval: 6500
     repeat: true
-    running: !parent.paused
+    running: parent.enabled
 
     onTriggered: {
         const sunlight = sunlightComponent.createObject(parent);

@@ -12,7 +12,7 @@ Image {
 
     StartAdventure {
         onClicked: {
-            enabled = quitButton.enabled = false;
+            parent.enabled = false;
             zombieHandRise.rise();
         }
         onEntered: soundEffect.play()
