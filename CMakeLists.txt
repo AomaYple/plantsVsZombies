@@ -41,6 +41,8 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
+        src/plants/SunflowerSeed.qml
+
         src/scenes/DaytimeGrass.qml
         src/scenes/GameScene.qml
         src/scenes/LoadBar.qml
@@ -66,6 +68,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/music/crazyDave.flac
         resources/music/grassWalk.flac
 
+        resources/plants/sunflower.gif
+        resources/plants/sunflower.png
+        resources/plants/sunflowerSeed.png
+
         resources/scenes/button.png
         resources/scenes/daytimeGrass.png
         resources/scenes/favicon.ico
@@ -90,6 +96,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/zombieHandRise.gif
 
         resources/sounds/bleep.wav
+        resources/sounds/buzzer.wav
         resources/sounds/evilLaugh.wav
         resources/sounds/pause.wav
         resources/sounds/points.wav

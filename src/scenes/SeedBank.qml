@@ -1,10 +1,15 @@
 import QtQuick
+import QtMultimedia
+import "../plants" as Plants
 
 Image {
     id: root
 
+    property bool paused: parent.paused
+    property int sunlightSum: parseInt(sunlightSum.text)
+
     function addSunlight() {
-        sunlightCount.text = (parseInt(sunlightCount.text) + 25).toString();
+        sunlightSum.text = (parseInt(sunlightSum.text) + 25).toString();
     }
     function emerge() {
         yAnimator.start();
@@ -20,7 +25,11 @@ Image {
     y: -height
 
     Text {
-        id: sunlightCount
+        id: sunlightSum
+
+        function decreaseSunlight(count) {
+            text = (parseInt(sunlightSum.text) - count).toString();
+        }
 
         color: '#000000'
         text: '50'
@@ -38,5 +47,14 @@ Image {
         duration: 500
         target: root
         to: 0
+    }
+    SoundEffect {
+        id: soundEffect
+
+        source: '../../resources/sounds/buzzer.wav'
+    }
+    Plants.SunflowerSeed {
+        onBuzzered: soundEffect.play()
+        onSunlightConsumed: count => sunlightSum.decreaseSunlight(count)
     }
 }
