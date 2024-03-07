@@ -1,4 +1,5 @@
 import QtQuick
+import "../plants" as Plants
 
 Item {
     id: root
@@ -16,16 +17,6 @@ Item {
             parent.chose();
         }
     }
-    MouseArea {
-        anchors.fill: parent
-        enabled: shovelBank.shoveling
-        hoverEnabled: true
-
-        onPositionChanged: {
-            shovel.x = mouseX - shovel.width / 2;
-            shovel.y = mouseY - shovel.height / 2;
-        }
-    }
     ReadySetPlant {
         id: readySetPlant
 
@@ -35,14 +26,36 @@ Item {
             parent.started();
         }
     }
+    MouseArea {
+        anchors.fill: parent
+        enabled: seedBank.planting || shovelBank.shoveling
+        hoverEnabled: true
+
+        onPositionChanged: {
+            if (seedBank.planting) {
+                previewPlant.x = mouseX - previewPlant.width / 2;
+                previewPlant.y = mouseY - previewPlant.height / 2;
+            } else if (shovelBank.shoveling) {
+                shovel.x = mouseX - shovel.width / 2;
+                shovel.y = mouseY - shovel.height / 2;
+            }
+        }
+    }
     SeedBank {
         id: seedBank
+
+        onPlantCanceled: previewPlant.source = ''
+        onPlantStarted: previewPlantSource => previewPlant.source = previewPlantSource
+    }
+    Plants.PreviewPlant {
+        id: previewPlant
 
     }
     ShovelBank {
         id: shovelBank
 
         anchors.left: seedBank.right
+        enabled: !seedBank.planting
 
         onClicked: {
             if (shoveling) {

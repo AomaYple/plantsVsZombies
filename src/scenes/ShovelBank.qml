@@ -18,6 +18,7 @@ Image {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
+        enabled: parent.enabled
 
         onClicked: {
             soundEffect.play();

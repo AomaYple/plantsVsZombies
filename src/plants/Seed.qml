@@ -1,10 +1,14 @@
 import QtQuick
 
 Image {
+    property bool planting: false
     required property int sunlightConsumption
     readonly property int sunlightSum: parent.sunlightSum
 
     signal buzzered
+    signal plantCanceled
+    signal plantStarted(url previewPlantSource)
+    signal planted
     signal sunlightDecreased(int count)
 
     anchors.verticalCenter: parent.verticalCenter
@@ -14,6 +18,12 @@ Image {
     mipmap: true
     sourceSize: Qt.size(width, height)
     width: height / 140 * 100
+
+    onPlanted: {
+        planting = false;
+        sunlightDecreased(sunlightConsumption);
+        numberAnimation.start();
+    }
 
     Rectangle {
         id: shallowCurtain
@@ -43,17 +53,20 @@ Image {
     }
     MouseArea {
         anchors.fill: parent
-        cursorShape: shallowCurtain.visible ? Qt.ArrowCursor : Qt.PointingHandCursor
+        cursorShape: Qt.PointingHandCursor
         enabled: parent.enabled
 
         onClicked: {
-            if (shallowCurtain.visible)
-                parent.buzzered();
-            else {
+            if (!planting && !shallowCurtain.visible) {
                 curtain.height = parent.height;
-                numberAnimation.start();
-                parent.sunlightDecreased(parent.sunlightConsumption);
-            }
+                planting = true;
+                parent.plantStarted('../../resources/plants/sunflower.png');
+            } else if (planting) {
+                curtain.height = 0;
+                planting = false;
+                parent.plantCanceled();
+            } else
+                parent.buzzered();
         }
     }
 }

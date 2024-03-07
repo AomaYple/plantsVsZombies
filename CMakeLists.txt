@@ -41,6 +41,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
+        src/plants/PreviewPlant.qml
         src/plants/Seed.qml
 
         src/scenes/DaytimeGrass.qml
