@@ -1,5 +1,6 @@
 import QtQuick
 import QtMultimedia
+import "scenes" as Scenes
 
 Window {
     id: root
@@ -20,14 +21,14 @@ Window {
 
         anchors.fill: parent
 
-        sourceComponent: LoadScreen {
+        sourceComponent: Scenes.LoadScreen {
             onLoaded: loader.sourceComponent = mainMenu
         }
 
         Component {
             id: mainMenu
 
-            MainMenu {
+            Scenes.MainMenu {
                 onAdventured: loader.sourceComponent = gameScene
                 onQuit: root.close()
             }
@@ -35,19 +36,19 @@ Window {
         Component {
             id: gameScene
 
-            GameScene {
+            Scenes.GameScene {
                 Component.onCompleted: {
-                    mediaPlayer.source = '../../resources/music/chooseYourSeeds.flac';
+                    mediaPlayer.source = rootPath + '/resources/music/chooseYourSeeds.flac';
                     mediaPlayer.play();
                 }
                 onBackToMainMenu: {
                     loader.sourceComponent = mainMenu;
-                    mediaPlayer.source = '../../resources/music/crazyDave.flac';
+                    mediaPlayer.source = rootPath + '/resources/music/crazyDave.flac';
                     mediaPlayer.play();
                 }
                 onChose: mediaPlayer.stop()
                 onStarted: {
-                    mediaPlayer.source = '../../resources/music/grassWalk.flac';
+                    mediaPlayer.source = rootPath + '/resources/music/grassWalk.flac';
                     mediaPlayer.play();
                 }
             }
@@ -56,7 +57,7 @@ Window {
             id: mediaPlayer
 
             loops: MediaPlayer.Infinite
-            source: '../../resources/music/crazyDave.flac'
+            source: rootPath + '/resources/music/crazyDave.flac'
 
             audioOutput: AudioOutput {
             }

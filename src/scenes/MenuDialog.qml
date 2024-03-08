@@ -8,16 +8,13 @@ Dialog {
     signal backToMainMenu
 
     closePolicy: Popup.CloseOnEscape
-    height: parent.height * 0.8
     modal: true
     width: height / 479 * 402
-    x: (parent.width - width) / 2
-    y: (parent.height - height) / 2
 
     background: Image {
         asynchronous: true
         mipmap: true
-        source: '../../resources/scenes/optionsMenuBackground.png'
+        source: rootPath + '/resources/scenes/optionsMenuBackground.png'
         sourceSize: Qt.size(width, height)
     }
 
@@ -28,7 +25,7 @@ Dialog {
         asynchronous: true
         height: parent.height * 0.15
         mipmap: true
-        source: '../../resources/scenes/button.png'
+        source: rootPath + '/resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
         width: height / 109 * 291
         y: parent.height * 0.64
@@ -55,7 +52,7 @@ Dialog {
         asynchronous: true
         height: parent.height * 0.18
         mipmap: true
-        source: '../../resources/scenes/optionsMenuButton.png'
+        source: rootPath + '/resources/scenes/optionsMenuButton.png'
         sourceSize: Qt.size(width, height)
         width: height / 79 * 341
         y: parent.height * 0.84

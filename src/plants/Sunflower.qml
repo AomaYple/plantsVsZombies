@@ -4,8 +4,9 @@ import "../scenes" as Scenes
 AnimatedImage {
     asynchronous: true
     mipmap: true
-    source: rootPath + '/resources/zombies/basicZombieStand' + Math.round(Math.random()) + '.gif'
-    width: height / 126 * 84
+    source: rootPath + '/resources/plants/sunflower.gif'
+    sourceSize: Qt.size(width, height)
+    width: height
 
     Scenes.Shadow {
         height: parent.height * 0.3

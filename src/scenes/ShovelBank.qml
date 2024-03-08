@@ -7,17 +7,16 @@ Image {
     signal clicked
 
     asynchronous: true
-    height: parent.height * 0.13
     mipmap: true
-    source: '../../resources/scenes/shovelBank.png'
+    source: rootPath + '/resources/scenes/shovelBank.png'
     sourceSize: Qt.size(width, height)
-    visible: parent.enabled
+    visible: false
     width: height / 72 * 70
     y: 0
 
     MouseArea {
         anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
         enabled: parent.enabled
 
         onClicked: {
@@ -28,7 +27,7 @@ Image {
         SoundEffect {
             id: soundEffect
 
-            source: '../../resources/sounds/shovel.wav'
+            source: rootPath + '/resources/sounds/shovel.wav'
         }
     }
 }

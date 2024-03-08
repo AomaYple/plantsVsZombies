@@ -5,40 +5,43 @@ import "../plants" as Plants
 Image {
     id: root
 
+    required property bool paused
     property bool planting: false
-    readonly property int sunlightSum: parseInt(text.text)
+    property int sunlightConsumption: 0
+    readonly property int sunlightSum: parseInt(sunlightSumText.text)
 
     signal plantCanceled
-    signal plantStarted(url previewPlantSource)
-    signal planted
+    signal plantStarted(url previewPlantSource, var plantComponent)
 
-    function decreaseSunlight(count) {
-        text.text = (parseInt(text.text) - count).toString();
-    }
     function emerge() {
         yAnimator.start();
     }
     function increaseSunlight() {
-        text.text = (parseInt(text.text) + 25).toString();
+        sunlightSumText.increase();
+    }
+    function plant() {
+        planting = false;
+        sunflowerSeed.plant();
+        sunlightSumText.decrease(sunlightConsumption);
     }
 
     asynchronous: true
-    enabled: parent.enabled
-    height: parent.height * 0.145
+    enabled: false
     mipmap: true
-    source: '../../resources/scenes/seedBank.png'
+    source: rootPath + '/resources/scenes/seedBank.png'
     sourceSize: Qt.size(width, height)
     width: height / 87 * 446
-    x: parent.width * 0.01
     y: -height
 
-    onPlanted: {
-        planting = false;
-        sunflowerSeed.planted();
-    }
-
     Text {
-        id: text
+        id: sunlightSumText
+
+        function decrease(consumption) {
+            text = (parseInt(text) - consumption).toString();
+        }
+        function increase() {
+            text = (parseInt(text) + 25).toString();
+        }
 
         color: '#000000'
         text: '50'
@@ -60,12 +63,16 @@ Image {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/buzzer.wav'
+        source: rootPath + '/resources/sounds/buzzer.wav'
     }
     Plants.Seed {
         id: sunflowerSeed
 
-        source: '../../resources/plants/sunflowerSeed.png'
+        enabled: parent.enabled && (!parent.planting || planting)
+        height: parent.height * 0.84
+        plantComponent: Qt.createComponent(rootPath + '/src/plants/Sunflower.qml', Component.Asynchronous)
+        previewPlantSource: rootPath + '/resources/plants/sunflower.png'
+        source: rootPath + '/resources/plants/sunflowerSeed.png'
         sunlightConsumption: 50
         x: parent.width * 0.17
 
@@ -74,10 +81,10 @@ Image {
             parent.planting = false;
             parent.plantCanceled();
         }
-        onPlantStarted: previewPlantSource => {
+        onPlantStarted: (previewPlantSource, plantComponent, sunlightConsumption) => {
             parent.planting = true;
-            parent.plantStarted(previewPlantSource);
+            parent.sunlightConsumption = sunlightConsumption;
+            parent.plantStarted(previewPlantSource, plantComponent);
         }
-        onSunlightDecreased: count => parent.decreaseSunlight(count)
     }
 }

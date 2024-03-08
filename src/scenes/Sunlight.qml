@@ -4,28 +4,27 @@ import QtMultimedia
 AnimatedImage {
     id: root
 
+    property bool picked: true
+
     signal collected
 
-    function down() {
-        x = getRandomFloat(parent.width * 0.1, parent.width * 0.9);
-        y = parent.height * 0.2;
-        downAnimation.to = getRandomFloat(parent.height * 0.4, parent.height * 0.9);
-        downAnimation.start();
-    }
-    function getRandomFloat(min, max) {
-        return Math.random() * (max - min) + min;
+    function naturalGenerate(beginPosition: point, endPositionY: real, collectedPosition: point) {
+        x = beginPosition.x;
+        y = beginPosition.y;
+        fallAnimation.to = endPositionY;
+        fallAnimation.start();
+        xAnimation.to = collectedPosition.x;
+        yAnimation.to = collectedPosition.y;
     }
 
     asynchronous: true
-    height: parent.height * 0.14
     mipmap: true
-    paused: !parent.enabled
-    source: '../../resources/scenes/sunlight.gif'
+    source: rootPath + '/resources/scenes/sunlight.gif'
     sourceSize: Qt.size(width, height)
     width: height / 56 * 57
 
     NumberAnimation {
-        id: downAnimation
+        id: fallAnimation
 
         duration: 3000
         paused: running && root.paused
@@ -33,22 +32,23 @@ AnimatedImage {
         target: root
     }
     MouseArea {
+        id: mouseArea
+
         anchors.fill: parent
         cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
 
         onClicked: {
-            if (downAnimation.to !== 0)
-                downAnimation.stop();
+            fallAnimation.stop();
             enabled = false;
-            pointsSound.play();
+            soundEffect.play();
             xAnimation.start();
             yAnimation.start();
         }
     }
     SoundEffect {
-        id: pointsSound
+        id: soundEffect
 
-        source: '../../resources/sounds/points.wav'
+        source: rootPath + '/resources/sounds/points.wav'
     }
     NumberAnimation {
         id: xAnimation
@@ -57,7 +57,6 @@ AnimatedImage {
         paused: running && root.paused
         properties: 'x'
         target: root
-        to: parent.width * 0.008
 
         onFinished: opacityAnimation.start()
     }
@@ -68,7 +67,17 @@ AnimatedImage {
         paused: running && root.paused
         properties: 'y'
         target: root
-        to: -parent.height * 0.01
+    }
+    Timer {
+        id: timer
+
+        interval: 8000
+        running: mouseArea.enabled
+
+        onTriggered: {
+            root.picked = false;
+            opacityAnimation.start();
+        }
     }
     NumberAnimation {
         id: opacityAnimation
@@ -81,7 +90,8 @@ AnimatedImage {
 
         onFinished: {
             root.destroy();
-            root.collected();
+            if (root.picked)
+                root.collected();
         }
     }
 }

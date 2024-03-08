@@ -5,14 +5,10 @@ Image {
     signal quit
 
     asynchronous: true
-    enabled: parent.enabled
-    height: parent.height * 0.04
     mipmap: true
-    source: mouseArea.containsMouse ? '../../resources/scenes/quitHighlight.png' : '../../resources/scenes/quit.png'
+    source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'quitHighlight.png' : 'quit.png')
     sourceSize: Qt.size(width, height)
     width: height / 23 * 43
-    x: parent.width * 0.903
-    y: parent.height * 0.86
 
     MouseArea {
         id: mouseArea

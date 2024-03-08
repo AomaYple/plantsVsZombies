@@ -6,15 +6,13 @@ Item {
 
     signal finished
 
-    anchors.fill: parent
-
     Image {
         id: image
 
         asynchronous: true
         height: parent.height
         mipmap: true
-        source: '../../resources/scenes/daytimeGrass.png'
+        source: rootPath + '/resources/scenes/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
         width: height / 600 * 1400
 

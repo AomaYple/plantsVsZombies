@@ -8,10 +8,10 @@ Image {
     asynchronous: true
     mipmap: true
     opacity: 0
-    source: '../../resources/scenes/popCapLogo.png'
+    source: rootPath + '/resources/scenes/popCapLogo.png'
     sourceSize: Qt.size(width, height)
 
-    onStatusChanged: if (source.toString() === '../../resources/scenes/popCapLogo.png' && status === Image.Ready)
+    onStatusChanged: if (source.toString() === rootPath + '/resources/scenes/popCapLogo.png' && status === Image.Ready)
         opacityAnimator.start()
 
     OpacityAnimator {
@@ -27,11 +27,16 @@ Image {
                 restart();
             } else {
                 root.opacity = 1;
-                root.source = '../../resources/scenes/titleScreen.png';
+                root.source = rootPath + '/resources/scenes/titleScreen.png';
             }
         }
     }
     LoadBar {
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: parent.height * 0.13
+        visible: parent.source.toString() === rootPath + '/resources/scenes/titleScreen.png'
+        y: parent.height * 0.8
+
         onClicked: parent.loaded()
     }
 }

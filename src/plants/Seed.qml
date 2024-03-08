@@ -1,29 +1,31 @@
 import QtQuick
 
 Image {
+    id: root
+
+    readonly property bool paused: parent.paused
+    required property var plantComponent
     property bool planting: false
+    required property url previewPlantSource
     required property int sunlightConsumption
     readonly property int sunlightSum: parent.sunlightSum
 
     signal buzzered
     signal plantCanceled
-    signal plantStarted(url previewPlantSource)
-    signal planted
-    signal sunlightDecreased(int count)
+    signal plantStarted(url previewPlantSource, var plantComponent, int sunlightConsumption)
+
+    function plant() {
+        if (planting) {
+            planting = false;
+            numberAnimation.start();
+        }
+    }
 
     anchors.verticalCenter: parent.verticalCenter
     asynchronous: true
-    enabled: parent.enabled
-    height: parent.height * 0.84
     mipmap: true
     sourceSize: Qt.size(width, height)
     width: height / 140 * 100
-
-    onPlanted: {
-        planting = false;
-        sunlightDecreased(sunlightConsumption);
-        numberAnimation.start();
-    }
 
     Rectangle {
         id: shallowCurtain
@@ -45,7 +47,7 @@ Image {
             id: numberAnimation
 
             duration: 7500
-            paused: running && !parent.enabled
+            paused: running && root.paused
             properties: 'height'
             target: curtain
             to: 0
@@ -60,7 +62,7 @@ Image {
             if (!planting && !shallowCurtain.visible) {
                 curtain.height = parent.height;
                 planting = true;
-                parent.plantStarted('../../resources/plants/sunflower.png');
+                parent.plantStarted(parent.previewPlantSource, parent.plantComponent, parent.sunlightConsumption);
             } else if (planting) {
                 curtain.height = 0;
                 planting = false;

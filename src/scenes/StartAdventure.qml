@@ -5,14 +5,10 @@ Image {
     signal entered
 
     asynchronous: true
-    enabled: parent.enabled
-    height: parent.height * 0.23
     mipmap: true
-    source: mouseArea.containsMouse ? '../../resources/scenes/startAdventureHighlight.png' : '../../resources/scenes/startAdventure.png'
+    source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'startAdventureHighlight.png' : 'startAdventure.png')
     sourceSize: Qt.size(width, height)
     width: height / 142 * 331
-    x: parent.width * 0.52
-    y: parent.height * 0.1
 
     MouseArea {
         id: mouseArea
@@ -35,10 +31,10 @@ Image {
         repeat: true
 
         onTriggered: {
-            if (parent.source.toString() === '../../resources/scenes/startAdventure.png')
-                parent.source = '../../resources/scenes/startAdventureHighlight.png';
+            if (parent.source.toString() === rootPath + '/resources/scenes/startAdventure.png')
+                parent.source = rootPath + '/resources/scenes/startAdventureHighlight.png';
             else
-                parent.source = '../../resources/scenes/startAdventure.png';
+                parent.source = rootPath + '/resources/scenes/startAdventure.png';
         }
     }
 }

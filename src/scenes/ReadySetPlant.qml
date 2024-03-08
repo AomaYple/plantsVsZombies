@@ -7,19 +7,18 @@ Image {
     signal finished
 
     function start() {
-        source = '../../resources/scenes/startReady.png';
+        source = rootPath + '/resources/scenes/startReady.png';
         soundEffect.play();
     }
 
     anchors.centerIn: parent
     asynchronous: true
-    height: parent.height * 0.2
     mipmap: true
     sourceSize: Qt.size(width, height)
     width: height / 99 * 210
 
     onStatusChanged: if (status === Image.Ready) {
-        if (source.toString() !== '../../resources/scenes/startPlant.png')
+        if (source.toString() !== rootPath + '/resources/scenes/startPlant.png')
             scaleAnimator.start();
         timer.start();
     }
@@ -30,13 +29,13 @@ Image {
         interval: 700
 
         onTriggered: {
-            if (parent.source.toString() === '../../resources/scenes/startReady.png') {
+            if (parent.source.toString() === rootPath + '/resources/scenes/startReady.png') {
                 scaleAnimator.stop();
-                parent.source = '../../resources/scenes/startSet.png';
+                parent.source = rootPath + '/resources/scenes/startSet.png';
                 start();
-            } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
+            } else if (parent.source.toString() === rootPath + '/resources/scenes/startSet.png') {
                 scaleAnimator.stop();
-                parent.source = '../../resources/scenes/startPlant.png';
+                parent.source = rootPath + '/resources/scenes/startPlant.png';
                 start();
             } else {
                 parent.source = '';
@@ -56,6 +55,6 @@ Image {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/readySetPlant.wav'
+        source: rootPath + '/resources/sounds/readySetPlant.wav'
     }
 }

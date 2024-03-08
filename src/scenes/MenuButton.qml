@@ -4,13 +4,11 @@ import QtMultimedia
 Image {
     signal triggered
 
-    anchors.right: parent.right
     asynchronous: true
-    height: parent.height * 0.07
     mipmap: true
-    source: '../../resources/scenes/button.png'
+    source: rootPath + '/resources/scenes/button.png'
     sourceSize: Qt.size(width, height)
-    visible: parent.enabled
+    visible: false
     width: height / 109 * 291
     y: 0
 
@@ -42,7 +40,7 @@ Image {
         SoundEffect {
             id: soundEffect
 
-            source: '../../resources/sounds/pause.wav'
+            source: rootPath + '/resources/sounds/pause.wav'
         }
     }
 }

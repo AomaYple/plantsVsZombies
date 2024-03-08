@@ -41,14 +41,16 @@ qt_add_qml_module(${PROJECT_NAME}
         src/main.cpp
 
         QML_FILES
+        src/js/common.js
+
         src/plants/PreviewPlant.qml
         src/plants/Seed.qml
+        src/plants/Sunflower.qml
 
         src/scenes/DaytimeGrass.qml
         src/scenes/GameScene.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
-        src/scenes/main.qml
         src/scenes/MainMenu.qml
         src/scenes/MenuButton.qml
         src/scenes/MenuDialog.qml
@@ -65,6 +67,8 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/ZombieHandRise.qml
 
         src/zombies/BasicZombieStand.qml
+
+        src/main.qml
 
         RESOURCES
         resources/music/chooseYourSeeds.flac

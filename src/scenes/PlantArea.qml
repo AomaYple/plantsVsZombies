@@ -1,25 +1,21 @@
 import QtQuick
 
-Row {
-    id: root
+Column {
+    required property size gameSceneSize
+    property var plantComponent: null
 
-    required property Item gameScene
-
-    enabled: parent.enabled
-    x: parent.width * 0.025
-    y: parent.height * 0.14
+    signal planted
 
     Repeater {
-        model: 9
+        model: 5
 
-        Column {
+        Row {
             Repeater {
-                model: 5
+                model: 9
 
                 MouseArea {
-                    enabled: root.enabled
-                    height: gameScene.height * 0.165
-                    width: gameScene.width * 0.105
+                    height: gameSceneSize.height * 0.16
+                    width: gameSceneSize.width * 0.105
                 }
             }
         }
