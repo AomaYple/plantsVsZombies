@@ -4,32 +4,44 @@ import QtMultimedia
 AnimatedImage {
     id: root
 
+    required property point collectedPosition
+    required property real endPositionY
+    required property bool natural
     property bool picked: true
+    property real upPositionY
 
     signal collected
 
-    function naturalGenerate(beginPosition: point, endPositionY: real, collectedPosition: point) {
-        x = beginPosition.x;
-        y = beginPosition.y;
-        fallAnimation.to = endPositionY;
-        fallAnimation.start();
-        xAnimation.to = collectedPosition.x;
-        yAnimation.to = collectedPosition.y;
-    }
-
     asynchronous: true
     mipmap: true
+    scale: 0.5
     source: rootPath + '/resources/scenes/sunlight.gif'
     sourceSize: Qt.size(width, height)
     width: height / 56 * 57
 
-    NumberAnimation {
-        id: fallAnimation
+    onStatusChanged: if (status === Image.Ready) {
+        if (natural) {
+            scale = 1;
+            yAnimation.duration = 3000;
+            yAnimation.to = endPositionY;
+            yAnimation.start();
+        } else {
+            scaleAnimation.start();
+            yAnimation.duration = scaleAnimation.duration;
+            yAnimation.to = upPositionY;
+        }
+    }
 
-        duration: 3000
-        paused: running && root.paused
-        properties: 'y'
-        target: root
+    Timer {
+        id: timer
+
+        interval: 8000
+        running: mouseArea.enabled
+
+        onTriggered: {
+            parent.picked = false;
+            opacityAnimation.start();
+        }
     }
     MouseArea {
         id: mouseArea
@@ -38,9 +50,14 @@ AnimatedImage {
         cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
 
         onClicked: {
-            fallAnimation.stop();
+            xAnimation.stop();
+            yAnimation.stop();
+            scaleAnimation.stop();
             enabled = false;
             soundEffect.play();
+            xAnimation.to = collectedPosition.x;
+            yAnimation.to = collectedPosition.y;
+            yAnimation.duration = xAnimation.duration;
             xAnimation.start();
             yAnimation.start();
         }
@@ -63,20 +80,22 @@ AnimatedImage {
     NumberAnimation {
         id: yAnimation
 
-        duration: 500
         paused: running && root.paused
         properties: 'y'
         target: root
     }
-    Timer {
-        id: timer
+    NumberAnimation {
+        id: scaleAnimation
 
-        interval: 8000
-        running: mouseArea.enabled
+        duration: 300
+        paused: running && root.paused
+        properties: 'scale'
+        target: root
+        to: 1
 
-        onTriggered: {
-            root.picked = false;
-            opacityAnimation.start();
+        onFinished: {
+            yAnimation.to = endPositionY;
+            yAnimation.start();
         }
     }
     NumberAnimation {

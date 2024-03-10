@@ -1,16 +1,44 @@
 import QtQuick
-import "../scenes" as Scenes
 
-AnimatedImage {
-    asynchronous: true
-    mipmap: true
+Plant {
+    id: root
+
+    signal sunlightProduced
+
     source: rootPath + '/resources/plants/sunflower.gif'
-    sourceSize: Qt.size(width, height)
-    width: height
+    type: PlantType.Type.Sunflower
 
-    Scenes.Shadow {
-        height: parent.height * 0.3
-        x: parent.width * 0.33
-        y: parent.height * 0.76
+    Timer {
+        interval: 15000
+        repeat: true
+        running: !parent.paused
+
+        onTriggered: numberAnimation.start()
+    }
+    Rectangle {
+        id: rectangle
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: '#ffff00'
+        height: parent.height * 0.6
+        opacity: 0
+        radius: height / 2
+        width: height
+        y: parent.height * 0.15
+    }
+    NumberAnimation {
+        id: numberAnimation
+
+        duration: 1000
+        paused: running && root.paused
+        properties: 'opacity'
+        target: rectangle
+        to: 0.5
+
+        onFinished: if (to === 0.5) {
+            to = 0;
+            start();
+            root.sunlightProduced();
+        }
     }
 }

@@ -29,14 +29,14 @@ Window {
             id: mainMenu
 
             Scenes.MainMenu {
-                onAdventured: loader.sourceComponent = gameScene
+                onAdventured: loader.sourceComponent = daytimeGrass
                 onQuit: root.close()
             }
         }
         Component {
-            id: gameScene
+            id: daytimeGrass
 
-            Scenes.GameScene {
+            Scenes.DaytimeGrass {
                 Component.onCompleted: {
                     mediaPlayer.source = rootPath + '/resources/music/chooseYourSeeds.flac';
                     mediaPlayer.play();
@@ -53,16 +53,16 @@ Window {
                 }
             }
         }
-        MediaPlayer {
-            id: mediaPlayer
+    }
+    MediaPlayer {
+        id: mediaPlayer
 
-            loops: MediaPlayer.Infinite
-            source: rootPath + '/resources/music/crazyDave.flac'
+        loops: MediaPlayer.Infinite
+        source: rootPath + '/resources/music/crazyDave.flac'
 
-            audioOutput: AudioOutput {
-            }
-
-            Component.onCompleted: play()
+        audioOutput: AudioOutput {
         }
+
+        Component.onCompleted: play()
     }
 }

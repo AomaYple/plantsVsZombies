@@ -7,8 +7,6 @@ Image {
 
     required property bool paused
     property bool planting: false
-    property int sunlightConsumption: 0
-    readonly property int sunlightSum: parseInt(sunlightSumText.text)
 
     signal plantCanceled
     signal plantStarted(url previewPlantSource, var plantComponent)
@@ -17,12 +15,12 @@ Image {
         yAnimator.start();
     }
     function increaseSunlight() {
-        sunlightSumText.increase();
+        sunlightSum.increase();
     }
     function plant() {
         planting = false;
         sunflowerSeed.plant();
-        sunlightSumText.decrease(sunlightConsumption);
+        sunlightSum.decrease();
     }
 
     asynchronous: true
@@ -34,13 +32,18 @@ Image {
     y: -height
 
     Text {
-        id: sunlightSumText
+        id: sunlightSum
 
-        function decrease(consumption) {
-            text = (parseInt(text) - consumption).toString();
+        property int sunlightConsumption
+
+        function decrease() {
+            text = (parseInt(text) - sunlightConsumption).toString();
         }
         function increase() {
             text = (parseInt(text) + 25).toString();
+        }
+        function sum() {
+            return parseInt(text);
         }
 
         color: '#000000'
@@ -68,12 +71,16 @@ Image {
     Plants.Seed {
         id: sunflowerSeed
 
+        anchors.verticalCenter: parent.verticalCenter
+        cooldownTime: 7500
         enabled: parent.enabled && (!parent.planting || planting)
         height: parent.height * 0.84
+        paused: parent.paused
         plantComponent: Qt.createComponent(rootPath + '/src/plants/Sunflower.qml', Component.Asynchronous)
         previewPlantSource: rootPath + '/resources/plants/sunflower.png'
         source: rootPath + '/resources/plants/sunflowerSeed.png'
         sunlightConsumption: 50
+        sunlightSum: sunlightSum.sum()
         x: parent.width * 0.17
 
         onBuzzered: soundEffect.play()
@@ -81,9 +88,9 @@ Image {
             parent.planting = false;
             parent.plantCanceled();
         }
-        onPlantStarted: (previewPlantSource, plantComponent, sunlightConsumption) => {
+        onPlantStarted: {
             parent.planting = true;
-            parent.sunlightConsumption = sunlightConsumption;
+            sunlightSum.sunlightConsumption = sunlightConsumption;
             parent.plantStarted(previewPlantSource, plantComponent);
         }
     }

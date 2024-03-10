@@ -23,11 +23,10 @@ Image {
             soundEffect.play();
             parent.clicked();
         }
+    }
+    SoundEffect {
+        id: soundEffect
 
-        SoundEffect {
-            id: soundEffect
-
-            source: rootPath + '/resources/sounds/shovel.wav'
-        }
+        source: rootPath + '/resources/sounds/shovel.wav'
     }
 }

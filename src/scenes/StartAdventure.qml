@@ -32,9 +32,13 @@ Image {
 
         onTriggered: {
             if (parent.source.toString() === rootPath + '/resources/scenes/startAdventure.png')
-                parent.source = rootPath + '/resources/scenes/startAdventureHighlight.png';
+                parent.source = Qt.binding(function () {
+                    return rootPath + '/resources/scenes/startAdventureHighlight.png';
+                });
             else
-                parent.source = rootPath + '/resources/scenes/startAdventure.png';
+                parent.source = Qt.binding(function () {
+                    return rootPath + '/resources/scenes/startAdventure.png';
+                });
         }
     }
 }

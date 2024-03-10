@@ -7,14 +7,15 @@ AnimatedImage {
     signal rose
 
     function rise() {
-        source = rootPath + '/resources/scenes/zombieHandRise.gif';
+        source = Qt.binding(function () {
+            return rootPath + '/resources/scenes/zombieHandRise.gif';
+        });
         soundEffect.play();
     }
 
     asynchronous: true
     mipmap: true
     sourceSize: Qt.size(width, height)
-    speed: 2
     width: height / 315 * 230
 
     onCurrentFrameChanged: if (currentFrame === frameCount - 1)

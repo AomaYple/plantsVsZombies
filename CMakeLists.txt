@@ -43,12 +43,13 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/js/common.js
 
+        src/plants/Plant.qml
+        src/plants/PlantType.qml
         src/plants/PreviewPlant.qml
         src/plants/Seed.qml
         src/plants/Sunflower.qml
 
         src/scenes/DaytimeGrass.qml
-        src/scenes/GameScene.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
         src/scenes/MainMenu.qml
@@ -106,6 +107,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/buzzer.wav
         resources/sounds/evilLaugh.wav
         resources/sounds/pause.wav
+        resources/sounds/plant.wav
         resources/sounds/points.wav
         resources/sounds/readySetPlant.wav
         resources/sounds/shovel.wav
