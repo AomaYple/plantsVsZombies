@@ -7,9 +7,7 @@ AnimatedImage {
     signal rose
 
     function rise() {
-        source = Qt.binding(function () {
-            return rootPath + '/resources/scenes/zombieHandRise.gif';
-        });
+        source = rootPath + '/resources/scenes/zombieHandRise.gif';
         soundEffect.play();
     }
 

@@ -2,7 +2,7 @@ import QtQuick
 import "../scenes" as Scenes
 
 Item {
-    required property bool paused
+    property alias paused: animatedImage.paused
     required property bool shoveling
     property alias source: animatedImage.source
     required property int type
@@ -21,7 +21,6 @@ Item {
         asynchronous: true
         mipmap: true
         opacity: parent.shoveling ? 0.8 : 1
-        paused: parent.paused
         sourceSize: Qt.size(width, height)
     }
 }

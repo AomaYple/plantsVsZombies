@@ -4,11 +4,11 @@ function getRandomFloat(min, max) {
 
 function createBasicZombieStand() {
     const component = Qt.createComponent(rootPath + '/src/zombies/BasicZombieStand.qml');
-    const zombieHeight = image.height * 0.23;
+    const zombieHeight = Qt.binding(function () {
+        return image.height * 0.23;
+    });
     const incubator0 = component.incubateObject(image, {
-        height: Qt.binding(function () {
-            return zombieHeight;
-        }),
+        height: zombieHeight,
         x: Qt.binding(function () {
             return image.width * 0.8;
         }),
@@ -20,9 +20,7 @@ function createBasicZombieStand() {
         incubator0.object.destroy();
     });
     const incubator1 = component.incubateObject(image, {
-        height: Qt.binding(function () {
-            return zombieHeight;
-        }),
+        height: zombieHeight,
         x: Qt.binding(function () {
             return image.width * 0.83;
         }),
@@ -34,9 +32,7 @@ function createBasicZombieStand() {
         incubator1.object.destroy();
     });
     const incubator2 = component.incubateObject(image, {
-        height: Qt.binding(function () {
-            return zombieHeight;
-        }),
+        height: zombieHeight,
         x: Qt.binding(function () {
             return image.width * 0.9;
         }),
@@ -48,9 +44,7 @@ function createBasicZombieStand() {
         incubator2.object.destroy();
     });
     const incubator3 = component.incubateObject(image, {
-        height: Qt.binding(function () {
-            return zombieHeight;
-        }),
+        height: zombieHeight,
         x: Qt.binding(function () {
             return image.width * 0.85;
         }),
@@ -63,7 +57,7 @@ function createBasicZombieStand() {
     });
 }
 
-function generateSunlight(position, endPositionY, natural, upPositionY) {
+function generateSunlight(beginPosition, endPositionY, natural, upPositionY) {
     const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
         natural: Qt.binding(function () {
             return natural;
@@ -75,10 +69,10 @@ function generateSunlight(position, endPositionY, natural, upPositionY) {
             return image.paused;
         }),
         x: Qt.binding(function () {
-            return position.x;
+            return beginPosition.x;
         }),
         y: Qt.binding(function () {
-            return position.y;
+            return beginPosition.y;
         }),
         upPositionY: Qt.binding(function () {
             return upPositionY;
@@ -105,7 +99,7 @@ function generateSunlight(position, endPositionY, natural, upPositionY) {
 function naturalGenerateSunlight() {
     const sunlightHeight = image.height * 0.14;
     generateSunlight(Qt.point(getRandomFloat(image.leftMargin, image.width - image.rightMargin - sunlightHeight),
-        image.height * 0.2), getRandomFloat(image.height * 0.4, image.height - sunlightHeight), true, null);
+        seedBank.height), getRandomFloat(seedBank.height + image.height * 0.1, image.height - sunlightHeight), true, null);
 }
 
 function plant(properties, subPlantAreaId) {

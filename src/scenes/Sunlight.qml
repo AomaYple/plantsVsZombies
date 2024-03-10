@@ -22,7 +22,7 @@ AnimatedImage {
     onStatusChanged: if (status === Image.Ready) {
         if (natural) {
             scale = 1;
-            yAnimation.duration = 3000;
+            yAnimation.duration = 5000;
             yAnimation.to = endPositionY;
             yAnimation.start();
         } else {

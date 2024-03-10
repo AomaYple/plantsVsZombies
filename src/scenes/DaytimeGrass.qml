@@ -65,9 +65,7 @@ Item {
 
             onFinished: {
                 menuButton.visible = shovelBank.visible = true;
-                seedBank.enabled = Qt.binding(function () {
-                    return !shovelBank.shoveling;
-                });
+                shovelBank.shoveling = false;
                 menuButton.forceActiveFocus();
                 parent.paused = false;
                 root.started();
@@ -82,7 +80,7 @@ Item {
         }
         MouseArea {
             anchors.fill: parent
-            enabled: seedBank.planting || shovelBank.shoveling
+            enabled: !parent.paused && (seedBank.planting || shovelBank.shoveling)
             hoverEnabled: true
 
             onPositionChanged: {
@@ -98,6 +96,7 @@ Item {
             SeedBank {
                 id: seedBank
 
+                enabled: !shovelBank.shoveling
                 height: parent.height * 0.145
                 paused: image.paused
                 x: image.leftMargin + parent.width * 0.01

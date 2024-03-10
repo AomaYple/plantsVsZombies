@@ -7,9 +7,7 @@ Image {
     signal finished
 
     function start() {
-        source = Qt.binding(function () {
-            return rootPath + '/resources/scenes/startReady.png';
-        });
+        source = rootPath + '/resources/scenes/startReady.png';
         soundEffect.play();
     }
 
@@ -32,15 +30,11 @@ Image {
         onTriggered: {
             if (parent.source.toString() === rootPath + '/resources/scenes/startReady.png') {
                 scaleAnimator.stop();
-                parent.source = Qt.binding(function () {
-                    return rootPath + '/resources/scenes/startSet.png';
-                });
+                parent.source = rootPath + '/resources/scenes/startSet.png';
                 start();
             } else if (parent.source.toString() === rootPath + '/resources/scenes/startSet.png') {
                 scaleAnimator.stop();
-                parent.source = Qt.binding(function () {
-                    return rootPath + '/resources/scenes/startPlant.png';
-                });
+                parent.source = rootPath + '/resources/scenes/startPlant.png';
                 start();
             } else {
                 parent.source = '';

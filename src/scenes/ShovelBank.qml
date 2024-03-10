@@ -2,7 +2,7 @@ import QtQuick
 import QtMultimedia
 
 Image {
-    property bool shoveling: false
+    property bool shoveling: true
 
     signal clicked
 
