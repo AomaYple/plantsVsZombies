@@ -125,7 +125,6 @@ function plant(properties, subPlantAreaId) {
         if (status === Component.Ready) {
             const plant = incubator.object;
             const index = subPlantAreaId.index;
-            plantArea.plantContainer[index[0]][index[1]] = plant;
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
                     initSunflower(plant);
@@ -134,6 +133,10 @@ function plant(properties, subPlantAreaId) {
                     initPeaShooter(plant);
                     break;
             }
+            plant.died.connect(function () {
+                plantArea.plantContainer[index[0]][index[1]] = null;
+            });
+            plantArea.plantContainer[index[0]][index[1]] = plant;
         }
     };
 }

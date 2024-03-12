@@ -8,8 +8,18 @@ Item {
     required property int type
 
     signal currentFrameChanged(int currentFrame)
+    signal died
+
+    function die() {
+        lifeValue = 0;
+    }
 
     width: height
+
+    onLifeValueChanged: if (lifeValue <= 0) {
+        destroy();
+        died();
+    }
 
     AnimatedImage {
         id: animatedImage
