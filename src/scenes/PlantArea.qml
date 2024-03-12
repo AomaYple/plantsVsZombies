@@ -5,7 +5,7 @@ import "../plants" as Plants
 Column {
     id: root
 
-    property var plants: [[null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null]]
+    property var plantContainer: [[null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null]]
     property url previewPlantSource
     required property bool shoveling
     required property size subPlantAreaSize
@@ -27,8 +27,6 @@ Column {
 
                     readonly property var index: modelData
 
-                    signal eradicated
-
                     height: root.subPlantAreaSize.height
                     hoverEnabled: true
                     width: root.subPlantAreaSize.width
@@ -41,20 +39,22 @@ Column {
                             const plantHeight = height * 0.9;
                             soundEffect.play();
                             root.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
-                        } else if (root.shoveling && root.plants[index[0]][index[1]]) {
-                            eradicated();
+                        } else if (root.shoveling && root.plantContainer[index[0]][index[1]]) {
+                            root.plantContainer[index[0]][index[1]].destroy();
+                            root.plantContainer[index[0]][index[1]] = null;
+                            soundEffect.play();
                             root.eradicated();
                         }
                     }
 
-                    Plants.PreviewPlant {
+                    PreviewPlant {
                         id: previewPlant
 
                         anchors.centerIn: parent
                         height: parent.height * 0.9
                         opacity: 0.3
                         source: root.previewPlantSource
-                        visible: parent.containsMouse && source.toString() !== '' && !root.plants[parent.index[0]][parent.index[1]]
+                        visible: parent.containsMouse && source.toString() !== '' && !root.plantContainer[parent.index[0]][parent.index[1]]
                     }
                 }
             }

@@ -5,9 +5,7 @@ Image {
 
     required property real cooldownTime
     required property bool paused
-    required property var plantComponent
     property bool planting: false
-    required property url previewPlantSource
     required property int sunlightConsumption
     required property int sunlightSum
 

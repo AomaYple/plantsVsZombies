@@ -65,16 +65,20 @@ Item {
 
             onFinished: {
                 menuButton.visible = shovelBank.visible = true;
-                shovelBank.shoveling = false;
+                shovelBank.shoveling = parent.paused = false;
+                sunlightProducer.running = true;
                 menuButton.forceActiveFocus();
-                parent.paused = false;
                 root.started();
             }
         }
-        SunlightProducer {
+        SuspendableTimer {
             id: sunlightProducer
 
-            running: !parent.paused
+            readonly property var sunlightComponent: Qt.createComponent(rootPath + '/src/scenes/Sunlight.qml', Component.Asynchronous)
+
+            interval: 6500
+            paused: running && parent.paused
+            repeat: true
 
             onTriggered: Common.naturalGenerateSunlight()
         }
@@ -146,7 +150,7 @@ Item {
                 }
             }
         }
-        Plants.PreviewPlant {
+        PreviewPlant {
             id: previewPlant
 
             property var plantComponent

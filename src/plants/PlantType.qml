@@ -2,6 +2,7 @@ import QtQml
 
 QtObject {
     enum Type {
-        Sunflower
+        Sunflower,
+        PeaShooter
     }
 }

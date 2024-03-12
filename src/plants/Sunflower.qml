@@ -1,17 +1,21 @@
 import QtQuick
+import "../scenes" as Scenes
 
 Plant {
     id: root
+
+    readonly property int lifeValue: 300
 
     signal sunlightProduced
 
     source: rootPath + '/resources/plants/sunflower.gif'
     type: PlantType.Type.Sunflower
 
-    Timer {
+    Scenes.SuspendableTimer {
         interval: 15000
+        paused: running && parent.paused
         repeat: true
-        running: !parent.paused
+        running: true
 
         onTriggered: numberAnimation.start()
     }
@@ -39,6 +43,7 @@ Plant {
             to = 0;
             start();
             root.sunlightProduced();
-        }
+        } else
+            to = 0.5
     }
 }

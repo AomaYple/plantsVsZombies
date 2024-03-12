@@ -8,7 +8,6 @@ AnimatedImage {
     required property real endPositionY
     required property bool natural
     property bool picked: true
-    property real upPositionY
 
     signal collected
 
@@ -25,16 +24,11 @@ AnimatedImage {
             yAnimation.duration = 5000;
             yAnimation.to = endPositionY;
             yAnimation.start();
-        } else {
+        } else
             scaleAnimation.start();
-            yAnimation.duration = scaleAnimation.duration;
-            yAnimation.to = upPositionY;
-        }
     }
 
-    Timer {
-        id: timer
-
+    SuspendableTimer {
         interval: 8000
         running: mouseArea.enabled
 
@@ -50,12 +44,10 @@ AnimatedImage {
         cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
 
         onClicked: {
-            xAnimation.stop();
-            yAnimation.stop();
-            scaleAnimation.stop();
             enabled = false;
+            scaleAnimation.complete();
+            yAnimation.stop();
             soundEffect.play();
-            xAnimation.to = collectedPosition.x;
             yAnimation.to = collectedPosition.y;
             yAnimation.duration = xAnimation.duration;
             xAnimation.start();
@@ -74,6 +66,7 @@ AnimatedImage {
         paused: running && root.paused
         properties: 'x'
         target: root
+        to: collectedPosition.x
 
         onFinished: opacityAnimation.start()
     }

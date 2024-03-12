@@ -43,10 +43,11 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/js/common.js
 
+        src/plants/Pea.qml
+        src/plants/PeaShooter.qml
         src/plants/Plant.qml
         src/plants/PlantType.qml
-        src/plants/PreviewPlant.qml
-        src/plants/Seed.qml
+        src/scenes/PreviewPlant.qml
         src/plants/Sunflower.qml
 
         src/scenes/DaytimeGrass.qml
@@ -58,13 +59,14 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/PlantArea.qml
         src/scenes/QuitButton.qml
         src/scenes/ReadySetPlant.qml
+        src/scenes/Seed.qml
         src/scenes/SeedBank.qml
         src/scenes/Shadow.qml
         src/scenes/Shovel.qml
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
         src/scenes/Sunlight.qml
-        src/scenes/SunlightProducer.qml
+        src/scenes/SuspendableTimer.qml
         src/scenes/ZombieHandRise.qml
 
         src/zombies/BasicZombieStand.qml
@@ -76,6 +78,11 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/music/crazyDave.flac
         resources/music/grassWalk.flac
 
+        resources/plants/pea.png
+        resources/plants/peaShooter.gif
+        resources/plants/peaShooter.png
+        resources/plants/peaShooterSeed.png
+        resources/plants/peaShooterShooting.gif
         resources/plants/sunflower.gif
         resources/plants/sunflower.png
         resources/plants/sunflowerSeed.png

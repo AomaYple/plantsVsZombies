@@ -1,6 +1,5 @@
 import QtQuick
 import QtMultimedia
-import "../plants" as Plants
 
 Image {
     id: root
@@ -19,8 +18,9 @@ Image {
     }
     function plant() {
         planting = false;
-        sunflowerSeed.plant();
         sunlightSum.decrease();
+        sunflowerSeed.plant();
+        peaShooterSeed.plant();
     }
 
     asynchronous: true
@@ -68,16 +68,17 @@ Image {
 
         source: rootPath + '/resources/sounds/buzzer.wav'
     }
-    Plants.Seed {
+    Seed {
         id: sunflowerSeed
+
+        readonly property var plantComponent: Qt.createComponent(rootPath + '/src/plants/Sunflower.qml', Component.Asynchronous)
+        readonly property var previewPlantSource: rootPath + '/resources/plants/sunflower.png'
 
         anchors.verticalCenter: parent.verticalCenter
         cooldownTime: 7500
         enabled: parent.enabled && (!parent.planting || planting)
         height: parent.height * 0.84
         paused: parent.paused
-        plantComponent: Qt.createComponent(rootPath + '/src/plants/Sunflower.qml', Component.Asynchronous)
-        previewPlantSource: rootPath + '/resources/plants/sunflower.png'
         source: rootPath + '/resources/plants/sunflowerSeed.png'
         sunlightConsumption: 50
         sunlightSum: sunlightSum.sum()
@@ -92,6 +93,36 @@ Image {
             parent.planting = true;
             sunlightSum.sunlightConsumption = sunlightConsumption;
             parent.plantStarted(previewPlantSource, plantComponent);
+        }
+    }
+    Seed {
+        id: peaShooterSeed
+
+        readonly property var plantComponent: Qt.createComponent(rootPath + '/src/plants/PeaShooter.qml', Component.Asynchronous)
+        readonly property var previewPlantSource: rootPath + '/resources/plants/peaShooter.png'
+
+        cooldownTime: 7500
+        enabled: parent.enabled && (!parent.planting || planting)
+        height: sunflowerSeed.height
+        paused: parent.paused
+        source: rootPath + '/resources/plants/peaShooterSeed.png'
+        sunlightConsumption: 100
+        sunlightSum: sunlightSum.sum()
+
+        onBuzzered: soundEffect.play()
+        onPlantCanceled: {
+            parent.planting = false;
+            parent.plantCanceled();
+        }
+        onPlantStarted: {
+            parent.planting = true;
+            sunlightSum.sunlightConsumption = sunlightConsumption;
+            parent.plantStarted(previewPlantSource, plantComponent);
+        }
+
+        anchors {
+            left: sunflowerSeed.right
+            verticalCenter: parent.verticalCenter
         }
     }
 }

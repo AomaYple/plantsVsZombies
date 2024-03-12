@@ -57,7 +57,7 @@ function createBasicZombieStand() {
     });
 }
 
-function generateSunlight(beginPosition, endPositionY, natural, upPositionY) {
+function generateSunlight(beginPosition, endPositionY, natural) {
     const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
         natural: Qt.binding(function () {
             return natural;
@@ -73,9 +73,6 @@ function generateSunlight(beginPosition, endPositionY, natural, upPositionY) {
         }),
         y: Qt.binding(function () {
             return beginPosition.y;
-        }),
-        upPositionY: Qt.binding(function () {
-            return upPositionY;
         }),
         endPositionY: Qt.binding(function () {
             return endPositionY;
@@ -99,7 +96,7 @@ function generateSunlight(beginPosition, endPositionY, natural, upPositionY) {
 function naturalGenerateSunlight() {
     const sunlightHeight = image.height * 0.14;
     generateSunlight(Qt.point(getRandomFloat(image.leftMargin, image.width - image.rightMargin - sunlightHeight),
-        seedBank.height), getRandomFloat(seedBank.height + image.height * 0.1, image.height - sunlightHeight), true, null);
+        seedBank.height), getRandomFloat(seedBank.height + image.height * 0.1, image.height - sunlightHeight), true);
 }
 
 function plant(properties, subPlantAreaId) {
@@ -124,16 +121,11 @@ function plant(properties, subPlantAreaId) {
         if (status === Component.Ready) {
             const plant = incubator.object;
             const index = subPlantAreaId.index;
-            plantArea.plants[index[0]][index[1]] = plant;
-            subPlantAreaId.eradicated.connect(function () {
-                plant.destroy();
-                plantArea.plants[index[0]][index[1]] = null;
-            });
+            plantArea.plantContainer[index[0]][index[1]] = plant;
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
                     plant.sunlightProduced.connect(function () {
-                        generateSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false,
-                            plant.y - plant.height * 0.5);
+                        generateSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
                     });
                     break;
             }
