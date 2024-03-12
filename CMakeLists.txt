@@ -45,7 +45,6 @@ qt_add_qml_module(${PROJECT_NAME}
 
         src/plants/Pea.qml
         src/plants/PeaShooter.qml
-        src/plants/Plant.qml
         src/plants/PlantType.qml
         src/scenes/PreviewPlant.qml
         src/plants/Sunflower.qml

@@ -128,6 +128,27 @@ function plant(properties, subPlantAreaId) {
                         generateSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
                     });
                     break;
+                case Plants.PlantType.Type.PeaShooter:
+                    plant.peaShot.connect(function (position) {
+                        const incubator = plant.peaComponent.incubateObject(image, {
+                            x: Qt.binding(function () {
+                                return position.x;
+                            }),
+                            y: Qt.binding(function () {
+                                return position.y;
+                            }),
+                            height: Qt.binding(function () {
+                                return image.height * 0.1;
+                            }),
+                            paused: Qt.binding(function () {
+                                return image.paused;
+                            }),
+                            endPositionX: Qt.binding(function () {
+                                return image.width - image.rightMargin;
+                            }),
+                        });
+                    });
+                    break;
             }
         }
     };
