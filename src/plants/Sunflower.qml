@@ -17,7 +17,7 @@ Plant {
     }
     Scenes.SuspendableTimer {
         interval: 15000
-        paused: running && parent.paused
+        paused: parent.paused
         repeat: true
         running: true
 

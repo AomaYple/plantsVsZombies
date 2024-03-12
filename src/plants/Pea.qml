@@ -33,7 +33,7 @@ Item {
     }
     NumberAnimation {
         duration: (root.endPositionX - root.x) / root.speed
-        paused: running && root.paused
+        paused: root.paused
         properties: 'x'
         running: true
         target: root

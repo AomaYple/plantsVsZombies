@@ -1,4 +1,5 @@
 import QtQuick
+import QtMultimedia
 
 Item {
     required property int lifeValue
@@ -17,6 +18,7 @@ Item {
     width: height
 
     onLifeValueChanged: if (lifeValue <= 0) {
+        soundEffect.play();
         destroy();
         died();
     }
@@ -32,5 +34,10 @@ Item {
         z: 1
 
         onCurrentFrameChanged: parent.currentFrameChanged(currentFrame)
+    }
+    SoundEffect {
+        id: soundEffect
+
+        source: rootPath + '/resources/sounds/gulp.wav'
     }
 }

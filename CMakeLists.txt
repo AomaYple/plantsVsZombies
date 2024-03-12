@@ -117,7 +117,17 @@ qt_add_qml_module(${PROJECT_NAME}
 
         resources/sounds/bleep.wav
         resources/sounds/buzzer.wav
+        resources/sounds/chomp0.wav
+        resources/sounds/chomp1.wav
+        resources/sounds/chomp2.wav
         resources/sounds/evilLaugh.wav
+        resources/sounds/groan0.wav
+        resources/sounds/groan1.wav
+        resources/sounds/groan2.wav
+        resources/sounds/groan3.wav
+        resources/sounds/groan4.wav
+        resources/sounds/groan5.wav
+        resources/sounds/gulp.wav
         resources/sounds/pause.wav
         resources/sounds/plant.wav
         resources/sounds/points.wav

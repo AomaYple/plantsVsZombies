@@ -168,3 +168,25 @@ function initPeaShooter(peaShooter) {
         });
     });
 }
+
+function createZombie() {
+    const zombieHeight = image.height * 0.24;
+    const zombieY = plantArea.y + getRandomInt(1, 5) * plantArea.subPlantAreaSize.height - zombieHeight;
+    const incubator = zombieProducer.zombieComponent.incubateObject(image, {
+        x: Qt.binding(function () {
+            return image.width - image.rightMargin;
+        }),
+        y: Qt.binding(function () {
+            return zombieY;
+        }),
+        height: Qt.binding(function () {
+            return zombieHeight;
+        }),
+        paused: Qt.binding(function () {
+            return image.paused;
+        }),
+        endPositionX: Qt.binding(function () {
+            return image.leftMargin;
+        })
+    });
+}

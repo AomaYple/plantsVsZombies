@@ -66,7 +66,7 @@ Item {
             onFinished: {
                 menuButton.visible = shovelBank.visible = true;
                 shovelBank.shoveling = parent.paused = false;
-                sunlightProducer.running = true;
+                sunlightProducer.running = zombieProducer.running = true;
                 menuButton.forceActiveFocus();
                 root.started();
             }
@@ -82,6 +82,8 @@ Item {
             id: zombieProducer
 
             paused: running && parent.paused
+
+            onTriggered: Common.createZombie()
         }
         MouseArea {
             anchors.fill: parent
