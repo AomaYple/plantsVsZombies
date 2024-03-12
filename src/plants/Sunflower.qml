@@ -1,32 +1,19 @@
 import QtQuick
 import "../scenes" as Scenes
 
-Item {
+Plant {
     id: root
-
-    readonly property int lifeValue: 300
-    property alias paused: animatedImage.paused
-    required property bool shoveling
-    readonly property int type: PlantType.Type.Sunflower
 
     signal sunlightProduced
 
-    width: height
+    lifeValue: 5
+    source: rootPath + '/resources/plants/sunflower.gif'
+    type: PlantType.Type.Sunflower
 
     Scenes.Shadow {
         anchors.horizontalCenter: parent.horizontalCenter
         height: parent.height * 0.5
         y: parent.height * 0.6
-    }
-    AnimatedImage {
-        id: animatedImage
-
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        opacity: parent.shoveling ? 0.8 : 1
-        source: rootPath + '/resources/plants/sunflower.gif'
-        sourceSize: Qt.size(width, height)
     }
     Scenes.SuspendableTimer {
         interval: 15000

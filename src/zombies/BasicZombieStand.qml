@@ -14,5 +14,6 @@ Item {
         asynchronous: true
         mipmap: true
         source: rootPath + '/resources/zombies/basicZombieStand' + Math.round(Math.random()) + '.gif'
+        sourceSize: Qt.size(width, height)
     }
 }

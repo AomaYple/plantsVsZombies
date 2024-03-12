@@ -1,3 +1,7 @@
+function getRandomInt(n, m) {
+    return Math.floor(Math.random() * (m - n + 1)) + n;
+}
+
 function getRandomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -124,32 +128,40 @@ function plant(properties, subPlantAreaId) {
             plantArea.plantContainer[index[0]][index[1]] = plant;
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
-                    plant.sunlightProduced.connect(function () {
-                        generateSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
-                    });
+                    initSunflower(plant);
                     break;
                 case Plants.PlantType.Type.PeaShooter:
-                    plant.peaShot.connect(function (position) {
-                        const incubator = plant.peaComponent.incubateObject(image, {
-                            x: Qt.binding(function () {
-                                return position.x;
-                            }),
-                            y: Qt.binding(function () {
-                                return position.y;
-                            }),
-                            height: Qt.binding(function () {
-                                return image.height * 0.1;
-                            }),
-                            paused: Qt.binding(function () {
-                                return image.paused;
-                            }),
-                            endPositionX: Qt.binding(function () {
-                                return image.width - image.rightMargin;
-                            }),
-                        });
-                    });
+                    initPeaShooter(plant);
                     break;
             }
         }
     };
+}
+
+function initSunflower(sunflower) {
+    sunflower.sunlightProduced.connect(function () {
+        generateSunlight(Qt.point(sunflower.x, sunflower.y), sunflower.y + sunflower.height * 0.5, false);
+    });
+}
+
+function initPeaShooter(peaShooter) {
+    peaShooter.peaShot.connect(function (position) {
+        const incubator = peaShooter.peaComponent.incubateObject(image, {
+            x: Qt.binding(function () {
+                return position.x;
+            }),
+            y: Qt.binding(function () {
+                return position.y;
+            }),
+            height: Qt.binding(function () {
+                return image.height * 0.1;
+            }),
+            paused: Qt.binding(function () {
+                return image.paused;
+            }),
+            endPositionX: Qt.binding(function () {
+                return image.width - image.rightMargin;
+            })
+        });
+    });
 }

@@ -45,8 +45,8 @@ qt_add_qml_module(${PROJECT_NAME}
 
         src/plants/Pea.qml
         src/plants/PeaShooter.qml
+        src/plants/Plant.qml
         src/plants/PlantType.qml
-        src/scenes/PreviewPlant.qml
         src/plants/Sunflower.qml
 
         src/scenes/DaytimeGrass.qml
@@ -56,6 +56,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/MenuButton.qml
         src/scenes/MenuDialog.qml
         src/scenes/PlantArea.qml
+        src/scenes/PreviewPlant.qml
         src/scenes/QuitButton.qml
         src/scenes/ReadySetPlant.qml
         src/scenes/Seed.qml
@@ -65,10 +66,15 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/ShovelBank.qml
         src/scenes/StartAdventure.qml
         src/scenes/Sunlight.qml
+        src/scenes/SunlightProducer.qml
         src/scenes/SuspendableTimer.qml
         src/scenes/ZombieHandRise.qml
+        src/scenes/ZombieProducer.qml
 
+        src/zombies/BasicZombie.qml
         src/zombies/BasicZombieStand.qml
+        src/zombies/Zombie.qml
+        src/zombies/ZombieType.qml
 
         src/main.qml
 
@@ -116,7 +122,11 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/plant.wav
         resources/sounds/points.wav
         resources/sounds/readySetPlant.wav
+        resources/sounds/seedLift.wav
         resources/sounds/shovel.wav
+        resources/sounds/splat0.wav
+        resources/sounds/splat1.wav
+        resources/sounds/splat2.wav
 
         resources/zombies/basicZombieAttack.gif
         resources/zombies/basicZombieStand0.gif

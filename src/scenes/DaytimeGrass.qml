@@ -71,16 +71,17 @@ Item {
                 root.started();
             }
         }
-        SuspendableTimer {
+        SunlightProducer {
             id: sunlightProducer
 
-            readonly property var sunlightComponent: Qt.createComponent(rootPath + '/src/scenes/Sunlight.qml', Component.Asynchronous)
-
-            interval: 6500
             paused: running && parent.paused
-            repeat: true
 
             onTriggered: Common.naturalGenerateSunlight()
+        }
+        ZombieProducer {
+            id: zombieProducer
+
+            paused: running && parent.paused
         }
         MouseArea {
             anchors.fill: parent
@@ -171,7 +172,6 @@ Item {
             visible: shovelBank.visible
             x: shovelBank.x + (shovelBank.width - width) / 2
             y: shovelBank.y + (shovelBank.height - height) / 2
-            z: 1
         }
         MenuButton {
             id: menuButton

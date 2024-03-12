@@ -47,7 +47,7 @@ Image {
         }
 
         color: '#000000'
-        text: '50'
+        text: '5000'
         x: parent.width * 0.085 - width / 2
         y: parent.height * 0.82 - height / 2
 
@@ -64,7 +64,12 @@ Image {
         to: 0
     }
     SoundEffect {
-        id: soundEffect
+        id: seedLift
+
+        source: rootPath + '/resources/sounds/seedLift.wav'
+    }
+    SoundEffect {
+        id: buzzer
 
         source: rootPath + '/resources/sounds/buzzer.wav'
     }
@@ -84,12 +89,13 @@ Image {
         sunlightSum: sunlightSum.sum()
         x: parent.width * 0.17
 
-        onBuzzered: soundEffect.play()
+        onBuzzered: buzzer.play()
         onPlantCanceled: {
             parent.planting = false;
             parent.plantCanceled();
         }
         onPlantStarted: {
+            seedLift.play();
             parent.planting = true;
             sunlightSum.sunlightConsumption = sunlightConsumption;
             parent.plantStarted(previewPlantSource, plantComponent);
@@ -109,12 +115,13 @@ Image {
         sunlightConsumption: 100
         sunlightSum: sunlightSum.sum()
 
-        onBuzzered: soundEffect.play()
+        onBuzzered: buzzer.play()
         onPlantCanceled: {
             parent.planting = false;
             parent.plantCanceled();
         }
         onPlantStarted: {
+            seedLift.play();
             parent.planting = true;
             sunlightSum.sunlightConsumption = sunlightConsumption;
             parent.plantStarted(previewPlantSource, plantComponent);
