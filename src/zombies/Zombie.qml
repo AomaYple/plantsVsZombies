@@ -6,7 +6,8 @@ import "../js/common.js" as Common
 Item {
     id: root
 
-    required property int damageValue
+    required property int attackValue
+    property bool attacking: false
     required property real endPositionX
     required property int lifeValue
     property alias paused: animatedImage.paused
@@ -14,16 +15,22 @@ Item {
     property real speed: 0.011
     required property int type
 
+    signal attacked
     signal died
 
     function die() {
-        lifeValue = 0;
-    }
-
-    onLifeValueChanged: if (lifeValue <= 0) {
         destroy();
         died();
     }
+    function startAttack() {
+        attacking = true;
+    }
+    function stopAttack() {
+        attacking = false;
+    }
+
+    onLifeValueChanged: if (lifeValue <= 0)
+        die()
 
     Scenes.Shadow {
         height: parent.height * 0.3
@@ -40,7 +47,7 @@ Item {
     }
     NumberAnimation {
         duration: Math.abs(root.x - root.endPositionX) / root.speed
-        paused: root.paused
+        paused: root.paused || root.attacking
         properties: 'x'
         running: true
         target: root
@@ -52,5 +59,12 @@ Item {
         source: rootPath + '/resources/sounds/groan' + Common.getRandomInt(0, 5) + '.wav'
 
         Component.onCompleted: play()
+    }
+    Scenes.SuspendableTimer {
+        interval: 500
+        repeat: true
+        running: !root.paused && root.attacking
+
+        onTriggered: parent.attacked()
     }
 }

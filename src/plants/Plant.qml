@@ -12,16 +12,22 @@ Item {
     signal died
 
     function die() {
-        lifeValue = 0;
+        destroy();
+        soundEffect.play();
+        died();
+    }
+    function shovel() {
+        destroy();
+        died();
+    }
+    function twinkle() {
+        numberAnimation.start();
     }
 
     width: height
 
-    onLifeValueChanged: if (lifeValue <= 0) {
-        soundEffect.play();
-        destroy();
-        died();
-    }
+    onLifeValueChanged: if (lifeValue <= 0)
+        die()
 
     AnimatedImage {
         id: animatedImage
@@ -34,6 +40,25 @@ Item {
         z: 1
 
         onCurrentFrameChanged: parent.currentFrameChanged(currentFrame)
+    }
+    NumberAnimation {
+        id: numberAnimation
+
+        duration: 250
+        paused: running && parent.paused
+        properties: 'opacity'
+        target: animatedImage
+        to: 0.5
+
+        onFinished: if (to === 0.5) {
+            to = 1;
+            start();
+        } else {
+            to = 0.5;
+            animatedImage.opacity = Qt.binding(function () {
+                return root.shoveling ? 0.8 : 1;
+            });
+        }
     }
     SoundEffect {
         id: soundEffect

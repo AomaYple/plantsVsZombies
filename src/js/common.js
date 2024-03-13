@@ -171,7 +171,8 @@ function initPeaShooter(peaShooter) {
 
 function createZombie() {
     const zombieHeight = image.height * 0.24;
-    const zombieY = plantArea.y + getRandomInt(1, 5) * plantArea.subPlantAreaSize.height - zombieHeight;
+    const rowIndex = getRandomInt(0, 4);
+    const zombieY = plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight;
     const incubator = zombieProducer.zombieComponent.incubateObject(image, {
         x: Qt.binding(function () {
             return image.width - image.rightMargin;
@@ -189,4 +190,34 @@ function createZombie() {
             return image.leftMargin;
         })
     });
+    incubator.onStatusChanged = function (status) {
+        if (status === Component.Ready) {
+            const zombie = incubator.object;
+            zombieProducer.zombieContainer[rowIndex].push(zombie);
+            zombie.died.connect(function () {
+                zombieProducer.zombieContainer[rowIndex].splice(zombieProducer.zombieContainer[rowIndex].indexOf(zombie), 1);
+            });
+            zombie.xChanged.connect(function () {
+                if (findNearestPlant(rowIndex, zombie))
+                    zombie.startAttack();
+            });
+            zombie.attacked.connect(function () {
+                const plant = findNearestPlant(rowIndex, zombie);
+                if (plant) {
+                    plant.lifeValue -= zombie.attackValue;
+                    plant.twinkle();
+                } else
+                    zombie.stopAttack();
+            });
+        }
+    };
+}
+
+function findNearestPlant(rowIndex, zombie) {
+    for (let i = 8; i >= 0; --i) {
+        const plant = plantArea.plantContainer[rowIndex][i];
+        if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5)
+            return plant;
+    }
+    return null;
 }
