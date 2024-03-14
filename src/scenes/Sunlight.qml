@@ -1,39 +1,44 @@
 import QtQuick
 import QtMultimedia
 
-AnimatedImage {
+Item {
     id: root
 
     required property point collectedPosition
     required property real endPositionY
     required property bool natural
-    property bool picked: true
+    property alias paused: animatedImage.paused
 
     signal collected
 
-    asynchronous: true
-    mipmap: true
-    scale: 0.5
-    source: rootPath + '/resources/scenes/sunlight.gif'
-    sourceSize: Qt.size(width, height)
     width: height / 56 * 57
 
-    onStatusChanged: if (status === Image.Ready) {
-        if (natural) {
-            scale = 1;
-            yAnimation.duration = 5000;
-            yAnimation.to = endPositionY;
-            yAnimation.start();
-        } else
-            scaleAnimation.start();
-    }
+    AnimatedImage {
+        id: animatedImage
 
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        source: rootPath + '/resources/scenes/sunlight.gif'
+        sourceSize: Qt.size(width, height)
+
+        onStatusChanged: if (status === Image.Ready) {
+            if (natural) {
+                yAnimation.duration = 5000;
+                yAnimation.to = endPositionY;
+                yAnimation.start();
+            } else {
+                scale = 0.5;
+                scaleAnimation.start();
+            }
+        }
+    }
     SuspendableTimer {
         interval: 8000
         running: mouseArea.enabled
 
         onTriggered: {
-            parent.picked = false;
+            opacityAnimation.picked = false;
             opacityAnimation.start();
         }
     }
@@ -66,7 +71,7 @@ AnimatedImage {
         paused: running && root.paused
         properties: 'x'
         target: root
-        to: collectedPosition.x
+        to: root.collectedPosition.x
 
         onFinished: opacityAnimation.start()
     }
@@ -94,6 +99,8 @@ AnimatedImage {
     NumberAnimation {
         id: opacityAnimation
 
+        property bool picked: true
+
         duration: 500
         paused: running && root.paused
         properties: 'opacity'
@@ -102,7 +109,7 @@ AnimatedImage {
 
         onFinished: {
             root.destroy();
-            if (root.picked)
+            if (picked)
                 root.collected();
         }
     }

@@ -165,7 +165,6 @@ Item {
             }
 
             height: parent.height * 0.15
-            z: 1
         }
         Shovel {
             id: shovel

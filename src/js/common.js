@@ -193,31 +193,25 @@ function createZombie() {
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
             const zombie = incubator.object;
-            zombieProducer.zombieContainer[rowIndex].push(zombie);
-            zombie.died.connect(function () {
-                zombieProducer.zombieContainer[rowIndex].splice(zombieProducer.zombieContainer[rowIndex].indexOf(zombie), 1);
-            });
+            const plantArray = plantArea.plantContainer[rowIndex];
+            const zombieSet = zombieProducer.zombieContainer[rowIndex];
             zombie.xChanged.connect(function () {
-                if (findNearestPlant(rowIndex, zombie))
-                    zombie.startAttack();
+                for (let i = 8; i >= 0 && !zombie.attacked; --i) {
+                    const plant = plantArray[i];
+                    if (plant && zombie.x < plant.x + plant.width * 0.5)
+                        zombie.startAttack(plant);
+                }
             });
-            zombie.attacked.connect(function () {
-                const plant = findNearestPlant(rowIndex, zombie);
-                if (plant) {
-                    plant.lifeValue -= zombie.attackValue;
-                    plant.twinkle();
-                } else
-                    zombie.stopAttack();
+            zombie.died.connect(function () {
+                for (let i = 8; zombieSet.size > 1 && i >= 0; --i)
+                    plantArray[i].zombieAppeared = false;
+                zombieSet.delete(zombie)
             });
+            if (zombieSet.size === 0) {
+                for (let i = 8; i >= 0; --i)
+                    plantArray[i].zombieAppeared = true;
+            }
+            zombieSet.add(zombie);
         }
     };
-}
-
-function findNearestPlant(rowIndex, zombie) {
-    for (let i = 8; i >= 0; --i) {
-        const plant = plantArea.plantContainer[rowIndex][i];
-        if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5)
-            return plant;
-    }
-    return null;
 }

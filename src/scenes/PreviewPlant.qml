@@ -1,8 +1,12 @@
 import QtQuick
 
-Image {
-    asynchronous: true
-    mipmap: true
-    sourceSize: Qt.size(width, height)
+Item {
     width: height
+
+    Image {
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        sourceSize: Qt.size(width, height)
+    }
 }

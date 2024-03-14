@@ -33,26 +33,6 @@ Window {
                 onQuit: root.close()
             }
         }
-        Component {
-            id: daytimeGrass
-
-            Scenes.DaytimeGrass {
-                Component.onCompleted: {
-                    mediaPlayer.source = rootPath + '/resources/music/chooseYourSeeds.flac';
-                    mediaPlayer.play();
-                }
-                onBackToMainMenu: {
-                    loader.sourceComponent = mainMenu;
-                    mediaPlayer.source = rootPath + '/resources/music/crazyDave.flac';
-                    mediaPlayer.play();
-                }
-                onChose: mediaPlayer.stop()
-                onStarted: {
-                    mediaPlayer.source = rootPath + '/resources/music/grassWalk.flac';
-                    mediaPlayer.play();
-                }
-            }
-        }
     }
     MediaPlayer {
         id: mediaPlayer

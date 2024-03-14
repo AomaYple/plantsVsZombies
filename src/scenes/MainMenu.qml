@@ -1,15 +1,17 @@
 import QtQuick
 import QtMultimedia
 
-Image {
+Item {
     signal adventured
     signal quit
 
-    asynchronous: true
-    mipmap: true
-    source: rootPath + '/resources/scenes/mainMenu.png'
-    sourceSize: Qt.size(width, height)
-
+    Image {
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        source: rootPath + '/resources/scenes/mainMenu.png'
+        sourceSize: Qt.size(width, height)
+    }
     StartAdventure {
         enabled: parent.enabled
         height: parent.height * 0.23

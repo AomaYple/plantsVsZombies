@@ -1,19 +1,22 @@
 import QtQuick
 import QtMultimedia
 
-Image {
+Item {
     signal triggered
 
-    asynchronous: true
-    mipmap: true
-    source: rootPath + '/resources/scenes/button.png'
-    sourceSize: Qt.size(width, height)
     visible: false
     width: height / 109 * 291
     y: 0
 
     Keys.onEscapePressed: mouseArea.trigger()
 
+    Image {
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        source: rootPath + '/resources/scenes/button.png'
+        sourceSize: Qt.size(width, height)
+    }
     Text {
         anchors.centerIn: parent
         color: '#008000'

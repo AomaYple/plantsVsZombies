@@ -1,11 +1,10 @@
 import QtQuick
 import QtMultimedia
-import "../plants" as Plants
 
 Column {
     id: root
 
-    property var plantContainer: [[null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null]]
+    property var plantContainer: Array(5).fill(null).map(() => Array(9).fill(null))
     property url previewPlantSource
     required property bool shoveling
     required property size subPlantAreaSize

@@ -1,43 +1,48 @@
 import QtQuick
 import QtMultimedia
 
-Image {
+Item {
     id: root
 
     signal finished
 
     function start() {
-        source = rootPath + '/resources/scenes/startReady.png';
+        image.source = rootPath + '/resources/scenes/startReady.png';
         soundEffect.play();
     }
 
-    asynchronous: true
-    mipmap: true
-    sourceSize: Qt.size(width, height)
     width: height / 99 * 210
 
-    onStatusChanged: if (status === Image.Ready) {
-        if (source.toString() !== rootPath + '/resources/scenes/startPlant.png')
-            scaleAnimator.start();
-        timer.start();
-    }
+    Image {
+        id: image
 
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        sourceSize: Qt.size(width, height)
+
+        onStatusChanged: if (status === Image.Ready) {
+            if (source.toString() !== rootPath + '/resources/scenes/startPlant.png')
+                scaleAnimator.start();
+            timer.start();
+        }
+    }
     Timer {
         id: timer
 
         interval: 700
 
         onTriggered: {
-            if (parent.source.toString() === rootPath + '/resources/scenes/startReady.png') {
+            if (image.source.toString() === rootPath + '/resources/scenes/startReady.png') {
                 scaleAnimator.stop();
-                parent.source = rootPath + '/resources/scenes/startSet.png';
+                image.source = rootPath + '/resources/scenes/startSet.png';
                 start();
-            } else if (parent.source.toString() === rootPath + '/resources/scenes/startSet.png') {
+            } else if (image.source.toString() === rootPath + '/resources/scenes/startSet.png') {
                 scaleAnimator.stop();
-                parent.source = rootPath + '/resources/scenes/startPlant.png';
+                image.source = rootPath + '/resources/scenes/startPlant.png';
                 start();
             } else {
-                parent.source = '';
+                image.source = '';
                 parent.finished();
             }
         }

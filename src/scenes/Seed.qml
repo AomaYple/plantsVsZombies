@@ -1,11 +1,10 @@
 import QtQuick
 
-Image {
-    id: root
-
+Item {
     required property real cooldownTime
     required property bool paused
-    property bool planting: false
+    readonly property alias planting: mouseArea.planting
+    property alias source: image.source
     required property int sunlightConsumption
     required property int sunlightSum
 
@@ -14,17 +13,22 @@ Image {
     signal plantStarted
 
     function plant() {
-        if (planting) {
-            planting = false;
+        if (mouseArea.planting) {
+            mouseArea.planting = false;
             numberAnimation.start();
         }
     }
 
-    asynchronous: true
-    mipmap: true
-    sourceSize: Qt.size(width, height)
     width: height / 140 * 100
 
+    Image {
+        id: image
+
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        sourceSize: Qt.size(width, height)
+    }
     Rectangle {
         id: curtain
 
@@ -50,18 +54,22 @@ Image {
         to: 0
     }
     MouseArea {
+        id: mouseArea
+
+        property bool planting: false
+
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         enabled: parent.enabled
 
         onClicked: {
-            if (!parent.planting && !curtain.visible) {
+            if (!planting && !curtain.visible) {
                 deepCurtain.height = height;
-                parent.planting = true;
+                planting = true;
                 parent.plantStarted();
             } else if (planting) {
                 deepCurtain.height = 0;
-                parent.planting = false;
+                planting = false;
                 parent.plantCanceled();
             } else
                 parent.buzzered();

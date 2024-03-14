@@ -8,8 +8,7 @@ Item {
 
     readonly property int damageValue: 1
     required property real endPositionX
-    property bool paused: false
-    readonly property real speed: 0.3
+    property alias paused: numberAnimation.paused
 
     width: height / 2
     z: 2
@@ -32,7 +31,9 @@ Item {
         width: parent.width
     }
     NumberAnimation {
-        duration: (root.endPositionX - root.x) / root.speed
+        id: numberAnimation
+
+        duration: (root.endPositionX - root.x) / 0.3
         paused: root.paused
         properties: 'x'
         running: true

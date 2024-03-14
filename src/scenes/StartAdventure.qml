@@ -1,15 +1,20 @@
 import QtQuick
 
-Image {
+Item {
     signal clicked
     signal entered
 
-    asynchronous: true
-    mipmap: true
-    source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'startAdventureHighlight.png' : 'startAdventure.png')
-    sourceSize: Qt.size(width, height)
     width: height / 142 * 331
 
+    Image {
+        id: image
+
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'startAdventureHighlight.png' : 'startAdventure.png')
+        sourceSize: Qt.size(width, height)
+    }
     MouseArea {
         id: mouseArea
 
@@ -31,10 +36,10 @@ Image {
         repeat: true
 
         onTriggered: {
-            if (parent.source.toString() === rootPath + '/resources/scenes/startAdventure.png')
-                parent.source = rootPath + '/resources/scenes/startAdventureHighlight.png';
+            if (image.source.toString() === rootPath + '/resources/scenes/startAdventure.png')
+                image.source = rootPath + '/resources/scenes/startAdventureHighlight.png';
             else
-                parent.source = rootPath + '/resources/scenes/startAdventure.png';
+                image.source = rootPath + '/resources/scenes/startAdventure.png';
         }
     }
 }

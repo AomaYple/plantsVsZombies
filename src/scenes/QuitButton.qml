@@ -1,15 +1,18 @@
 import QtQuick
 
-Image {
+Item {
     signal entered
     signal quit
 
-    asynchronous: true
-    mipmap: true
-    source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'quitHighlight.png' : 'quit.png')
-    sourceSize: Qt.size(width, height)
     width: height / 23 * 43
 
+    Image {
+        anchors.fill: parent
+        asynchronous: true
+        mipmap: true
+        source: rootPath + '/resources/scenes/' + (mouseArea.containsMouse ? 'quitHighlight.png' : 'quit.png')
+        sourceSize: Qt.size(width, height)
+    }
     MouseArea {
         id: mouseArea
 
