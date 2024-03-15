@@ -128,7 +128,7 @@ function plant(properties, subPlantAreaId) {
                     initSunflower(plant);
                     break;
                 case Plants.PlantType.Type.PeaShooter:
-                    initPeaShooter(plant);
+                    initPeaShooter(plant, zombieProducer.zombieContainer[index[0]]);
                     break;
             }
             plant.died.connect(function () {
@@ -145,7 +145,11 @@ function initSunflower(sunflower) {
     });
 }
 
-function initPeaShooter(peaShooter) {
+function initPeaShooter(peaShooter, zombies) {
+    for (const zombie of zombies) {
+        if (zombie.x >= peaShooter.x + peaShooter.width * 0.5)
+            ++peaShooter.zombieCount;
+    }
     peaShooter.peaShot.connect(function (position) {
         const incubator = peaShooter.peaComponent.incubateObject(image, {
             x: Qt.binding(function () {
@@ -194,22 +198,19 @@ function createZombie() {
             const plantArray = plantArea.plantContainer[rowIndex];
             const zombieSet = zombieProducer.zombieContainer[rowIndex];
             zombie.xChanged.connect(function () {
-                for (let i = 8; i >= 0; --i) {
-                    const plant = plantArray[i];
+                for (const plant of plantArray) {
                     if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5)
                         zombie.startAttack(plant);
                 }
             });
             zombie.died.connect(function () {
-                for (let i = 8; i >= 0; --i) {
-                    const plant = plantArray[i];
+                for (const plant of plantArray) {
                     if (plant && plant.type === Plants.PlantType.Type.PeaShooter && zombie.x >= plant.x + plant.width * 0.5)
                         --plant.zombieCount;
                 }
                 zombieSet.delete(zombie)
             });
-            for (let i = 8; i >= 0; --i) {
-                const plant = plantArray[i];
+            for (const plant of plantArray) {
                 if (plant && plant.type === Plants.PlantType.Type.PeaShooter)
                     ++plant.zombieCount;
             }

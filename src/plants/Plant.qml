@@ -17,12 +17,6 @@ Item {
     signal died
 
     function die() {
-        soundEffect.play();
-        destroy();
-        died();
-    }
-
-    function shovel() {
         destroy();
         died();
     }
@@ -51,13 +45,6 @@ Item {
         mipmap: true
         opacity: parent.shoveling ? 0.8 : 1
         sourceSize: Qt.size(width, height)
-
-        Binding {
-            property: 'opacity'
-            target: item
-            value: item.shoveling ? 0.8 : 1
-            when: !numberAnimation.running
-        }
     }
 
     NumberAnimation {
@@ -72,13 +59,11 @@ Item {
         onFinished: if (to === 0.5) {
             to = 1;
             start();
-        } else
-            to = 0.5
-    }
-
-    SoundEffect {
-        id: soundEffect
-
-        source: '../../resources/sounds/gulp.wav'
+        } else {
+            to = 0.5;
+            item.opacity = Qt.binding(function () {
+                return item.shoveling ? 0.8 : 1;
+            });
+        }
     }
 }

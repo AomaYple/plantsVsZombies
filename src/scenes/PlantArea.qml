@@ -39,7 +39,7 @@ Column {
                             soundEffect.play();
                             column.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
                         } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
-                            column.plantContainer[index[0]][index[1]].shovel();
+                            column.plantContainer[index[0]][index[1]].die();
                             soundEffect.play();
                             column.eradicated();
                         }

@@ -24,8 +24,8 @@ Item {
         width: height / 600 * 1400
 
         onStatusChanged: if (status === Image.Ready) {
-            Common.createBasicZombieStand();
             timer.start();
+            Common.createBasicZombieStand();
         }
 
         Timer {
@@ -50,9 +50,9 @@ Item {
                     to = -image.leftMargin;
                     timer.start();
                 } else {
-                    readied();
                     readySetPlant.start();
                     seedBank.emerge();
+                    readied();
                     item.chose();
                 }
             }

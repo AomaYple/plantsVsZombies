@@ -14,8 +14,8 @@ Plant {
     type: PlantType.Type.PeaShooter
 
     Scenes.SuspendableTimer {
-        interval: 800
-        paused: parent.paused
+        interval: 1300
+        paused: running && parent.paused
         repeat: true
         running: parent.zombieCount > 0
 

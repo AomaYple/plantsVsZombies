@@ -12,7 +12,7 @@ Item {
     required property int lifeValue
     property alias paused: animatedImage.paused
     property alias source: animatedImage.source
-    readonly property real speed: 0.011
+    readonly property real speed: 0.01
     required property int type
 
     signal died
@@ -24,9 +24,12 @@ Item {
 
     function startAttack(attackTargetObject) {
         attackTarget = attackTargetObject;
-        attackTargetObject.onDied = function () {
+        attackTargetObject.died.connect(function () {
             attackTarget = null;
-        };
+            chomp.stop();
+            gulp.play();
+        });
+        chomp.play();
     }
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -66,9 +69,26 @@ Item {
 
     Scenes.SuspendableTimer {
         interval: 500
+        paused: running && parent.paused
         repeat: true
-        running: !parent.paused && parent.attackTarget
+        running: parent.attackTarget
 
-        onTriggered: parent.attackTarget.lifeValue -= parent.attackValue
+        onTriggered: {
+            parent.attackTarget.twinkle();
+            parent.attackTarget.lifeValue -= parent.attackValue;
+        }
+    }
+
+    SoundEffect {
+        id: chomp
+
+        loops: SoundEffect.Infinite
+        source: '../../resources/sounds/chomp' + Common.getRandomInt(0, 2) + '.wav'
+    }
+
+    SoundEffect {
+        id: gulp
+
+        source: '../../resources/sounds/gulp.wav'
     }
 }

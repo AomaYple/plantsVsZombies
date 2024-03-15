@@ -28,7 +28,7 @@ Dialog {
         source: '../../resources/scenes/button.png'
         sourceSize: Qt.size(width, height)
         width: height / 109 * 291
-        y: parent.height * 0.64
+        y: parent.height * 0.62
 
         Text {
             anchors.centerIn: parent
@@ -57,7 +57,7 @@ Dialog {
         source: '../../resources/scenes/optionsMenuButton.png'
         sourceSize: Qt.size(width, height)
         width: height / 79 * 341
-        y: parent.height * 0.84
+        y: parent.height * 0.82
 
         Text {
             anchors.centerIn: parent
