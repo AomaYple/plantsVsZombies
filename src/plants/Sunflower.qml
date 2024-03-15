@@ -2,19 +2,16 @@ import QtQuick
 import "../scenes" as Scenes
 
 Plant {
-    id: root
+    id: plant
 
     signal sunlightProduced
 
     lifeValue: 5
-    source: rootPath + '/resources/plants/sunflower.gif'
+    shadowHeight: height * 0.5
+    shadowPosition: Qt.point((width - shadowWidth) / 2, height * 0.6)
+    source: '../../resources/plants/sunflower.gif'
     type: PlantType.Type.Sunflower
 
-    Scenes.Shadow {
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: parent.height * 0.5
-        y: parent.height * 0.6
-    }
     Scenes.SuspendableTimer {
         interval: 15000
         paused: parent.paused
@@ -23,6 +20,7 @@ Plant {
 
         onTriggered: numberAnimation.start()
     }
+
     Rectangle {
         id: rectangle
 
@@ -34,11 +32,12 @@ Plant {
         width: height
         y: parent.height * 0.15
     }
+
     NumberAnimation {
         id: numberAnimation
 
         duration: 1000
-        paused: running && root.paused
+        paused: running && plant.paused
         properties: 'opacity'
         target: rectangle
         to: 0.5
@@ -46,7 +45,7 @@ Plant {
         onFinished: if (to === 0.5) {
             to = 0;
             start();
-            root.sunlightProduced();
+            plant.sunlightProduced();
         } else
             to = 0.5
     }

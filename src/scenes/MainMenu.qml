@@ -1,17 +1,15 @@
 import QtQuick
 import QtMultimedia
 
-Item {
+Image {
     signal adventured
     signal quit
 
-    Image {
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: rootPath + '/resources/scenes/mainMenu.png'
-        sourceSize: Qt.size(width, height)
-    }
+    asynchronous: true
+    mipmap: true
+    source: '../resources/scenes/mainMenu.png'
+    sourceSize: Qt.size(width, height)
+
     StartAdventure {
         enabled: parent.enabled
         height: parent.height * 0.23
@@ -24,6 +22,7 @@ Item {
         }
         onEntered: soundEffect.play()
     }
+
     ZombieHandRise {
         id: zombieHandRise
 
@@ -33,6 +32,7 @@ Item {
 
         onRose: parent.adventured()
     }
+
     QuitButton {
         enabled: parent.enabled
         height: parent.height * 0.04
@@ -42,9 +42,10 @@ Item {
         onEntered: soundEffect.play()
         onQuit: parent.quit()
     }
+
     SoundEffect {
         id: soundEffect
 
-        source: rootPath + '/resources/sounds/bleep.wav'
+        source: '../../resources/sounds/bleep.wav'
     }
 }

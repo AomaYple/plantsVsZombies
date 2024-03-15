@@ -2,10 +2,10 @@ import QtQuick
 import QtMultimedia
 
 Column {
-    id: root
+    id: column
 
     property var plantContainer: Array(5).fill(null).map(() => Array(9).fill(null))
-    property url previewPlantSource
+    required property url previewPlantSource
     required property bool shoveling
     required property size subPlantAreaSize
 
@@ -26,22 +26,22 @@ Column {
 
                     readonly property var index: modelData
 
-                    height: root.subPlantAreaSize.height
+                    height: column.subPlantAreaSize.height
                     hoverEnabled: true
-                    width: root.subPlantAreaSize.width
+                    width: column.subPlantAreaSize.width
 
                     onClicked: {
                         if (previewPlant.visible) {
-                            const plantX = root.x + index[1] * width;
-                            const plantY = root.y + index[0] * height;
+                            const plantX = column.x + index[1] * width;
+                            const plantY = column.y + index[0] * height;
                             const plantWidth = width * 0.9;
                             const plantHeight = height * 0.9;
                             soundEffect.play();
-                            root.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
-                        } else if (root.shoveling && root.plantContainer[index[0]][index[1]]) {
-                            root.plantContainer[index[0]][index[1]].shovel();
+                            column.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
+                        } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
+                            column.plantContainer[index[0]][index[1]].shovel();
                             soundEffect.play();
-                            root.eradicated();
+                            column.eradicated();
                         }
                     }
 
@@ -51,16 +51,17 @@ Column {
                         anchors.centerIn: parent
                         height: parent.height * 0.9
                         opacity: 0.3
-                        source: root.previewPlantSource
-                        visible: parent.containsMouse && source.toString() !== '' && !root.plantContainer[parent.index[0]][parent.index[1]]
+                        source: column.previewPlantSource
+                        visible: parent.containsMouse && source.toString() !== '' && !column.plantContainer[parent.index[0]][parent.index[1]]
                     }
                 }
             }
         }
     }
+
     SoundEffect {
         id: soundEffect
 
-        source: rootPath + '/resources/sounds/plant.wav'
+        source: '../../resources/sounds/plant.wav'
     }
 }

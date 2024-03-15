@@ -1,7 +1,7 @@
 import QtQuick
 
 Item {
-    id: root
+    id: item
 
     property alias interval: numberAnimation.duration
     property alias paused: numberAnimation.paused
@@ -14,12 +14,12 @@ Item {
         id: numberAnimation
 
         properties: 'opacity'
-        target: root
+        target: item
 
         onFinished: {
-            if (root.repeat)
+            if (item.repeat)
                 start();
-            root.triggered();
+            item.triggered();
         }
     }
 }

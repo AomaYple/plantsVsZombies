@@ -3,7 +3,7 @@ import QtMultimedia
 import "scenes" as Scenes
 
 Window {
-    id: root
+    id: window
 
     color: '#000000'
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
@@ -30,15 +30,37 @@ Window {
 
             Scenes.MainMenu {
                 onAdventured: loader.sourceComponent = daytimeGrass
-                onQuit: root.close()
+                onQuit: window.close()
+            }
+        }
+
+        Component {
+            id: daytimeGrass
+
+            Scenes.DaytimeGrass {
+                Component.onCompleted: {
+                    mediaPlayer.source = '../resources/music/chooseYourSeeds.flac';
+                    mediaPlayer.play();
+                }
+                onBackToMainMenu: {
+                    loader.sourceComponent = mainMenu;
+                    mediaPlayer.source = '../resources/music/crazyDave.flac';
+                    mediaPlayer.play();
+                }
+                onChose: mediaPlayer.stop()
+                onStarted: {
+                    mediaPlayer.source = '../resources/music/grassWalk.flac';
+                    mediaPlayer.play();
+                }
             }
         }
     }
+
     MediaPlayer {
         id: mediaPlayer
 
         loops: MediaPlayer.Infinite
-        source: rootPath + '/resources/music/crazyDave.flac'
+        source: '../resources/music/crazyDave.flac'
 
         audioOutput: AudioOutput {
         }

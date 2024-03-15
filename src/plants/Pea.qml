@@ -4,14 +4,13 @@ import "../scenes" as Scenes
 import "../js/common.js" as Common
 
 Item {
-    id: root
+    id: item
 
     readonly property int damageValue: 1
     required property real endPositionX
     property alias paused: numberAnimation.paused
 
     width: height / 2
-    z: 2
 
     Scenes.Shadow {
         height: parent.width * 0.5
@@ -21,30 +20,33 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
     }
+
     Image {
         anchors.top: parent.top
         asynchronous: true
         height: width
         mipmap: true
-        source: rootPath + '/resources/plants/pea.png'
+        source: '../../resources/plants/pea.png'
         sourceSize: Qt.size(width, height)
         width: parent.width
     }
+
     NumberAnimation {
         id: numberAnimation
 
-        duration: (root.endPositionX - root.x) / 0.3
-        paused: root.paused
+        duration: (item.endPositionX - item.x) / 0.3
+        paused: item.paused
         properties: 'x'
         running: true
-        target: root
-        to: root.endPositionX
+        target: item
+        to: item.endPositionX
 
-        onFinished: root.destroy()
+        onFinished: item.destroy()
     }
+
     SoundEffect {
         id: soundEffect
 
-        source: rootPath + '/resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
+        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
     }
 }

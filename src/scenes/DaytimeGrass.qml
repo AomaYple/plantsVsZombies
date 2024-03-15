@@ -3,7 +3,7 @@ import "../plants" as Plants
 import "../js/common.js" as Common
 
 Item {
-    id: root
+    id: item
 
     signal backToMainMenu
     signal chose
@@ -19,7 +19,7 @@ Item {
         asynchronous: true
         height: parent.height
         mipmap: true
-        source: rootPath + '/resources/scenes/daytimeGrass.png'
+        source: '../../resources/scenes/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
         width: height / 600 * 1400
 
@@ -35,6 +35,7 @@ Item {
 
             onTriggered: xAnimator.start()
         }
+
         XAnimator {
             id: xAnimator
 
@@ -52,10 +53,11 @@ Item {
                     readied();
                     readySetPlant.start();
                     seedBank.emerge();
-                    root.chose();
+                    item.chose();
                 }
             }
         }
+
         ReadySetPlant {
             id: readySetPlant
 
@@ -64,13 +66,19 @@ Item {
             x: (parent.width - parent.leftMargin - parent.rightMargin - width) / 2 + parent.leftMargin
 
             onFinished: {
-                menuButton.visible = shovelBank.visible = true;
-                shovelBank.shoveling = parent.paused = false;
-                sunlightProducer.running = zombieProducer.running = true;
+                menuButton.visible = shovelBank.visible = sunlightProducer.running = zombieProducer.running = true;
                 menuButton.forceActiveFocus();
-                root.started();
+                parent.paused = false;
+                mouseArea.enabled = Qt.binding(function () {
+                    return seedBank.plantComponent || shovelBank.shoveling;
+                });
+                seedBank.enabled = Qt.binding(function () {
+                    return !shovelBank.shoveling;
+                });
+                item.started();
             }
         }
+
         SunlightProducer {
             id: sunlightProducer
 
@@ -78,6 +86,7 @@ Item {
 
             onTriggered: Common.naturalGenerateSunlight()
         }
+
         ZombieProducer {
             id: zombieProducer
 
@@ -85,16 +94,19 @@ Item {
 
             onTriggered: Common.createZombie()
         }
+
         MouseArea {
+            id: mouseArea
+
             anchors.fill: parent
-            enabled: !parent.paused && (seedBank.planting || shovelBank.shoveling)
+            enabled: false
             hoverEnabled: true
 
             onPositionChanged: {
-                if (seedBank.planting) {
+                if (seedBank.plantComponent) {
                     previewPlant.x = mouseX - previewPlant.width / 2;
                     previewPlant.y = mouseY - previewPlant.height / 2;
-                } else if (shovelBank.shoveling) {
+                } else {
                     shovel.x = mouseX - shovel.width / 2;
                     shovel.y = mouseY - shovel.height / 2;
                 }
@@ -103,40 +115,27 @@ Item {
             SeedBank {
                 id: seedBank
 
-                enabled: !shovelBank.shoveling
                 height: parent.height * 0.145
                 paused: image.paused
                 x: image.leftMargin + parent.width * 0.01
-
-                onPlantCanceled: {
-                    previewPlant.source = '';
-                    previewPlant.plantComponent = null;
-                }
-                onPlantStarted: (previewPlantSource, plantComponent) => {
-                    previewPlant.source = previewPlantSource;
-                    previewPlant.plantComponent = plantComponent;
-                }
             }
+
             ShovelBank {
                 id: shovelBank
 
                 function fixShovel() {
                     shovel.x = x + (width - shovel.width) / 2;
                     shovel.y = y + (height - shovel.height) / 2;
-                    shoveling = false;
                 }
 
                 anchors.left: seedBank.right
-                enabled: !seedBank.planting
+                enabled: !seedBank.plantComponent
                 height: parent.height * 0.13
 
-                onClicked: {
-                    if (shoveling)
-                        fixShovel();
-                    else
-                        shoveling = true;
-                }
+                onClicked: if (!shoveling)
+                    fixShovel()
             }
+
             PlantArea {
                 id: plantArea
 
@@ -149,23 +148,18 @@ Item {
                 onEradicated: shovelBank.fixShovel()
                 onPlanted: (properties, subPlantAreaId) => {
                     Common.plant(properties, subPlantAreaId);
-                    previewPlant.plant();
+                    seedBank.plant();
                 }
             }
         }
+
         PreviewPlant {
             id: previewPlant
 
-            property var plantComponent
-
-            function plant() {
-                source = '';
-                plantComponent = null;
-                seedBank.plant();
-            }
-
             height: parent.height * 0.15
+            source: seedBank.previewPlantSource
         }
+
         Shovel {
             id: shovel
 
@@ -174,6 +168,7 @@ Item {
             x: shovelBank.x + (shovelBank.width - width) / 2
             y: shovelBank.y + (shovelBank.height - height) / 2
         }
+
         MenuButton {
             id: menuButton
 
@@ -185,6 +180,7 @@ Item {
                 menuDialog.open();
             }
         }
+
         MenuDialog {
             id: menuDialog
 
@@ -199,7 +195,7 @@ Item {
             }
             onBackToMainMenu: {
                 close();
-                root.backToMainMenu();
+                item.backToMainMenu();
             }
         }
     }

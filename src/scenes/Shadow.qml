@@ -1,13 +1,9 @@
 import QtQuick
 
-Item {
+Image {
+    asynchronous: true
+    mipmap: true
+    source: '../../resources/scenes/shadow.png'
+    sourceSize: Qt.size(width, height)
     width: height / 49 * 73
-
-    Image {
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: rootPath + '/resources/scenes/shadow.png'
-        sourceSize: Qt.size(width, height)
-    }
 }

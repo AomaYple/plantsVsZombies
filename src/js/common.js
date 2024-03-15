@@ -7,7 +7,7 @@ function getRandomFloat(min, max) {
 }
 
 function createBasicZombieStand() {
-    const component = Qt.createComponent(rootPath + '/src/zombies/BasicZombieStand.qml');
+    const component = Qt.createComponent('../zombies/BasicZombieStand.qml');
     const zombieHeight = Qt.binding(function () {
         return image.height * 0.23;
     });
@@ -86,14 +86,12 @@ function generateSunlight(beginPosition, endPositionY, natural) {
         })
     });
     incubator.onStatusChanged = function (status) {
-        if (status === Component.Ready) {
-            const sunlight = incubator.object;
-            sunlight.collected.connect(
+        if (status === Component.Ready)
+            incubator.object.collected.connect(
                 function () {
                     seedBank.increaseSunlight();
                 }
             );
-        }
     };
 }
 
@@ -104,7 +102,7 @@ function naturalGenerateSunlight() {
 }
 
 function plant(properties, subPlantAreaId) {
-    const incubator = previewPlant.plantComponent.incubateObject(image, {
+    const incubator = seedBank.plantComponent.incubateObject(image, {
         height: Qt.binding(function () {
             return properties.height;
         }),
@@ -196,20 +194,24 @@ function createZombie() {
             const plantArray = plantArea.plantContainer[rowIndex];
             const zombieSet = zombieProducer.zombieContainer[rowIndex];
             zombie.xChanged.connect(function () {
-                for (let i = 8; i >= 0 && !zombie.attacked; --i) {
+                for (let i = 8; i >= 0; --i) {
                     const plant = plantArray[i];
-                    if (plant && zombie.x < plant.x + plant.width * 0.5)
+                    if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5)
                         zombie.startAttack(plant);
                 }
             });
             zombie.died.connect(function () {
-                for (let i = 8; zombieSet.size > 1 && i >= 0; --i)
-                    plantArray[i].zombieAppeared = false;
+                for (let i = 8; i >= 0; --i) {
+                    const plant = plantArray[i];
+                    if (plant && plant.type === Plants.PlantType.Type.PeaShooter && zombie.x >= plant.x + plant.width * 0.5)
+                        --plant.zombieCount;
+                }
                 zombieSet.delete(zombie)
             });
-            if (zombieSet.size === 0) {
-                for (let i = 8; i >= 0; --i)
-                    plantArray[i].zombieAppeared = true;
+            for (let i = 8; i >= 0; --i) {
+                const plant = plantArray[i];
+                if (plant && plant.type === Plants.PlantType.Type.PeaShooter)
+                    ++plant.zombieCount;
             }
             zombieSet.add(zombie);
         }

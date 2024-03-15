@@ -1,47 +1,43 @@
 import QtQuick
 import QtMultimedia
 
-Item {
-    id: root
+AnimatedImage {
+    id: animatedImage
 
     required property point collectedPosition
     required property real endPositionY
     required property bool natural
-    property alias paused: animatedImage.paused
+    property bool picked: true
 
     signal collected
 
+    asynchronous: true
+    mipmap: true
+    source: '../../resources/scenes/sunlight.gif'
+    sourceSize: Qt.size(width, height)
     width: height / 56 * 57
 
-    AnimatedImage {
-        id: animatedImage
-
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: rootPath + '/resources/scenes/sunlight.gif'
-        sourceSize: Qt.size(width, height)
-
-        onStatusChanged: if (status === Image.Ready) {
-            if (natural) {
-                yAnimation.duration = 5000;
-                yAnimation.to = endPositionY;
-                yAnimation.start();
-            } else {
-                scale = 0.5;
-                scaleAnimation.start();
-            }
+    onStatusChanged: if (status === Image.Ready) {
+        if (natural) {
+            yAnimation.duration = 5000;
+            yAnimation.to = endPositionY;
+            yAnimation.start();
+        } else {
+            scale = 0.5;
+            scaleAnimation.start();
         }
     }
+
     SuspendableTimer {
         interval: 8000
         running: mouseArea.enabled
 
         onTriggered: {
-            opacityAnimation.picked = false;
+            parent.picked = false;
             opacityAnimation.start();
         }
     }
+
     MouseArea {
         id: mouseArea
 
@@ -52,43 +48,47 @@ Item {
             enabled = false;
             scaleAnimation.complete();
             yAnimation.stop();
-            soundEffect.play();
             yAnimation.to = collectedPosition.y;
             yAnimation.duration = xAnimation.duration;
+            soundEffect.play();
             xAnimation.start();
             yAnimation.start();
         }
     }
+
     SoundEffect {
         id: soundEffect
 
-        source: rootPath + '/resources/sounds/points.wav'
+        source: '../../resources/sounds/points.wav'
     }
+
     NumberAnimation {
         id: xAnimation
 
         duration: 500
-        paused: running && root.paused
+        paused: running && animatedImage.paused
         properties: 'x'
-        target: root
-        to: root.collectedPosition.x
+        target: animatedImage
+        to: animatedImage.collectedPosition.x
 
         onFinished: opacityAnimation.start()
     }
+
     NumberAnimation {
         id: yAnimation
 
-        paused: running && root.paused
+        paused: running && animatedImage.paused
         properties: 'y'
-        target: root
+        target: animatedImage
     }
+
     NumberAnimation {
         id: scaleAnimation
 
         duration: 300
-        paused: running && root.paused
+        paused: running && animatedImage.paused
         properties: 'scale'
-        target: root
+        target: animatedImage
         to: 1
 
         onFinished: {
@@ -96,21 +96,20 @@ Item {
             yAnimation.start();
         }
     }
+
     NumberAnimation {
         id: opacityAnimation
 
-        property bool picked: true
-
         duration: 500
-        paused: running && root.paused
+        paused: running && animatedImage.paused
         properties: 'opacity'
-        target: root
+        target: animatedImage
         to: 0
 
         onFinished: {
-            root.destroy();
-            if (picked)
-                root.collected();
+            animatedImage.destroy();
+            if (animatedImage.picked)
+                animatedImage.collected();
         }
     }
 }

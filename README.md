@@ -1,10 +1,10 @@
 ## 介绍
 
-本项目是一个基于c++23和qt6 qml的跨平台植物大战僵尸游戏
+本项目是一个基于c++23和qt6 qml的windows植物大战僵尸游戏
 
 ## 环境
 
-gcc or clang or msvc，cmake，ninja，qt6
+msvc，cmake，ninja，qt6
 
 ## 编译
 

@@ -1,25 +1,14 @@
 import QtQuick
 
-Item {
-    readonly property real aspectRatio: image.sourceSize.width / image.sourceSize.height
-
+Image {
     signal clicked
 
-    Image {
-        id: image
+    asynchronous: true
+    mipmap: true
+    source: '../../resources/scenes/loadBar.png'
+    sourceSize: Qt.size(width, height)
+    width: height / 94 * 332
 
-        anchors.fill: parent
-        asynchronous: true
-        mipmap: true
-        source: rootPath + '/resources/scenes/loadBar.png'
-
-        onStatusChanged: if (status === Image.Ready) {
-            const aspectRatio = sourceSize.width / sourceSize.height;
-            sourceSize = Qt.binding(function () {
-                return Qt.size(height * aspectRatio, parent.height);
-            });
-        }
-    }
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor

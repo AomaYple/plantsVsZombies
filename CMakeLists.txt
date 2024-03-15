@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.29.0-rc4)
 
 project(PlantsVsZombies)
 
@@ -11,22 +11,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD_REQUIRED ON
         AUTOMOC ON
         WIN32_EXECUTABLE $<$<CONFIG:Debug>:TRUE,FALSE>
-        MACOSX_BUNDLE $<$<CONFIG:Debug>:TRUE,FALSE>
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
-        $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic>
-        $<$<CXX_COMPILER_ID:Clang>:-Weverything>
-        $<$<CXX_COMPILER_ID:MSVC>:/Wall>
-
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og -fsanitize=address>
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:-Ofast>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/fsanitize=address>
-)
-
-target_link_options(${PROJECT_NAME} PRIVATE
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-fsanitize=address>
+        /Wall
+        $<$<CONFIG:Debug>:/fsanitize=address>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
