@@ -1,4 +1,5 @@
 import QtQml
+import "../scenes" as Scenes
 
 Plant {
     readonly property var peaComponent: Qt.createComponent('Pea.qml', Component.Asynchronous)
@@ -13,7 +14,7 @@ Plant {
     type: PlantType.Type.PeaShooter
 
     onCurrentFrameChanged: currentFrame => {
-        if (currentFrame === 13)
+        if (zombieCount > 0 && currentFrame === 13)
             peaShot(Qt.point(x + width, y + height * 0.12));
     }
 }
