@@ -17,8 +17,8 @@ Item {
     signal died
 
     function die() {
-        destroy();
         soundEffect.play();
+        destroy();
         died();
     }
 
@@ -54,7 +54,7 @@ Item {
 
         Binding {
             property: 'opacity'
-            target: parent
+            target: item
             value: item.shoveling ? 0.8 : 1
             when: !numberAnimation.running
         }
