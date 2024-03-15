@@ -16,7 +16,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 target_compile_options(${PROJECT_NAME} PRIVATE
         /Wall
-        $<$<CONFIG:Debug>:/fsanitize=address>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

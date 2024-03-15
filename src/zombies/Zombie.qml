@@ -23,7 +23,6 @@ Item {
     }
 
     function playSplat() {
-        splat.source = '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav';
         splat.play();
     }
 
@@ -104,6 +103,7 @@ Item {
     SoundEffect {
         id: splat
 
+        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
     }
 
     NumberAnimation {

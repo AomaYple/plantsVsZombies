@@ -176,9 +176,9 @@ function initPeaShooter(peaShooter, zombies) {
                     for (const zombie of zombies) {
                         const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
                         if (x >= left && x <= right) {
+                            zombie.lifeValue -= pea.damageValue;
                             zombie.twinkle();
                             zombie.playSplat();
-                            zombie.lifeValue -= pea.damageValue;
                             pea.destroy();
                         }
                     }
