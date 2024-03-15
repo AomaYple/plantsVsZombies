@@ -14,12 +14,11 @@ Plant {
     type: PlantType.Type.PeaShooter
 
     Scenes.SuspendableTimer {
-        interval: 790
+        interval: 800
         paused: parent.paused
         repeat: true
-        running: true
+        running: parent.zombieCount > 0
 
-        onTriggered: if (parent.zombieCount > 0)
-            parent.peaShot(Qt.point(parent.x + parent.width, parent.y + parent.height * 0.12))
+        onTriggered: parent.peaShot(Qt.point(parent.x + parent.width, parent.y + parent.height * 0.12))
     }
 }

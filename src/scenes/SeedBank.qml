@@ -23,15 +23,14 @@ Image {
 
     function plant() {
         cancelPlant();
-        sunlightSum.decrease();
         sunflowerSeed.plant();
         peaShooterSeed.plant();
+        sunlightSum.decrease();
     }
 
     function startPlant(seedPreviewPlantSource, seedPlantComponent, seedSunlightConsumption) {
         previewPlantSource = seedPreviewPlantSource;
         plantComponent = seedPlantComponent;
-        console.log(plantComponent.errorString());
         sunlightSum.sunlightConsumption = seedSunlightConsumption;
         seedLift.play();
     }
