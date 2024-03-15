@@ -126,14 +126,17 @@ Item {
                 function fixShovel() {
                     shovel.x = x + (width - shovel.width) / 2;
                     shovel.y = y + (height - shovel.height) / 2;
+                    shoveling = false;
                 }
 
                 anchors.left: seedBank.right
                 enabled: !seedBank.plantComponent
                 height: parent.height * 0.13
 
-                onClicked: if (!shoveling)
+                onClicked: if (shoveling)
                     fixShovel()
+                else
+                    shoveling = true
             }
 
             PlantArea {

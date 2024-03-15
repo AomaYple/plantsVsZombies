@@ -168,6 +168,23 @@ function initPeaShooter(peaShooter, zombies) {
                 return image.width - image.rightMargin;
             })
         });
+        incubator.onStatusChanged = function (status) {
+            if (status === Component.Ready) {
+                const pea = incubator.object;
+                pea.xChanged.connect(function () {
+                    const x = pea.x + pea.width;
+                    for (const zombie of zombies) {
+                        const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
+                        if (x >= left && x <= right) {
+                            zombie.twinkle();
+                            zombie.playSplat();
+                            zombie.lifeValue -= pea.damageValue;
+                            pea.destroy();
+                        }
+                    }
+                });
+            }
+        }
     });
 }
 

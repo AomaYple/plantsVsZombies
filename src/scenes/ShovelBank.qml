@@ -22,7 +22,6 @@ Image {
         enabled: parent.enabled
 
         onClicked: {
-            parent.shoveling = !parent.shoveling;
             soundEffect.play();
             parent.clicked();
         }

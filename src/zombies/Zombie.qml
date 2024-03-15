@@ -22,6 +22,11 @@ Item {
         died();
     }
 
+    function playSplat() {
+        splat.source = '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav';
+        splat.play();
+    }
+
     function startAttack(attackTargetObject) {
         attackTarget = attackTargetObject;
         attackTargetObject.died.connect(function () {
@@ -30,6 +35,10 @@ Item {
             gulp.play();
         });
         chomp.play();
+    }
+
+    function twinkle() {
+        twinkle.start();
     }
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -90,5 +99,26 @@ Item {
         id: gulp
 
         source: '../../resources/sounds/gulp.wav'
+    }
+
+    SoundEffect {
+        id: splat
+
+    }
+
+    NumberAnimation {
+        id: twinkle
+
+        duration: 250
+        paused: running && item.paused
+        properties: 'opacity'
+        target: animatedImage
+        to: 0.5
+
+        onFinished: if (to === 0.5) {
+            to = 1;
+            start();
+        } else
+            to = 0.5
     }
 }

@@ -1,5 +1,4 @@
 import QtQml
-import "../scenes" as Scenes
 
 Plant {
     readonly property var peaComponent: Qt.createComponent('Pea.qml', Component.Asynchronous)
@@ -13,12 +12,8 @@ Plant {
     source: '../../resources/plants/peaShooter' + (zombieCount > 0 ? 'Shooting.gif' : '.gif')
     type: PlantType.Type.PeaShooter
 
-    Scenes.SuspendableTimer {
-        interval: 1300
-        paused: running && parent.paused
-        repeat: true
-        running: parent.zombieCount > 0
-
-        onTriggered: parent.peaShot(Qt.point(parent.x + parent.width, parent.y + parent.height * 0.12))
+    onCurrentFrameChanged: currentFrame => {
+        if (currentFrame === 13)
+            peaShot(Qt.point(x + width, y + height * 0.12));
     }
 }

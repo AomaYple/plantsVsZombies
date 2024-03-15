@@ -14,6 +14,7 @@ Item {
     property alias source: animatedImage.source
     required property int type
 
+    signal currentFrameChanged(int currentFrame)
     signal died
 
     function die() {
@@ -45,6 +46,8 @@ Item {
         mipmap: true
         opacity: parent.shoveling ? 0.8 : 1
         sourceSize: Qt.size(width, height)
+
+        onCurrentFrameChanged: parent.currentFrameChanged(currentFrame)
     }
 
     NumberAnimation {

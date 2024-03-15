@@ -1,7 +1,6 @@
 import QtQuick
 import QtMultimedia
 import "../scenes" as Scenes
-import "../js/common.js" as Common
 
 Item {
     id: item
@@ -42,11 +41,5 @@ Item {
         to: item.endPositionX
 
         onFinished: item.destroy()
-    }
-
-    SoundEffect {
-        id: soundEffect
-
-        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
     }
 }
