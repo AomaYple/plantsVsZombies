@@ -1,5 +1,4 @@
 import QtQml
-import "../scenes" as Scenes
 
 Plant {
     readonly property var peaComponent: Qt.createComponent('Pea.qml', Component.Asynchronous)
