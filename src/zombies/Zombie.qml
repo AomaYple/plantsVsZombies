@@ -28,16 +28,23 @@ Item {
 
     function startAttack(attackTargetObject) {
         attackTarget = attackTargetObject;
-        attackTargetObject.died.connect(function () {
-            attackTarget = null;
-            chomp.stop();
+        chomp.play();
+        attackTarget.died.connect(function () {
+            stopAttack();
             gulp.play();
         });
-        chomp.play();
+        attackTarget.shovelled.connect(function () {
+            stopAttack();
+        });
+    }
+
+    function stopAttack() {
+        attackTarget = null;
+        chomp.stop();
     }
 
     function twinkle() {
-        twinkle.start();
+        numberAnimation.running = true;
     }
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -82,8 +89,8 @@ Item {
         running: parent.attackTarget
 
         onTriggered: {
-            parent.attackTarget.twinkle();
             parent.attackTarget.lifeValue -= parent.attackValue;
+            parent.attackTarget.twinkle();
         }
     }
 
@@ -100,14 +107,8 @@ Item {
         source: '../../resources/sounds/gulp.wav'
     }
 
-    SoundEffect {
-        id: splat
-
-        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
-    }
-
     NumberAnimation {
-        id: twinkle
+        id: numberAnimation
 
         duration: 250
         paused: running && item.paused
@@ -117,8 +118,14 @@ Item {
 
         onFinished: if (to === 0.5) {
             to = 1;
-            start();
+            running = true;
         } else
             to = 0.5
+    }
+
+    SoundEffect {
+        id: splat
+
+        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
     }
 }

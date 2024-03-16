@@ -9,8 +9,8 @@ Column {
     required property bool shoveling
     required property size subPlantAreaSize
 
-    signal eradicated
     signal planted(rect properties, var subPlantAreaId)
+    signal shovelled
 
     Repeater {
         model: 5
@@ -39,9 +39,10 @@ Column {
                             soundEffect.play();
                             column.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
                         } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
-                            column.plantContainer[index[0]][index[1]].die();
+                            column.plantContainer[index[0]][index[1]].shovel();
+                            column.plantContainer[index[0]][index[1]] = null;
                             soundEffect.play();
-                            column.eradicated();
+                            column.shovelled();
                         }
                     }
 

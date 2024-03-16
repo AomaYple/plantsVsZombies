@@ -121,6 +121,7 @@ function plant(properties, subPlantAreaId) {
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
+            seedBank.plant();
             const plant = incubator.object;
             const index = subPlantAreaId.index;
             switch (plant.type) {

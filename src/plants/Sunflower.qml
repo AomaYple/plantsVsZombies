@@ -18,7 +18,7 @@ Plant {
         repeat: true
         running: true
 
-        onTriggered: numberAnimation.start()
+        onTriggered: numberAnimation.running = true
     }
 
     Rectangle {
@@ -44,7 +44,7 @@ Plant {
 
         onFinished: if (to === 0.5) {
             to = 0;
-            start();
+            running = true;
             plant.sunlightProduced();
         } else
             to = 0.5

@@ -9,12 +9,12 @@ Image {
     property url previewPlantSource: ''
 
     function cancelPlant() {
-        previewPlantSource = '';
         plantComponent = null;
+        previewPlantSource = '';
     }
 
     function emerge() {
-        yAnimator.start();
+        yAnimator.running = true;
     }
 
     function increaseSunlight() {

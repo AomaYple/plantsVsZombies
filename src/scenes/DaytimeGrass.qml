@@ -24,7 +24,7 @@ Item {
         width: height / 600 * 1400
 
         onStatusChanged: if (status === Image.Ready) {
-            timer.start();
+            timer.running = true;
             Common.createBasicZombieStand();
         }
 
@@ -33,7 +33,7 @@ Item {
 
             interval: 1500
 
-            onTriggered: xAnimator.start()
+            onTriggered: xAnimator.running = true
         }
 
         XAnimator {
@@ -48,7 +48,7 @@ Item {
             onFinished: {
                 if (to === -(image.leftMargin + image.rightMargin)) {
                     to = -image.leftMargin;
-                    timer.start();
+                    timer.running = true;
                 } else {
                     readySetPlant.start();
                     seedBank.emerge();
@@ -148,11 +148,8 @@ Item {
                 x: image.leftMargin + parent.width * 0.018
                 y: parent.height * 0.145
 
-                onEradicated: shovelBank.fixShovel()
-                onPlanted: (properties, subPlantAreaId) => {
-                    Common.plant(properties, subPlantAreaId);
-                    seedBank.plant();
-                }
+                onPlanted: (properties, subPlantAreaId) => Common.plant(properties, subPlantAreaId)
+                onShovelled: shovelBank.fixShovel()
             }
         }
 
@@ -180,7 +177,7 @@ Item {
 
             onTriggered: {
                 parent.paused = true;
-                menuDialog.open();
+                menuDialog.visible = true;
             }
         }
 
@@ -192,12 +189,12 @@ Item {
             y: (parent.height - height) / 2
 
             onBackToGame: {
-                close();
+                visible = false;
                 parent.paused = false;
                 menuButton.forceActiveFocus();
             }
             onBackToMainMenu: {
-                close();
+                visible = false;
                 item.backToMainMenu();
             }
         }

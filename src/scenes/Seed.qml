@@ -3,7 +3,7 @@ import QtQuick
 Image {
     id: image
 
-    required property real cooldownTime
+    required property int cooldownTime
     required property bool paused
     property bool planting: false
     required property int sunlightConsumption
@@ -61,12 +61,12 @@ Image {
 
         onClicked: {
             if (!parent.planting && !curtain.visible) {
-                deepCurtain.height = height;
                 parent.planting = true;
+                deepCurtain.height = height;
                 parent.plantStarted();
             } else if (planting) {
-                deepCurtain.height = 0;
                 parent.planting = false;
+                deepCurtain.height = 0;
                 parent.plantCanceled();
             } else
                 parent.buzzered();

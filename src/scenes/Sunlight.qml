@@ -21,10 +21,10 @@ AnimatedImage {
         if (natural) {
             yAnimation.duration = 5000;
             yAnimation.to = endPositionY;
-            yAnimation.start();
+            yAnimation.running = true;
         } else {
             scale = 0.5;
-            scaleAnimation.start();
+            scaleAnimation.running = true;
         }
     }
 
@@ -34,7 +34,7 @@ AnimatedImage {
 
         onTriggered: {
             parent.picked = false;
-            opacityAnimation.start();
+            opacityAnimation.running = true;
         }
     }
 
@@ -47,12 +47,12 @@ AnimatedImage {
         onClicked: {
             enabled = false;
             scaleAnimation.complete();
-            yAnimation.stop();
+            yAnimation.running = false;
             yAnimation.to = collectedPosition.y;
             yAnimation.duration = xAnimation.duration;
             soundEffect.play();
-            xAnimation.start();
-            yAnimation.start();
+            xAnimation.running = true;
+            yAnimation.running = true;
         }
     }
 
@@ -71,7 +71,7 @@ AnimatedImage {
         target: animatedImage
         to: animatedImage.collectedPosition.x
 
-        onFinished: opacityAnimation.start()
+        onFinished: opacityAnimation.running = true
     }
 
     NumberAnimation {
@@ -93,7 +93,7 @@ AnimatedImage {
 
         onFinished: {
             yAnimation.to = endPositionY;
-            yAnimation.start();
+            yAnimation.running = true;
         }
     }
 

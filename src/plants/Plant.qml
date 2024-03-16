@@ -16,14 +16,20 @@ Item {
 
     signal currentFrameChanged(int currentFrame)
     signal died
+    signal shovelled
 
     function die() {
         destroy();
         died();
     }
 
+    function shovel() {
+        destroy();
+        shovelled();
+    }
+
     function twinkle() {
-        numberAnimation.start();
+        numberAnimation.running = true;
     }
 
     width: height
@@ -61,7 +67,7 @@ Item {
 
         onFinished: if (to === 0.5) {
             to = 1;
-            start();
+            running = true;
         } else {
             to = 0.5;
             item.opacity = Qt.binding(function () {

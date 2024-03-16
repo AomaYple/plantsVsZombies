@@ -1,5 +1,4 @@
 import QtQuick
-import QtMultimedia
 import "../scenes" as Scenes
 
 Item {
