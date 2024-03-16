@@ -6,8 +6,8 @@ import "../js/common.js" as Common
 Item {
     id: item
 
-    property var attackTarget: null
     required property int attackValue
+    property bool attacking: false
     required property real endPositionX
     required property int lifeValue
     property alias paused: animatedImage.paused
@@ -15,6 +15,7 @@ Item {
     readonly property real speed: 0.01
     required property int type
 
+    signal attacked
     signal died
 
     function die() {
@@ -26,20 +27,13 @@ Item {
         splat.play();
     }
 
-    function startAttack(attackTargetObject) {
-        attackTarget = attackTargetObject;
+    function startAttack() {
+        attacking = true;
         chomp.play();
-        attackTarget.died.connect(function () {
-            stopAttack();
-            gulp.play();
-        });
-        attackTarget.shovelled.connect(function () {
-            stopAttack();
-        });
     }
 
     function stopAttack() {
-        attackTarget = null;
+        attacking = false;
         chomp.stop();
     }
 
@@ -73,7 +67,7 @@ Item {
 
     NumberAnimation {
         duration: Math.abs(item.x - item.endPositionX) / item.speed
-        paused: item.paused || item.attackTarget
+        paused: item.paused || item.attacking
         properties: 'x'
         running: true
         target: item
@@ -83,16 +77,12 @@ Item {
     }
 
     Scenes.SuspendableTimer {
-        interval: 500
+        interval: 600
         paused: running && parent.paused
         repeat: true
-        running: parent.attackTarget
+        running: item.attacking
 
-        onTriggered: {
-            parent.attackTarget.lifeValue -= parent.attackValue;
-            if (parent.attackTarget)
-                parent.attackTarget.twinkle();
-        }
+        onTriggered: parent.attacked()
     }
 
     SoundEffect {

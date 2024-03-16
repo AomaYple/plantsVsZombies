@@ -32,6 +32,7 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/js/common.js
 
+        src/plants/WallNut.qml
         src/plants/Pea.qml
         src/plants/PeaShooter.qml
         src/plants/Plant.qml
@@ -80,6 +81,9 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/plants/sunflower.gif
         resources/plants/sunflower.png
         resources/plants/sunflowerSeed.png
+        resources/plants/wallNut.gif
+        resources/plants/wallNut.png
+        resources/plants/wallNutSeed.png
 
         resources/scenes/button.png
         resources/scenes/daytimeGrass.png

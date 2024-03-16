@@ -16,16 +16,10 @@ Item {
 
     signal currentFrameChanged(int currentFrame)
     signal died
-    signal shovelled
 
     function die() {
         destroy();
         died();
-    }
-
-    function shovel() {
-        destroy();
-        shovelled();
     }
 
     function twinkle() {
