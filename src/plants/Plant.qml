@@ -54,7 +54,6 @@ Item {
         id: numberAnimation
 
         duration: 250
-        paused: running && item.paused
         properties: 'opacity'
         target: animatedImage
         to: 0.5
