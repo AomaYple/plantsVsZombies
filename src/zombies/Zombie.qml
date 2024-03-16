@@ -90,7 +90,8 @@ Item {
 
         onTriggered: {
             parent.attackTarget.lifeValue -= parent.attackValue;
-            parent.attackTarget.twinkle();
+            if (parent.attackTarget)
+                parent.attackTarget.twinkle();
         }
     }
 

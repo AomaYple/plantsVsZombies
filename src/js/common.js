@@ -173,14 +173,17 @@ function initPeaShooter(peaShooter, zombies) {
             if (status === Component.Ready) {
                 const pea = incubator.object;
                 pea.xChanged.connect(function () {
-                    const x = pea.x + pea.width;
-                    for (const zombie of zombies) {
-                        const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
-                        if (x >= left && x <= right) {
-                            zombie.lifeValue -= pea.damageValue;
-                            zombie.twinkle();
-                            zombie.playSplat();
-                            pea.destroy();
+                    if (pea.damageCount > 0) {
+                        const x = pea.x + pea.width;
+                        for (const zombie of zombies) {
+                            const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
+                            if (x >= left && x <= right) {
+                                --pea.damageCount;
+                                zombie.playSplat();
+                                zombie.twinkle();
+                                zombie.lifeValue -= pea.damageValue;
+                                pea.destroy();
+                            }
                         }
                     }
                 });
