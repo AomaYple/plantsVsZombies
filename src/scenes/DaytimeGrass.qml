@@ -124,9 +124,9 @@ Item {
                 id: shovelBank
 
                 function fixShovel() {
+                    shoveling = false;
                     shovel.x = x + (width - shovel.width) / 2;
                     shovel.y = y + (height - shovel.height) / 2;
-                    shoveling = false;
                 }
 
                 anchors.left: seedBank.right

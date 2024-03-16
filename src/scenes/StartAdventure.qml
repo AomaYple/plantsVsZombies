@@ -19,7 +19,7 @@ Image {
         hoverEnabled: enabled
 
         onClicked: {
-            timer.start();
+            timer.running = true;
             parent.clicked();
         }
         onEntered: parent.entered()
