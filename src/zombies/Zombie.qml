@@ -142,6 +142,7 @@ Item {
 
         onTriggered: {
             parent.speed *= 2;
+            moveAnimation.restart();
             animatedImage.speed *= 2;
         }
     }
