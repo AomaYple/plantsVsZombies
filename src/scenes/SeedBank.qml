@@ -28,6 +28,7 @@ Image {
         wallNutSeed.plant();
         snowPeaShooterSeed.plant();
         repeaterSeed.plant();
+        potatoMineSeed.plant();
         sunlightSum.decrease();
     }
 
@@ -102,7 +103,7 @@ Image {
 
         anchors.verticalCenter: parent.verticalCenter
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.planting || planting)
+        enabled: parent.enabled && (!parent.plantComponent || planting)
         height: parent.height * 0.84
         paused: parent.paused
         source: '../../resources/plants/sunflowerSeed.png'
@@ -122,7 +123,7 @@ Image {
         readonly property url previewPlantSource: '../../resources/plants/peaShooter.png'
 
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.planting || planting)
+        enabled: parent.enabled && (!parent.plantComponent || planting)
         height: sunflowerSeed.height
         paused: parent.paused
         source: '../../resources/plants/peaShooterSeed.png'
@@ -146,7 +147,7 @@ Image {
         readonly property url previewPlantSource: '../../resources/plants/wallNut.png'
 
         cooldownTime: 30000
-        enabled: parent.enabled && (!parent.planting || planting)
+        enabled: parent.enabled && (!parent.plantComponent || planting)
         height: peaShooterSeed.height
         paused: parent.paused
         source: '../../resources/plants/wallNutSeed.png'
@@ -170,7 +171,7 @@ Image {
         readonly property url previewPlantSource: '../../resources/plants/snowPeaShooter.png'
 
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.planting || planting)
+        enabled: parent.enabled && (!parent.plantComponent || planting)
         height: wallNutSeed.height
         paused: parent.paused
         source: '../../resources/plants/snowPeaShooterSeed.png'
@@ -194,7 +195,7 @@ Image {
         readonly property url previewPlantSource: '../../resources/plants/repeater.png'
 
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.planting || planting)
+        enabled: parent.enabled && (!parent.plantComponent || planting)
         height: snowPeaShooterSeed.height
         paused: parent.paused
         source: '../../resources/plants/repeaterSeed.png'
@@ -207,6 +208,30 @@ Image {
 
         anchors {
             left: snowPeaShooterSeed.right
+            verticalCenter: parent.verticalCenter
+        }
+    }
+
+    Seed {
+        id: potatoMineSeed
+
+        readonly property var plantComponent: Qt.createComponent('../plants/PotatoMine.qml', Component.Asynchronous)
+        readonly property url previewPlantSource: '../../resources/plants/potatoMine.png'
+
+        cooldownTime: 30000
+        enabled: parent.enabled && (!parent.plantComponent || planting)
+        height: repeaterSeed.height
+        paused: parent.paused
+        source: '../../resources/plants/potatoMineSeed.png'
+        sunlightConsumption: 25
+        sunlightSum: sunlightSum.sum()
+
+        onBuzzered: buzzer.play()
+        onPlantCanceled: parent.cancelPlant()
+        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+
+        anchors {
+            left: repeaterSeed.right
             verticalCenter: parent.verticalCenter
         }
     }

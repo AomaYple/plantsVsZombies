@@ -63,6 +63,7 @@ Window {
         source: '../resources/music/crazyDave.flac'
 
         audioOutput: AudioOutput {
+            volume: 0.8
         }
 
         Component.onCompleted: play()

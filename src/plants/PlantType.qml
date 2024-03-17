@@ -6,6 +6,7 @@ QtObject {
         PeaShooter,
         WallNut,
         SnowPeaShooter,
-        Repeater
+        Repeater,
+        PotatoMine
     }
 }

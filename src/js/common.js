@@ -20,7 +20,7 @@ function createBasicZombieStand() {
             return image.height * 0.15
         })
     });
-    xAnimator.readied.connect(function () {
+    moveAnimator.readied.connect(function () {
         incubator0.object.destroy();
     });
     const incubator1 = component.incubateObject(image, {
@@ -32,7 +32,7 @@ function createBasicZombieStand() {
             return image.height * 0.4
         })
     });
-    xAnimator.readied.connect(function () {
+    moveAnimator.readied.connect(function () {
         incubator1.object.destroy();
     });
     const incubator2 = component.incubateObject(image, {
@@ -44,7 +44,7 @@ function createBasicZombieStand() {
             return image.height * 0.6
         })
     });
-    xAnimator.readied.connect(function () {
+    moveAnimator.readied.connect(function () {
         incubator2.object.destroy();
     });
     const incubator3 = component.incubateObject(image, {
@@ -56,7 +56,7 @@ function createBasicZombieStand() {
             return image.height * 0.7
         })
     });
-    xAnimator.readied.connect(function () {
+    moveAnimator.readied.connect(function () {
         incubator3.object.destroy();
     });
 }
@@ -101,16 +101,16 @@ function naturalGenerateSunlight() {
         seedBank.height), getRandomFloat(seedBank.height + image.height * 0.1, image.height - sunlightHeight), true);
 }
 
-function plant(properties, subPlantAreaId) {
+function plant(property, subPlantAreaId) {
     const incubator = seedBank.plantComponent.incubateObject(image, {
         height: Qt.binding(function () {
-            return properties.height;
+            return property.height;
         }),
         x: Qt.binding(function () {
-            return properties.x;
+            return property.x;
         }),
         y: Qt.binding(function () {
-            return properties.y;
+            return property.y;
         }),
         shoveling: Qt.binding(function () {
             return shovelBank.shoveling && subPlantAreaId.containsMouse;
@@ -260,13 +260,22 @@ function createZombie() {
             zombie.xChanged.connect(function () {
                 for (const plant of plantArray) {
                     if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5) {
+                        switch (plant.type) {
+                            case Plants.PlantType.Type.WallNut:
+                                ++plant.zombieCount;
+                                break;
+                            case Plants.PlantType.Type.PotatoMine:
+                                plant.die();
+                                potatoMineBomb(Qt.rect(plant.x, plant.y, plant.width, plant.height));
+                                image.judder();
+                                zombie.die();
+                                break;
+                        }
                         zombie.startAttack();
                         zombie.attacked.connect(function () {
                             plant.lifeValue -= zombie.attackValue;
                             plant.twinkle();
                         });
-                        if (plant.type === Plants.PlantType.Type.WallNut)
-                            ++plant.zombieCount;
                         plant.lifeValueChanged.connect(function () {
                             if (plant.lifeValue <= 0)
                                 zombie.stopAttack();
@@ -307,4 +316,23 @@ function createZombie() {
             zombieSet.add(zombie);
         }
     };
+}
+
+function potatoMineBomb(plantProperty) {
+    const component = Qt.createComponent('../plants/MashedPotato.qml');
+    const objectHeight = image.height * 0.16, objectWidth = objectHeight / 92 * 131;
+    component.incubateObject(image, {
+        height: Qt.binding(function () {
+            return objectHeight;
+        }),
+        width: Qt.binding(function () {
+            return objectWidth;
+        }),
+        x: Qt.binding(function () {
+            return plantProperty.x - (objectWidth - plantProperty.width) / 2;
+        }),
+        y: Qt.binding(function () {
+            return plantProperty.y - (objectHeight - plantProperty.height) / 2;
+        }),
+    });
 }

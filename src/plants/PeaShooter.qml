@@ -12,7 +12,7 @@ Plant {
     source: '../../resources/plants/peaShooter' + (zombieCount > 0 ? 'Shooting.gif' : '.gif')
     type: PlantType.Type.PeaShooter
 
-    onCurrentFrameChanged: currentFrame => {
+    onCurrentFrameChanged: (currentFrame, frameCount) => {
         if (zombieCount > 0 && currentFrame === 13)
             peaShot(Qt.point(x + width, y + height * 0.12));
     }

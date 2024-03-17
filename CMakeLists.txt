@@ -32,11 +32,13 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/js/common.js
 
+        src/plants/MashedPotato.qml
         src/plants/Pea.qml
         src/plants/PeaShooter.qml
         src/plants/PeaType.qml
         src/plants/Plant.qml
         src/plants/PlantType.qml
+        src/plants/PotatoMine.qml
         src/plants/Repeater.qml
         src/plants/SnowPea.qml
         src/plants/SnowPeaShooter.qml
@@ -77,11 +79,17 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/music/crazyDave.flac
         resources/music/grassWalk.flac
 
+        resources/plants/mashedPotato.png
         resources/plants/pea.png
         resources/plants/peaShooter.gif
         resources/plants/peaShooter.png
         resources/plants/peaShooterSeed.png
         resources/plants/peaShooterShooting.gif
+        resources/plants/potatoMine.gif
+        resources/plants/potatoMine.png
+        resources/plants/potatoMineInitializing.png
+        resources/plants/potatoMineSeed.png
+        resources/plants/potatoMineUp.gif
         resources/plants/repeater.gif
         resources/plants/repeater.png
         resources/plants/repeaterSeed.png
@@ -136,8 +144,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/groan5.wav
         resources/sounds/gulp.wav
         resources/sounds/pause.wav
-        resources/sounds/plant.wav
+        resources/sounds/plant0.wav
+        resources/sounds/plant1.wav
         resources/sounds/points.wav
+        resources/sounds/potatoMine.wav
         resources/sounds/readySetPlant.wav
         resources/sounds/seedLift.wav
         resources/sounds/shovel.wav

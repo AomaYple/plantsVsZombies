@@ -1,5 +1,6 @@
 import QtQuick
 import QtMultimedia
+import "../js/common.js" as Common
 
 Column {
     id: column
@@ -9,7 +10,7 @@ Column {
     required property bool shoveling
     required property size subPlantAreaSize
 
-    signal planted(rect properties, var subPlantAreaId)
+    signal planted(rect property, var subPlantAreaId)
     signal shovelled
 
     Repeater {
@@ -62,6 +63,6 @@ Column {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/plant.wav'
+        source: '../../resources/sounds/plant' + Common.getRandomInt(0, 1) + '.wav'
     }
 }

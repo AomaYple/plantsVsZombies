@@ -31,7 +31,7 @@ Image {
         anchors.fill: parent
         color: '#000000'
         opacity: 0.5
-        visible: !parent.enabled || deepCurtain.height > 0 || parent.sunlightSum < parent.sunlightConsumption
+        visible: !parent.enabled || numberAnimation.running || parent.sunlightSum < parent.sunlightConsumption
     }
 
     Rectangle {
@@ -56,7 +56,7 @@ Image {
         id: mouseArea
 
         anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
         enabled: parent.enabled
 
         onClicked: {

@@ -16,6 +16,10 @@ Item {
         property bool paused: true
         readonly property real rightMargin: width - leftMargin - parent.width
 
+        function judder() {
+            judderAnimator.running = true;
+        }
+
         asynchronous: true
         height: parent.height
         mipmap: true
@@ -33,11 +37,11 @@ Item {
 
             interval: 1500
 
-            onTriggered: xAnimator.running = true
+            onTriggered: moveAnimator.running = true
         }
 
         XAnimator {
-            id: xAnimator
+            id: moveAnimator
 
             signal readied
 
@@ -56,6 +60,34 @@ Item {
                     item.chose();
                 }
             }
+        }
+
+        XAnimator {
+            id: judderAnimator
+
+            readonly property real gap: -image.height * 0.01
+
+            duration: 200
+            target: image
+            to: -image.leftMargin + gap
+
+            onFinished: if (to === -image.leftMargin + gap) {
+                running = true;
+                to = -image.leftMargin;
+            } else
+                to = -image.leftMargin + gap
+        }
+
+        YAnimator {
+            duration: judderAnimator.duration
+            running: judderAnimator.running
+            target: image
+            to: judderAnimator.gap
+
+            onFinished: if (to === judderAnimator.gap)
+                to = 0
+            else
+                to = judderAnimator.gap
         }
 
         ReadySetPlant {
@@ -148,7 +180,7 @@ Item {
                 x: image.leftMargin + parent.width * 0.018
                 y: parent.height * 0.145
 
-                onPlanted: (properties, subPlantAreaId) => Common.plant(properties, subPlantAreaId)
+                onPlanted: (property, subPlantAreaId) => Common.plant(property, subPlantAreaId)
                 onShovelled: shovelBank.fixShovel()
             }
         }
