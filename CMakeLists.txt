@@ -32,12 +32,15 @@ qt_add_qml_module(${PROJECT_NAME}
         QML_FILES
         src/js/common.js
 
-        src/plants/WallNut.qml
         src/plants/Pea.qml
         src/plants/PeaShooter.qml
+        src/plants/PeaType.qml
         src/plants/Plant.qml
         src/plants/PlantType.qml
+        src/plants/SnowPea.qml
+        src/plants/SnowPeaShooter.qml
         src/plants/Sunflower.qml
+        src/plants/WallNut.qml
 
         src/scenes/DaytimeGrass.qml
         src/scenes/LoadBar.qml
@@ -78,6 +81,11 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/plants/peaShooter.png
         resources/plants/peaShooterSeed.png
         resources/plants/peaShooterShooting.gif
+        resources/plants/snowPea.png
+        resources/plants/snowPeaShooter.gif
+        resources/plants/snowPeaShooter.png
+        resources/plants/snowPeaShooterSeed.png
+        resources/plants/snowPeaShooterShooting.gif
         resources/plants/sunflower.gif
         resources/plants/sunflower.png
         resources/plants/sunflowerSeed.png
@@ -114,6 +122,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/chomp1.wav
         resources/sounds/chomp2.wav
         resources/sounds/evilLaugh.wav
+        resources/sounds/frozen.wav
         resources/sounds/groan0.wav
         resources/sounds/groan1.wav
         resources/sounds/groan2.wav

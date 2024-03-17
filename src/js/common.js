@@ -126,6 +126,7 @@ function plant(properties, subPlantAreaId) {
                     initSunflower(plant);
                     break;
                 case Plants.PlantType.Type.PeaShooter:
+                case Plants.PlantType.Type.SnowPeaShooter:
                     initPeaShooter(plant, zombieProducer.zombieContainer[index[0]]);
                     break;
                 case Plants.PlantType.Type.WallNut:
@@ -184,6 +185,8 @@ function initPeaShooter(peaShooter, zombies) {
                         const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
                         if (x >= left && x <= right) {
                             zombie.lifeValue -= pea.attackValue;
+                            if (pea.type === Plants.PeaType.Type.SnowPea)
+                                zombie.decelerate();
                             pea.destroy();
                             zombie.twinkle();
                             zombie.playSplat();

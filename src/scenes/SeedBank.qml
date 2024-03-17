@@ -26,6 +26,7 @@ Image {
         sunflowerSeed.plant();
         peaShooterSeed.plant();
         wallNutSeed.plant();
+        snowPeaShooterSeed.plant();
         sunlightSum.decrease();
     }
 
@@ -157,6 +158,30 @@ Image {
 
         anchors {
             left: peaShooterSeed.right
+            verticalCenter: parent.verticalCenter
+        }
+    }
+
+    Seed {
+        id: snowPeaShooterSeed
+
+        readonly property var plantComponent: Qt.createComponent('../plants/SnowPeaShooter.qml', Component.Asynchronous)
+        readonly property url previewPlantSource: '../../resources/plants/snowPeaShooter.png'
+
+        cooldownTime: 7500
+        enabled: parent.enabled && (!parent.planting || planting)
+        height: sunflowerSeed.height
+        paused: parent.paused
+        source: '../../resources/plants/snowPeaShooterSeed.png'
+        sunlightConsumption: 175
+        sunlightSum: sunlightSum.sum()
+
+        onBuzzered: buzzer.play()
+        onPlantCanceled: parent.cancelPlant()
+        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+
+        anchors {
+            left: wallNutSeed.right
             verticalCenter: parent.verticalCenter
         }
     }

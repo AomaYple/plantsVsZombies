@@ -12,11 +12,23 @@ Item {
     required property int lifeValue
     property alias paused: animatedImage.paused
     property alias source: animatedImage.source
-    readonly property real speed: 0.01
+    property real speed: 0.01
     required property int type
 
     signal attacked
     signal died
+
+    function decelerate() {
+        if (suspendableTimer.running)
+            suspendableTimer.restart();
+        else {
+            speed /= 2;
+            animatedImage.speed /= 2;
+            moveAnimation.restart();
+            suspendableTimer.running = true;
+            frozen.play();
+        }
+    }
 
     function die() {
         destroy();
@@ -38,7 +50,7 @@ Item {
     }
 
     function twinkle() {
-        numberAnimation.running = true;
+        twinkleAnimation.running = true;
     }
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -66,6 +78,8 @@ Item {
     }
 
     NumberAnimation {
+        id: moveAnimation
+
         duration: Math.abs(item.x - item.endPositionX) / item.speed
         paused: item.paused || item.attacking
         properties: 'x'
@@ -99,7 +113,7 @@ Item {
     }
 
     NumberAnimation {
-        id: numberAnimation
+        id: twinkleAnimation
 
         duration: 250
         paused: running && item.paused
@@ -118,5 +132,23 @@ Item {
         id: splat
 
         source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
+    }
+
+    Scenes.SuspendableTimer {
+        id: suspendableTimer
+
+        interval: 10000
+        paused: running && parent.paused
+
+        onTriggered: {
+            parent.speed *= 2;
+            animatedImage.speed *= 2;
+        }
+    }
+
+    SoundEffect {
+        id: frozen
+
+        source: '../../resources/sounds/frozen.wav'
     }
 }

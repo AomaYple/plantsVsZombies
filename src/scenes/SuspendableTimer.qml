@@ -10,6 +10,10 @@ Item {
 
     signal triggered
 
+    function restart() {
+        numberAnimation.restart();
+    }
+
     NumberAnimation {
         id: numberAnimation
 

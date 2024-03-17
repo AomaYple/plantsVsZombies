@@ -4,6 +4,7 @@ QtObject {
     enum Type {
         Sunflower,
         PeaShooter,
-        WallNut
+        WallNut,
+        SnowPeaShooter
     }
 }

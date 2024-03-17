@@ -1,7 +1,7 @@
 import QtQml
 
 Plant {
-    readonly property var peaComponent: Qt.createComponent('Pea.qml', Component.Asynchronous)
+    property var peaComponent: Qt.createComponent('Pea.qml', Component.Asynchronous)
     property int zombieCount: 0
 
     signal peaShot(point position)

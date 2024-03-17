@@ -7,6 +7,8 @@ Item {
     readonly property int attackValue: 1
     required property real endPositionX
     property alias paused: numberAnimation.paused
+    property url source: '../../resources/plants/pea.png'
+    property int type: PeaType.Type.Pea
 
     width: height / 2
 
@@ -24,7 +26,7 @@ Item {
         asynchronous: true
         height: width
         mipmap: true
-        source: '../../resources/plants/pea.png'
+        source: parent.source
         sourceSize: Qt.size(width, height)
         width: parent.width
     }
