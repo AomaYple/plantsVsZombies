@@ -37,6 +37,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/plants/PeaType.qml
         src/plants/Plant.qml
         src/plants/PlantType.qml
+        src/plants/Repeater.qml
         src/plants/SnowPea.qml
         src/plants/SnowPeaShooter.qml
         src/plants/Sunflower.qml
@@ -81,6 +82,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/plants/peaShooter.png
         resources/plants/peaShooterSeed.png
         resources/plants/peaShooterShooting.gif
+        resources/plants/repeater.gif
+        resources/plants/repeater.png
+        resources/plants/repeaterSeed.png
+        resources/plants/repeaterShooting.gif
         resources/plants/snowPea.png
         resources/plants/snowPeaShooter.gif
         resources/plants/snowPeaShooter.png

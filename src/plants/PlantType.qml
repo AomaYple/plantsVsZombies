@@ -5,6 +5,7 @@ QtObject {
         Sunflower,
         PeaShooter,
         WallNut,
-        SnowPeaShooter
+        SnowPeaShooter,
+        Repeater
     }
 }
