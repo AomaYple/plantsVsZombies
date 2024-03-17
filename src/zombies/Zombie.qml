@@ -19,8 +19,8 @@ Item {
     signal died
 
     function decelerate() {
-        if (suspendableTimer.running)
-            suspendableTimer.restart();
+        if (frozenTimer.running)
+            frozenTimer.restart();
         else {
             speed /= 2;
             animatedImage.speed /= 2;
