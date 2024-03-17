@@ -25,7 +25,9 @@ Item {
             speed /= 2;
             animatedImage.speed /= 2;
             moveAnimation.restart();
-            suspendableTimer.running = true;
+            attackTimer.interval *= 2;
+            attackTimer.restart();
+            frozenTimer.running = true;
             frozen.play();
         }
     }
@@ -91,6 +93,8 @@ Item {
     }
 
     Scenes.SuspendableTimer {
+        id: attackTimer
+
         interval: 600
         paused: running && parent.paused
         repeat: true
@@ -135,7 +139,7 @@ Item {
     }
 
     Scenes.SuspendableTimer {
-        id: suspendableTimer
+        id: frozenTimer
 
         interval: 10000
         paused: running && parent.paused
@@ -143,6 +147,8 @@ Item {
         onTriggered: {
             parent.speed *= 2;
             moveAnimation.restart();
+            attackTimer.interval /= 2;
+            attackTimer.restart();
             animatedImage.speed *= 2;
         }
     }
