@@ -20,9 +20,13 @@ function createBasicZombieStand() {
             return image.height * 0.15
         })
     });
-    moveAnimator.readied.connect(function () {
+
+    function destroyIncubator0() {
         incubator0.object.destroy();
-    });
+        moveAnimator.readied.disconnect(destroyIncubator0);
+    }
+
+    moveAnimator.readied.connect(destroyIncubator0);
     const incubator1 = component.incubateObject(image, {
         height: zombieHeight,
         x: Qt.binding(function () {
@@ -32,9 +36,12 @@ function createBasicZombieStand() {
             return image.height * 0.4
         })
     });
-    moveAnimator.readied.connect(function () {
+
+    function destroyIncubator1() {
         incubator1.object.destroy();
-    });
+        moveAnimator.readied.disconnect(destroyIncubator1);
+    }
+
     const incubator2 = component.incubateObject(image, {
         height: zombieHeight,
         x: Qt.binding(function () {
@@ -44,9 +51,12 @@ function createBasicZombieStand() {
             return image.height * 0.6
         })
     });
-    moveAnimator.readied.connect(function () {
+
+    function destroyIncubator2() {
         incubator2.object.destroy();
-    });
+        moveAnimator.readied.disconnect(destroyIncubator2);
+    }
+
     const incubator3 = component.incubateObject(image, {
         height: zombieHeight,
         x: Qt.binding(function () {
@@ -56,9 +66,11 @@ function createBasicZombieStand() {
             return image.height * 0.7
         })
     });
-    moveAnimator.readied.connect(function () {
+
+    function destroyIncubator3() {
         incubator3.object.destroy();
-    });
+        moveAnimator.readied.disconnect(destroyIncubator3);
+    }
 }
 
 function generateSunlight(beginPosition, endPositionY, natural) {
@@ -216,16 +228,19 @@ function initWallNut(wallNut) {
 
 function initPea(pea, zombies) {
     pea.xChanged.connect(function () {
-        const x = pea.x + pea.width;
-        for (const zombie of zombies) {
-            const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
-            if (x >= left && x <= right) {
-                zombie.lifeValue -= pea.attackValue;
-                if (pea.type === Plants.PeaType.Type.SnowPea)
-                    zombie.decelerate();
-                pea.destroy();
-                zombie.twinkle();
-                zombie.playSplat();
+        if (pea.attackCount > 0) {
+            const x = pea.x + pea.width;
+            for (const zombie of zombies) {
+                const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
+                if (x >= left && x <= right) {
+                    --pea.attackCount;
+                    zombie.lifeValue -= pea.attackValue;
+                    if (pea.type === Plants.PeaType.Type.SnowPea)
+                        zombie.decelerate();
+                    pea.destroy();
+                    zombie.twinkle();
+                    zombie.playSplat();
+                }
             }
         }
     });
@@ -272,14 +287,22 @@ function createZombie() {
                                 break;
                         }
                         zombie.startAttack();
-                        zombie.attacked.connect(function () {
+
+                        function zombieAttackPlant() {
                             plant.lifeValue -= zombie.attackValue;
                             plant.twinkle();
-                        });
-                        plant.lifeValueChanged.connect(function () {
-                            if (plant.lifeValue <= 0)
+                        }
+
+                        function zombieStopAttack() {
+                            if (plant.lifeValue <= 0) {
                                 zombie.stopAttack();
-                        });
+                                zombie.attacked.disconnect(zombieAttackPlant);
+                                plant.lifeValueChanged.disconnect(zombieStopAttack);
+                            }
+                        }
+
+                        zombie.attacked.connect(zombieAttackPlant);
+                        plant.lifeValueChanged.connect(zombieStopAttack);
                     }
                 }
             });

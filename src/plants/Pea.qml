@@ -4,6 +4,7 @@ import "../scenes" as Scenes
 Item {
     id: item
 
+    property int attackCount: 1
     readonly property int attackValue: 1
     required property real endPositionX
     property alias paused: numberAnimation.paused
