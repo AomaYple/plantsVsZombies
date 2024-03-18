@@ -1,4 +1,5 @@
 import QtQuick
+import QtMultimedia
 import "../plants" as Plants
 import "../zombies" as Zombies
 import "../js/common.js" as Common
@@ -30,7 +31,41 @@ Item {
 
         onStatusChanged: if (status === Image.Ready) {
             timer.running = true;
-            Common.createZombieStand();
+            for (let i = 0; i < 9; ++i) {
+                let zombieStandComponent = null, zombieHeight = null, zombieWidth = null;
+                if (i < 4) {
+                    zombieStandComponent = Qt.createComponent('../zombies/BasicZombieStand.qml');
+                    zombieHeight = image.height * 0.23;
+                    zombieWidth = zombieHeight / 126 * 84;
+                } else if (i >= 4 && i < 7) {
+                    zombieStandComponent = Qt.createComponent('../zombies/ConeHeadZombieStand.qml');
+                    zombieHeight = image.height * 0.25;
+                    zombieWidth = zombieHeight / 148 * 82;
+                } else {
+                    zombieStandComponent = Qt.createComponent('../zombies/BucketHeadZombieStand.qml');
+                    zombieHeight = image.height * 0.24;
+                    zombieWidth = zombieHeight / 140 * 84;
+                }
+                const incubator = zombieStandComponent.incubateObject(image, {
+                    width: Qt.binding(function () {
+                        return zombieWidth;
+                    }),
+                    height: Qt.binding(function () {
+                        return zombieHeight;
+                    }),
+                    x: Qt.binding(function () {
+                        return Common.getRandomFloat(image.width - image.rightMargin, image.width - zombieWidth);
+                    }),
+                    y: Qt.binding(function () {
+                        return Common.getRandomFloat(0, image.height - zombieHeight);
+                    })
+                });
+                function destroyZombieStand() {
+                    incubator.object.destroy();
+                    moveAnimator.readied.disconnect(destroyZombieStand);
+                }
+                moveAnimator.readied.connect(destroyZombieStand);
+            }
         }
 
         Timer {

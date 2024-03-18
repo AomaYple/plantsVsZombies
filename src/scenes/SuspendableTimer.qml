@@ -14,6 +14,8 @@ Item {
         numberAnimation.restart();
     }
 
+    visible: false
+
     NumberAnimation {
         id: numberAnimation
 

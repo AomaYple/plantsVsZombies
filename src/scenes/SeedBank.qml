@@ -32,6 +32,10 @@ Image {
         sunlightSum.decrease();
     }
 
+    function playPoints() {
+        points.play();
+    }
+
     function startPlant(seedPreviewPlantSource, seedPlantComponent, seedSunlightConsumption) {
         previewPlantSource = seedPreviewPlantSource;
         plantComponent = seedPlantComponent;
@@ -81,6 +85,12 @@ Image {
         duration: 500
         target: image
         to: 0
+    }
+
+    SoundEffect {
+        id: points
+
+        source: '../../resources/sounds/points.wav'
     }
 
     SoundEffect {

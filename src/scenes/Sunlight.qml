@@ -1,5 +1,4 @@
 import QtQuick
-import QtMultimedia
 
 AnimatedImage {
     id: animatedImage
@@ -9,6 +8,7 @@ AnimatedImage {
     required property bool natural
     property bool picked: true
 
+    signal clicked
     signal collected
 
     asynchronous: true
@@ -50,16 +50,10 @@ AnimatedImage {
             yAnimation.running = false;
             yAnimation.to = collectedPosition.y;
             yAnimation.duration = xAnimation.duration;
-            soundEffect.play();
             xAnimation.running = true;
             yAnimation.running = true;
+            parent.clicked();
         }
-    }
-
-    SoundEffect {
-        id: soundEffect
-
-        source: '../../resources/sounds/points.wav'
     }
 
     NumberAnimation {
