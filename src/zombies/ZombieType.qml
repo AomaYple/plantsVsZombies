@@ -2,6 +2,8 @@ import QtQml
 
 QtObject {
     enum Type {
-        BasicZombie
+        BasicZombie,
+        ConeHeadZombie,
+        BucketHeadZombie
     }
 }

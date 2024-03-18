@@ -69,7 +69,12 @@ qt_add_qml_module(${PROJECT_NAME}
 
         src/zombies/BasicZombie.qml
         src/zombies/BasicZombieStand.qml
+        src/zombies/BucketHeadZombie.qml
+        src/zombies/BucketHeadZombieStand.qml
+        src/zombies/ConeHeadZombie.qml
+        src/zombies/ConeHeadZombieStand.qml
         src/zombies/Zombie.qml
+        src/zombies/ZombieStand.qml
         src/zombies/ZombieType.qml
 
         src/main.qml
@@ -150,7 +155,10 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/potatoMine.wav
         resources/sounds/readySetPlant.wav
         resources/sounds/seedLift.wav
+        resources/sounds/shieldHit0.wav
+        resources/sounds/shieldHit1.wav
         resources/sounds/shovel.wav
+        resources/sounds/siren.wav
         resources/sounds/splat0.wav
         resources/sounds/splat1.wav
         resources/sounds/splat2.wav
@@ -160,6 +168,16 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/basicZombieStand1.gif
         resources/zombies/basicZombieWalk0.gif
         resources/zombies/basicZombieWalk1.gif
+        resources/zombies/bucketHeadZombieAttack.gif
+        resources/zombies/bucketHeadZombieStand0.gif
+        resources/zombies/bucketHeadZombieStand1.gif
+        resources/zombies/bucketHeadZombieWalk0.gif
+        resources/zombies/bucketHeadZombieWalk1.gif
+        resources/zombies/coneHeadZombieAttack.gif
+        resources/zombies/coneHeadZombieStand0.gif
+        resources/zombies/coneHeadZombieStand1.gif
+        resources/zombies/coneHeadZombieWalk0.gif
+        resources/zombies/coneHeadZombieWalk1.gif
 
         NO_RESOURCE_TARGET_PATH
 )

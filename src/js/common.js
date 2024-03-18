@@ -6,70 +6,43 @@ function getRandomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function createBasicZombieStand() {
-    const component = Qt.createComponent('../zombies/BasicZombieStand.qml');
-    const zombieHeight = Qt.binding(function () {
-        return image.height * 0.23;
-    });
-    const incubator0 = component.incubateObject(image, {
-        height: zombieHeight,
-        x: Qt.binding(function () {
-            return image.width * 0.8;
-        }),
-        y: Qt.binding(function () {
-            return image.height * 0.15
-        })
-    });
+function createZombieStand() {
+    for (let i = 0; i < 9; ++i) {
+        let zombieStandComponent = null, zombieHeight = null, zombieWidth = null;
+        if (i < 4) {
+            zombieStandComponent = Qt.createComponent('../zombies/BasicZombieStand.qml');
+            zombieHeight = image.height * 0.23;
+            zombieWidth = zombieHeight / 126 * 84;
+        } else if (i >= 4 && i < 7) {
+            zombieStandComponent = Qt.createComponent('../zombies/ConeHeadZombieStand.qml');
+            zombieHeight = image.height * 0.25;
+            zombieWidth = zombieHeight / 148 * 82;
+        } else {
+            zombieStandComponent = Qt.createComponent('../zombies/BucketHeadZombieStand.qml');
+            zombieHeight = image.height * 0.24;
+            zombieWidth = zombieHeight / 140 * 84;
+        }
+        const incubator = zombieStandComponent.incubateObject(image, {
+            width: Qt.binding(function () {
+                return zombieWidth;
+            }),
+            height: Qt.binding(function () {
+                return zombieHeight;
+            }),
+            x: Qt.binding(function () {
+                return getRandomFloat(image.width - image.rightMargin, image.width - zombieWidth);
+            }),
+            y: Qt.binding(function () {
+                return getRandomFloat(0, image.height - zombieHeight);
+            })
+        });
 
-    function destroyIncubator0() {
-        incubator0.object.destroy();
-        moveAnimator.readied.disconnect(destroyIncubator0);
-    }
+        function destroyZombieStand() {
+            incubator.object.destroy();
+            moveAnimator.readied.disconnect(destroyZombieStand);
+        }
 
-    moveAnimator.readied.connect(destroyIncubator0);
-    const incubator1 = component.incubateObject(image, {
-        height: zombieHeight,
-        x: Qt.binding(function () {
-            return image.width * 0.83;
-        }),
-        y: Qt.binding(function () {
-            return image.height * 0.4
-        })
-    });
-
-    function destroyIncubator1() {
-        incubator1.object.destroy();
-        moveAnimator.readied.disconnect(destroyIncubator1);
-    }
-
-    const incubator2 = component.incubateObject(image, {
-        height: zombieHeight,
-        x: Qt.binding(function () {
-            return image.width * 0.9;
-        }),
-        y: Qt.binding(function () {
-            return image.height * 0.6
-        })
-    });
-
-    function destroyIncubator2() {
-        incubator2.object.destroy();
-        moveAnimator.readied.disconnect(destroyIncubator2);
-    }
-
-    const incubator3 = component.incubateObject(image, {
-        height: zombieHeight,
-        x: Qt.binding(function () {
-            return image.width * 0.85;
-        }),
-        y: Qt.binding(function () {
-            return image.height * 0.7
-        })
-    });
-
-    function destroyIncubator3() {
-        incubator3.object.destroy();
-        moveAnimator.readied.disconnect(destroyIncubator3);
+        moveAnimator.readied.connect(destroyZombieStand);
     }
 }
 
@@ -239,7 +212,10 @@ function initPea(pea, zombies) {
                         zombie.decelerate();
                     pea.destroy();
                     zombie.twinkle();
-                    zombie.playSplat();
+                    if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
+                        zombie.playSplat();
+                    else
+                        zombie.playShieldHit();
                 }
             }
         }
@@ -247,10 +223,17 @@ function initPea(pea, zombies) {
 }
 
 function createZombie() {
-    const zombieHeight = image.height * 0.24;
+    let zombieHeight = null;
+    const zombieComponent = zombieProducer.zombieComponent;
+    if (zombieComponent === zombieProducer.basicZombieComponent)
+        zombieHeight = image.height * 0.24;
+    else if (zombieComponent === zombieProducer.coneHeadZombieComponent)
+        zombieHeight = image.height * 0.26;
+    else
+        zombieHeight = image.height * 0.25;
     const rowIndex = getRandomInt(0, 4);
     const zombieY = plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight;
-    const incubator = zombieProducer.zombieComponent.incubateObject(image, {
+    const incubator = zombieComponent.incubateObject(image, {
         x: Qt.binding(function () {
             return image.width - image.rightMargin;
         }),
@@ -281,9 +264,8 @@ function createZombie() {
                                 break;
                             case Plants.PlantType.Type.PotatoMine:
                                 plant.die();
-                                potatoMineBomb(Qt.rect(plant.x, plant.y, plant.width, plant.height));
+                                potatoMineBomb(plant, zombieSet, Qt.rect(plant.x, plant.y, plant.width, plant.height));
                                 image.judder();
-                                zombie.die();
                                 break;
                         }
                         zombie.startAttack();
@@ -341,7 +323,10 @@ function createZombie() {
     };
 }
 
-function potatoMineBomb(plantProperty) {
+function potatoMineBomb(potatoMine, zombieSet, plantProperty) {
+    for (const zombie of zombieSet)
+        if (zombie.x > potatoMine.x && zombie.x < potatoMine.x + potatoMine.width)
+            zombie.die();
     const component = Qt.createComponent('../plants/MashedPotato.qml');
     const objectHeight = image.height * 0.16, objectWidth = objectHeight / 92 * 131;
     component.incubateObject(image, {

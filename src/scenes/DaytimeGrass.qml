@@ -1,5 +1,6 @@
 import QtQuick
 import "../plants" as Plants
+import "../zombies" as Zombies
 import "../js/common.js" as Common
 
 Item {
@@ -29,7 +30,7 @@ Item {
 
         onStatusChanged: if (status === Image.Ready) {
             timer.running = true;
-            Common.createBasicZombieStand();
+            Common.createZombieStand();
         }
 
         Timer {
