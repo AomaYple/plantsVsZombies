@@ -1,5 +1,4 @@
 import QtQuick
-import QtMultimedia
 import "../scenes" as Scenes
 
 Item {
@@ -23,7 +22,7 @@ Item {
     }
 
     function twinkle() {
-        numberAnimation.running = true;
+        numberAnimation.start();
     }
 
     width: height
@@ -60,7 +59,7 @@ Item {
 
         onFinished: if (to === 0.5) {
             to = 1;
-            running = true;
+            start();
         } else {
             to = 0.5;
             item.opacity = Qt.binding(function () {

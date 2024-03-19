@@ -1,17 +1,28 @@
 import QtQuick
 import QtMultimedia
-import "../js/common.js" as Common
 
 Column {
     id: column
 
-    property var plantContainer: Array(5).fill(null).map(() => Array(9).fill(null))
-    required property url previewPlantSource
+    readonly property var plantContainer: Array(5).fill(null).map(() => Array(9).fill(null))
+    property url previewPlantSource: ''
     required property bool shoveling
     required property size subPlantAreaSize
 
-    signal planted(rect property, var subPlantAreaId)
+    signal planted(rect property, MouseArea subPlantArea)
     signal shovelled
+
+    function playPlant() {
+        const index = Math.round(Math.random());
+        switch (index) {
+        case 0:
+            plant0.play();
+            break;
+        case 1:
+            plant1.play();
+            break;
+        }
+    }
 
     Repeater {
         model: 5
@@ -35,13 +46,11 @@ Column {
                         if (previewPlant.visible) {
                             const plantX = column.x + index[1] * width;
                             const plantY = column.y + index[0] * height;
-                            const plantWidth = width * 0.9;
-                            const plantHeight = height * 0.9;
-                            soundEffect.play();
-                            column.planted(Qt.rect(plantX, plantY, plantWidth, plantHeight), mouseArea);
+                            column.playPlant();
+                            column.planted(Qt.rect(plantX, plantY, width * 0.9, height * 0.9), mouseArea);
                         } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
-                            column.plantContainer[index[0]][index[1]].lifeValue = 0;
-                            soundEffect.play();
+                            column.plantContainer[index[0]][index[1]].die();
+                            column.playPlant();
                             column.shovelled();
                         }
                     }
@@ -61,8 +70,14 @@ Column {
     }
 
     SoundEffect {
-        id: soundEffect
+        id: plant0
 
-        source: '../../resources/sounds/plant' + Common.getRandomInt(0, 1) + '.wav'
+        source: '../../resources/sounds/plant0.wav'
+    }
+
+    SoundEffect {
+        id: plant1
+
+        source: '../../resources/sounds/plant1.wav'
     }
 }

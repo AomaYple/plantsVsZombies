@@ -5,16 +5,10 @@ Image {
     id: image
 
     required property bool paused
-    property var plantComponent: null
-    property url previewPlantSource: ''
-
-    function cancelPlant() {
-        plantComponent = null;
-        previewPlantSource = '';
-    }
+    property Seed plantingSeed: null
 
     function emerge() {
-        yAnimator.running = true;
+        yAnimator.start();
     }
 
     function increaseSunlight() {
@@ -22,25 +16,9 @@ Image {
     }
 
     function plant() {
-        cancelPlant();
-        sunflowerSeed.plant();
-        peaShooterSeed.plant();
-        wallNutSeed.plant();
-        snowPeaShooterSeed.plant();
-        repeaterSeed.plant();
-        potatoMineSeed.plant();
-        sunlightSum.decrease();
-    }
-
-    function playPoints() {
-        points.play();
-    }
-
-    function startPlant(seedPreviewPlantSource, seedPlantComponent, seedSunlightConsumption) {
-        previewPlantSource = seedPreviewPlantSource;
-        plantComponent = seedPlantComponent;
-        sunlightSum.sunlightConsumption = seedSunlightConsumption;
-        seedLift.play();
+        sunlightSum.decrease(plantingSeed.sunlightConsumption);
+        plantingSeed.plant();
+        plantingSeed = null;
     }
 
     asynchronous: true
@@ -51,13 +29,16 @@ Image {
     width: height / 87 * 446
     y: -height
 
+    onPlantingSeedChanged: {
+        if (plantingSeed)
+            seedLift.play();
+    }
+
     Text {
         id: sunlightSum
 
-        property int sunlightConsumption
-
-        function decrease() {
-            text = (parseInt(text) - sunlightConsumption).toString();
+        function decrease(value) {
+            text = (parseInt(text) - value).toString();
         }
 
         function increase() {
@@ -88,12 +69,6 @@ Image {
     }
 
     SoundEffect {
-        id: points
-
-        source: '../../resources/sounds/points.wav'
-    }
-
-    SoundEffect {
         id: seedLift
 
         source: '../../resources/sounds/seedLift.wav'
@@ -108,41 +83,47 @@ Image {
     Seed {
         id: sunflowerSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/Sunflower.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/sunflower.png'
-
         anchors.verticalCenter: parent.verticalCenter
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.plantComponent || planting)
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
         height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/Sunflower.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/sunflower.png'
         source: '../../resources/plants/sunflowerSeed.png'
         sunlightConsumption: 50
         sunlightSum: sunlightSum.sum()
         x: parent.width * 0.17
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = sunflowerSeed;
+            else
+                parent.plantingSeed = null;
+        }
     }
 
     Seed {
         id: peaShooterSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/PeaShooter.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/peaShooter.png'
-
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.plantComponent || planting)
-        height: sunflowerSeed.height
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
+        height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/PeaShooter.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/peaShooter.png'
         source: '../../resources/plants/peaShooterSeed.png'
         sunlightConsumption: 100
         sunlightSum: sunlightSum.sum()
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = peaShooterSeed;
+            else
+                parent.plantingSeed = null;
+        }
 
         anchors {
             left: sunflowerSeed.right
@@ -153,20 +134,23 @@ Image {
     Seed {
         id: wallNutSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/WallNut.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/wallNut.png'
-
         cooldownTime: 30000
-        enabled: parent.enabled && (!parent.plantComponent || planting)
-        height: peaShooterSeed.height
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
+        height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/WallNut.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/wallNut.png'
         source: '../../resources/plants/wallNutSeed.png'
         sunlightConsumption: 50
         sunlightSum: sunlightSum.sum()
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = wallNutSeed;
+            else
+                parent.plantingSeed = null;
+        }
 
         anchors {
             left: peaShooterSeed.right
@@ -177,20 +161,23 @@ Image {
     Seed {
         id: snowPeaShooterSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/SnowPeaShooter.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/snowPeaShooter.png'
-
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.plantComponent || planting)
-        height: wallNutSeed.height
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
+        height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/SnowPeaShooter.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/snowPeaShooter.png'
         source: '../../resources/plants/snowPeaShooterSeed.png'
         sunlightConsumption: 175
         sunlightSum: sunlightSum.sum()
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = snowPeaShooterSeed;
+            else
+                parent.plantingSeed = null;
+        }
 
         anchors {
             left: wallNutSeed.right
@@ -201,20 +188,23 @@ Image {
     Seed {
         id: repeaterSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/Repeater.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/repeater.png'
-
         cooldownTime: 7500
-        enabled: parent.enabled && (!parent.plantComponent || planting)
-        height: snowPeaShooterSeed.height
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
+        height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/Repeater.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/repeater.png'
         source: '../../resources/plants/repeaterSeed.png'
         sunlightConsumption: 200
         sunlightSum: sunlightSum.sum()
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = repeaterSeed;
+            else
+                parent.plantingSeed = null;
+        }
 
         anchors {
             left: snowPeaShooterSeed.right
@@ -225,20 +215,23 @@ Image {
     Seed {
         id: potatoMineSeed
 
-        readonly property var plantComponent: Qt.createComponent('../plants/PotatoMine.qml', Component.Asynchronous)
-        readonly property url previewPlantSource: '../../resources/plants/potatoMine.png'
-
         cooldownTime: 30000
-        enabled: parent.enabled && (!parent.plantComponent || planting)
-        height: repeaterSeed.height
+        enabled: parent.enabled && (!parent.plantingSeed || planting)
+        height: parent.height * 0.84
         paused: parent.paused
+        plantComponent: Qt.createComponent('../plants/PotatoMine.qml', Component.Asynchronous)
+        previewPlantSource: '../../resources/plants/potatoMine.png'
         source: '../../resources/plants/potatoMineSeed.png'
         sunlightConsumption: 25
         sunlightSum: sunlightSum.sum()
 
         onBuzzered: buzzer.play()
-        onPlantCanceled: parent.cancelPlant()
-        onPlantStarted: parent.startPlant(previewPlantSource, plantComponent, sunlightConsumption)
+        onPlantingChanged: {
+            if (planting)
+                parent.plantingSeed = potatoMineSeed;
+            else
+                parent.plantingSeed = null;
+        }
 
         anchors {
             left: repeaterSeed.right

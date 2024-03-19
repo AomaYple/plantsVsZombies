@@ -4,7 +4,7 @@ Item {
     id: item
 
     property alias interval: numberAnimation.duration
-    property alias paused: numberAnimation.paused
+    property bool paused: false
     property bool repeat: false
     property alias running: numberAnimation.running
 
@@ -14,11 +14,16 @@ Item {
         numberAnimation.restart();
     }
 
+    function start() {
+        numberAnimation.start();
+    }
+
     visible: false
 
     NumberAnimation {
         id: numberAnimation
 
+        paused: running && item.paused
         properties: 'opacity'
         target: item
 

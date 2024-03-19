@@ -10,7 +10,6 @@ Image {
     sourceSize: Qt.size(width, height)
     visible: false
     width: height / 109 * 291
-    y: 0
 
     Keys.onEscapePressed: mouseArea.trigger()
 

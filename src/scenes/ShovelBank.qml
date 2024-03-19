@@ -12,7 +12,6 @@ Image {
     sourceSize: Qt.size(width, height)
     visible: false
     width: height / 72 * 70
-    y: 0
 
     MouseArea {
         id: mouseArea

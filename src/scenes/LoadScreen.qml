@@ -12,7 +12,7 @@ Image {
     sourceSize: Qt.size(width, height)
 
     onStatusChanged: if (source.toString() === '../resources/scenes/popCapLogo.png' && status === Image.Ready)
-        opacityAnimator.running = true
+        opacityAnimator.start()
 
     OpacityAnimator {
         id: opacityAnimator
@@ -24,7 +24,7 @@ Image {
         onFinished: {
             if (to === 1) {
                 to = 0;
-                running = true;
+                start();
             } else {
                 image.opacity = 1;
                 image.source = '../resources/scenes/titleScreen.png';

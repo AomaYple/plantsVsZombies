@@ -1,7 +1,5 @@
 import QtQuick
-import QtMultimedia
 import "../scenes" as Scenes
-import "../js/common.js" as Common
 
 Item {
     id: item
@@ -17,6 +15,7 @@ Item {
 
     signal attacked
     signal died
+    signal froze
 
     function decelerate() {
         if (frozenTimer.running)
@@ -27,8 +26,8 @@ Item {
             moveAnimation.restart();
             attackTimer.interval *= 2;
             attackTimer.restart();
-            frozenTimer.running = true;
-            frozen.play();
+            frozenTimer.start();
+            froze();
         }
     }
 
@@ -37,22 +36,16 @@ Item {
         died();
     }
 
-    function playSplat() {
-        splat.play();
-    }
-
     function startAttack() {
         attacking = true;
-        chomp.play();
     }
 
     function stopAttack() {
         attacking = false;
-        chomp.stop();
     }
 
     function twinkle() {
-        twinkleAnimation.running = true;
+        twinkleAnimation.start();
     }
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -71,12 +64,6 @@ Item {
         asynchronous: true
         mipmap: true
         sourceSize: Qt.size(width, height)
-    }
-
-    SoundEffect {
-        source: '../../resources/sounds/groan' + Common.getRandomInt(0, 5) + '.wav'
-
-        Component.onCompleted: play()
     }
 
     NumberAnimation {
@@ -103,19 +90,6 @@ Item {
         onTriggered: parent.attacked()
     }
 
-    SoundEffect {
-        id: chomp
-
-        loops: SoundEffect.Infinite
-        source: '../../resources/sounds/chomp' + Common.getRandomInt(0, 2) + '.wav'
-    }
-
-    SoundEffect {
-        id: gulp
-
-        source: '../../resources/sounds/gulp.wav'
-    }
-
     NumberAnimation {
         id: twinkleAnimation
 
@@ -127,15 +101,9 @@ Item {
 
         onFinished: if (to === 0.5) {
             to = 1;
-            running = true;
+            start();
         } else
             to = 0.5
-    }
-
-    SoundEffect {
-        id: splat
-
-        source: '../../resources/sounds/splat' + Common.getRandomInt(0, 2) + '.wav'
     }
 
     Scenes.SuspendableTimer {
@@ -151,11 +119,5 @@ Item {
             attackTimer.restart();
             animatedImage.speed *= 2;
         }
-    }
-
-    SoundEffect {
-        id: frozen
-
-        source: '../../resources/sounds/frozen.wav'
     }
 }

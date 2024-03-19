@@ -4,7 +4,7 @@ import "../scenes" as Scenes
 Item {
     id: item
 
-    property int attackCount: 1
+    property bool attack: true
     readonly property int attackValue: 1
     required property real endPositionX
     property alias paused: numberAnimation.paused
@@ -36,7 +36,6 @@ Item {
         id: numberAnimation
 
         duration: (item.endPositionX - item.x) / 0.3
-        paused: item.paused
         properties: 'x'
         running: true
         target: item

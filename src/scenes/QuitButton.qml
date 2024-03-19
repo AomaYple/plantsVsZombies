@@ -6,7 +6,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/' + (mouseArea.containsMouse ? 'quitHighlight.png' : 'quit.png')
+    source: '../../resources/scenes/' + (mouseArea.containsMouse ? 'highlightQ' : 'q') + 'uit.png'
     sourceSize: Qt.size(width, height)
     width: height / 23 * 43
 

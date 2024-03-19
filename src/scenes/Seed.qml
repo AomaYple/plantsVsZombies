@@ -5,19 +5,17 @@ Image {
 
     required property int cooldownTime
     required property bool paused
+    required property Component plantComponent
     property bool planting: false
+    required property url previewPlantSource
     required property int sunlightConsumption
     required property int sunlightSum
 
     signal buzzered
-    signal plantCanceled
-    signal plantStarted
 
     function plant() {
-        if (planting) {
-            planting = false;
-            numberAnimation.start();
-        }
+        planting = false;
+        numberAnimation.start();
     }
 
     asynchronous: true
@@ -61,13 +59,11 @@ Image {
 
         onClicked: {
             if (!parent.planting && !curtain.visible) {
-                parent.planting = true;
                 deepCurtain.height = height;
-                parent.plantStarted();
+                parent.planting = true;
             } else if (planting) {
-                parent.planting = false;
                 deepCurtain.height = 0;
-                parent.plantCanceled();
+                parent.planting = false;
             } else
                 parent.buzzered();
         }

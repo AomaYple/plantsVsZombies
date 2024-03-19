@@ -21,20 +21,21 @@ AnimatedImage {
         if (natural) {
             yAnimation.duration = 5000;
             yAnimation.to = endPositionY;
-            yAnimation.running = true;
+            yAnimation.start();
         } else {
             scale = 0.5;
-            scaleAnimation.running = true;
+            scaleAnimation.start();
         }
     }
 
     SuspendableTimer {
         interval: 8000
+        paused: running && parent.paused
         running: mouseArea.enabled
 
         onTriggered: {
             parent.picked = false;
-            opacityAnimation.running = true;
+            opacityAnimation.start();
         }
     }
 
@@ -47,11 +48,11 @@ AnimatedImage {
         onClicked: {
             enabled = false;
             scaleAnimation.complete();
-            yAnimation.running = false;
+            yAnimation.stop();
             yAnimation.to = collectedPosition.y;
             yAnimation.duration = xAnimation.duration;
-            xAnimation.running = true;
-            yAnimation.running = true;
+            xAnimation.start();
+            yAnimation.start();
             parent.clicked();
         }
     }
@@ -65,7 +66,7 @@ AnimatedImage {
         target: animatedImage
         to: animatedImage.collectedPosition.x
 
-        onFinished: opacityAnimation.running = true
+        onFinished: opacityAnimation.start()
     }
 
     NumberAnimation {
@@ -87,7 +88,7 @@ AnimatedImage {
 
         onFinished: {
             yAnimation.to = endPositionY;
-            yAnimation.running = true;
+            yAnimation.start();
         }
     }
 

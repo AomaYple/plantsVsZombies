@@ -18,13 +18,13 @@ Image {
 
         onClicked: {
             parent.enabled = false;
-            zombieHandRise.rise();
+            zombieHand.rise();
         }
         onEntered: soundEffect.play()
     }
 
-    ZombieHandRise {
-        id: zombieHandRise
+    ZombieHand {
+        id: zombieHand
 
         height: parent.height * 0.5
         x: parent.width * 0.25

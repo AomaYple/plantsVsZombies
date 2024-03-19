@@ -1,13 +1,38 @@
 import QtQml
 import QtMultimedia
+import "../js/common.js" as Common
 
 SuspendableTimer {
-    readonly property var basicZombieComponent: Qt.createComponent('../zombies/BasicZombie.qml', Component.Asynchronous)
-    readonly property var bucketHeadZombieComponent: Qt.createComponent('../zombies/BucketHeadZombie.qml', Component.Asynchronous)
-    readonly property var coneHeadZombieComponent: Qt.createComponent('../zombies/ConeHeadZombie.qml', Component.Asynchronous)
+    readonly property Component basicZombieComponent: Qt.createComponent('../zombies/BasicZombie.qml', Component.Asynchronous)
+    readonly property Component bucketHeadZombieComponent: Qt.createComponent('../zombies/BucketHeadZombie.qml', Component.Asynchronous)
+    readonly property Component coneHeadZombieComponent: Qt.createComponent('../zombies/ConeHeadZombie.qml', Component.Asynchronous)
     property int index: 1
-    property var zombieComponent: null
+    property Component zombieComponent: null
     readonly property var zombieContainer: [new Set(), new Set(), new Set(), new Set(), new Set(), new Set(),]
+
+    function playGroan() {
+        const groanIndex = Common.getRandomInt(0, 5);
+        switch (groanIndex) {
+        case 0:
+            groan0.play();
+            break;
+        case 1:
+            groan1.play();
+            break;
+        case 2:
+            groan2.play();
+            break;
+        case 3:
+            groan3.play();
+            break;
+        case 4:
+            groan4.play();
+            break;
+        case 5:
+            groan5.play();
+            break;
+        }
+    }
 
     interval: 5000
     repeat: true
@@ -20,13 +45,50 @@ SuspendableTimer {
         else
             zombieComponent = basicZombieComponent;
         if (index === 1)
-            soundEffect.play();
+            siren.play();
         ++index;
+        playGroan();
     }
 
     SoundEffect {
-        id: soundEffect
+        id: siren
 
         source: '../../resources/sounds/siren.wav'
+    }
+
+    SoundEffect {
+        id: groan0
+
+        source: '../../resources/sounds/groan0.wav'
+    }
+
+    SoundEffect {
+        id: groan1
+
+        source: '../../resources/sounds/groan1.wav'
+    }
+
+    SoundEffect {
+        id: groan2
+
+        source: '../../resources/sounds/groan2.wav'
+    }
+
+    SoundEffect {
+        id: groan3
+
+        source: '../../resources/sounds/groan3.wav'
+    }
+
+    SoundEffect {
+        id: groan4
+
+        source: '../../resources/sounds/groan4.wav'
+    }
+
+    SoundEffect {
+        id: groan5
+
+        source: '../../resources/sounds/groan5.wav'
     }
 }

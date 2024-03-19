@@ -18,8 +18,8 @@ Image {
 
     onStatusChanged: if (status === Image.Ready) {
         if (source.toString() !== '../../resources/scenes/startPlant.png')
-            scaleAnimator.running = true;
-        timer.running = true;
+            scaleAnimator.start();
+        timer.start();
     }
 
     Timer {
@@ -29,13 +29,13 @@ Image {
 
         onTriggered: {
             if (parent.source.toString() === '../../resources/scenes/startReady.png') {
-                scaleAnimator.running = false;
+                scaleAnimator.stop();
                 parent.source = '../../resources/scenes/startSet.png';
-                running = true;
+                start();
             } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
-                scaleAnimator.running = false;
+                scaleAnimator.stop();
                 parent.source = '../../resources/scenes/startPlant.png';
-                running = true;
+                start();
             } else {
                 parent.source = '';
                 parent.finished();

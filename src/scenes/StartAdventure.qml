@@ -6,7 +6,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/' + (mouseArea.containsMouse ? 'startAdventureHighlight.png' : 'startAdventure.png')
+    source: '../../resources/scenes/' + (mouseArea.containsMouse ? 'highlightS' : 's') + 'tartAdventure.png'
     sourceSize: Qt.size(width, height)
     width: height / 142 * 331
 
@@ -19,7 +19,7 @@ Image {
         hoverEnabled: enabled
 
         onClicked: {
-            timer.running = true;
+            timer.start();
             parent.clicked();
         }
         onEntered: parent.entered()
@@ -31,11 +31,6 @@ Image {
         interval: 100
         repeat: true
 
-        onTriggered: {
-            if (parent.source.toString() === '../../resources/scenes/startAdventure.png')
-                parent.source = '../../resources/scenes/startAdventureHighlight.png';
-            else
-                parent.source = '../../resources/scenes/startAdventure.png';
-        }
+        onTriggered: parent.source = '../../resources/scenes/' + (parent.source.toString() === '../../resources/scenes/startAdventure.png' ? 'highlightS' : 's') + 'tartAdventure.png'
     }
 }

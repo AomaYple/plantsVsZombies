@@ -1,9 +1,7 @@
-import "../js/common.js" as Common
-
 Zombie {
     attackValue: 1
     lifeValue: 10
-    source: '../../resources/zombies/basicZombie' + (!attacking ? 'Walk' + Common.getRandomInt(0, 1) : 'Attack') + '.gif'
+    source: '../../resources/zombies/' + (!attacking ? 'walkingBasicZombie' + Math.round(Math.random()) : 'attackingBasicZombie') + '.gif'
     type: ZombieType.Type.BasicZombie
     width: height / 130 * 94
 }

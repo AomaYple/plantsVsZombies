@@ -6,35 +6,55 @@ function getRandomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function generateSunlight(beginPosition, endPositionY, natural) {
-    const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
-        natural: Qt.binding(function () {
-            return natural;
-        }),
-        height: Qt.binding(function () {
-            return image.height * 0.14;
-        }),
+function produceStandingZombies() {
+    for (let i = 0; i < 9; ++i) {
+        let standingZombieComponent = null, zombieHeight = null, zombieWidth = null;
+        if (i < 4) {
+            standingZombieComponent = image.standingBasicZombieComponent;
+            zombieHeight = image.height * 0.23;
+            zombieWidth = zombieHeight / 126 * 84;
+        } else if (i >= 4 && i < 7) {
+            standingZombieComponent = image.standingConeHeadZombie;
+            zombieHeight = image.height * 0.25;
+            zombieWidth = zombieHeight / 148 * 82;
+        } else {
+            standingZombieComponent = image.standingBucketHeadZombie;
+            zombieHeight = image.height * 0.24;
+            zombieWidth = zombieHeight / 140 * 84;
+        }
+        const incubator = standingZombieComponent.incubateObject(image, {
+            width: zombieWidth,
+            height: zombieHeight,
+            x: getRandomFloat(image.leftMargin + item.width, image.width - zombieWidth),
+            y: getRandomFloat(0, image.height - zombieHeight)
+        });
+
+        function destroyStandingZombie() {
+            incubator.object.destroy();
+            item.finished.disconnect(destroyStandingZombie);
+        }
+
+        item.finished.connect(destroyStandingZombie);
+    }
+}
+
+function produceSunlight(beginPosition, endPositionY, natural) {
+    const incubator = sunlightProducer.sunlightComponent.incubateObject(item, {
+        natural: natural,
+        height: item.height * 0.14,
         paused: Qt.binding(function () {
-            return image.paused;
+            return item.paused;
         }),
-        x: Qt.binding(function () {
-            return beginPosition.x;
-        }),
-        y: Qt.binding(function () {
-            return beginPosition.y;
-        }),
-        endPositionY: Qt.binding(function () {
-            return endPositionY;
-        }),
-        collectedPosition: Qt.binding(function () {
-            return Qt.point(image.leftMargin + image.width * 0.008, -image.height * 0.01);
-        })
+        x: beginPosition.x,
+        y: beginPosition.y,
+        endPositionY: endPositionY,
+        collectedPosition: Qt.point(item.width * 0.008, -item.height * 0.01)
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
             const sunlight = incubator.object;
             sunlight.clicked.connect(function () {
-                seedBank.playPoints();
+                points.play();
             });
             sunlight.collected.connect(function () {
                 seedBank.increaseSunlight();
@@ -43,213 +63,194 @@ function generateSunlight(beginPosition, endPositionY, natural) {
     };
 }
 
-function naturalGenerateSunlight() {
-    const sunlightHeight = image.height * 0.14;
-    generateSunlight(Qt.point(getRandomFloat(image.leftMargin, image.width - image.rightMargin - sunlightHeight),
-        seedBank.height), getRandomFloat(seedBank.height + image.height * 0.1, image.height - sunlightHeight), true);
-}
-
-function plant(property, subPlantAreaId) {
-    const incubator = seedBank.plantComponent.incubateObject(image, {
-        height: Qt.binding(function () {
-            return property.height;
-        }),
-        x: Qt.binding(function () {
-            return property.x;
-        }),
-        y: Qt.binding(function () {
-            return property.y;
-        }),
+function plant(property, subPlantArea) {
+    const incubator = seedBank.plantingSeed.plantComponent.incubateObject(item, {
+        height: property.height,
+        x: property.x,
+        y: property.y,
         shoveling: Qt.binding(function () {
-            return shovelBank.shoveling && subPlantAreaId.containsMouse;
+            return shovelBank.shoveling && subPlantArea.containsMouse;
         })
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
             seedBank.plant();
             const plant = incubator.object;
-            const index = subPlantAreaId.index;
+            const index = subPlantArea.index;
+            const zombieSet = zombieProducer.zombieContainer[index[0]];
+            let setPaused = Qt.binding(function () {
+                return item.paused;
+            });
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
-                    initSunflower(plant);
+                    plant.sunlightProduced.connect(function () {
+                        produceSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
+                    });
                     break;
                 case Plants.PlantType.Type.PeaShooter:
                 case Plants.PlantType.Type.SnowPeaShooter:
                 case Plants.PlantType.Type.Repeater:
-                    initPeaShooter(plant, zombieProducer.zombieContainer[index[0]]);
+                    initPeaShooter(plant, zombieSet);
                     break;
                 case Plants.PlantType.Type.WallNut:
-                    initWallNut(plant);
+                    setPaused = Qt.binding(function () {
+                        return item.paused || plant.zombieCount > 0;
+                    });
+                    break;
+                case Plants.PlantType.Type.PotatoMine:
+                    initPotatoMine(plant, zombieSet);
                     break;
             }
+            plant.paused = setPaused;
+            const plantArray = plantArea.plantContainer[index[0]];
+            plantArray[index[1]] = plant;
             plant.died.connect(function () {
-                plantArea.plantContainer[index[0]][index[1]] = null;
+                plantArray[index[1]] = null;
             });
-            plantArea.plantContainer[index[0]][index[1]] = plant;
         }
     };
 }
 
-function initSunflower(sunflower) {
-    sunflower.paused = Qt.binding(function () {
-        return image.paused;
-    });
-    sunflower.sunlightProduced.connect(function () {
-        generateSunlight(Qt.point(sunflower.x, sunflower.y), sunflower.y + sunflower.height * 0.5, false);
-    });
-}
-
-function initPeaShooter(peaShooter, zombies) {
-    peaShooter.paused = Qt.binding(function () {
-        return image.paused;
-    });
-    for (const zombie of zombies) {
+function initPeaShooter(peaShooter, zombieSet) {
+    for (const zombie of zombieSet) {
         if (zombie.x >= peaShooter.x + peaShooter.width * 0.5)
             ++peaShooter.zombieCount;
     }
     peaShooter.peaShot.connect(function (position) {
-        const incubator0 = peaShooter.peaComponent.incubateObject(image, {
-            x: Qt.binding(function () {
-                return position.x;
-            }),
-            y: Qt.binding(function () {
-                return position.y;
-            }),
-            height: Qt.binding(function () {
-                return image.height * 0.1;
-            }),
-            paused: Qt.binding(function () {
-                return image.paused;
-            }),
-            endPositionX: Qt.binding(function () {
-                return image.width - image.rightMargin;
-            })
-        });
-        if (peaShooter.type === Plants.PlantType.Type.Repeater) {
-            const incubator1 = peaShooter.peaComponent.incubateObject(image, {
-                x: Qt.binding(function () {
-                    return position.x + image.height * 0.1;
-                }),
-                y: Qt.binding(function () {
-                    return position.y;
-                }),
-                height: Qt.binding(function () {
-                    return image.height * 0.1;
-                }),
+        const count = peaShooter.type === Plants.PlantType.Type.Repeater ? 2 : 1;
+        for (let i = 0; i < count; ++i) {
+            const peaX = position.x + (i === 1 ? peaShooter.width * 0.1 : 0), peaEndPositionX = item.width;
+            if (peaX >= peaEndPositionX)
+                return;
+            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? item.snowPeaComponent : item.peaComponent;
+            const incubator = peaComponent.incubateObject(item, {
+                x: peaX,
+                y: position.y,
+                height: item.height * 0.1,
                 paused: Qt.binding(function () {
-                    return image.paused;
+                    return item.paused;
                 }),
-                endPositionX: Qt.binding(function () {
-                    return image.width - image.rightMargin;
-                })
+                endPositionX: peaEndPositionX,
             });
-            incubator1.onStatusChanged = function (status) {
+            incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
-                    initPea(incubator1.object, zombies);
+                    const pea = incubator.object;
+                    pea.xChanged.connect(function () {
+                        if (pea.attack) {
+                            const edge = pea.x + pea.width;
+                            for (const zombie of zombieSet) {
+                                const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
+                                if (edge >= left && edge <= right) {
+                                    pea.attack = false;
+                                    zombie.lifeValue -= pea.attackValue;
+                                    if (pea.type === Plants.PeaType.Type.SnowPea)
+                                        zombie.decelerate();
+                                    pea.destroy();
+                                    zombie.twinkle();
+                                    if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
+                                        item.playSplat();
+                                    else
+                                        item.playShieldHit();
+                                }
+                            }
+                        }
+                    });
                 }
-            }
-        }
-        incubator0.onStatusChanged = function (status) {
-            if (status === Component.Ready)
-                initPea(incubator0.object, zombies);
+            };
         }
     });
 }
 
-function initWallNut(wallNut) {
-    wallNut.paused = Qt.binding(function () {
-        return image.paused || wallNut.zombieCount > 0;
-    });
-}
+function initPotatoMine(potatoMine, zombieSet) {
+    potatoMine.exploded.connect(function () {
+        for (const zombie of zombieSet)
+            if (zombie.x >= potatoMine.x && zombie.x <= potatoMine.x + potatoMine.width)
+                zombie.die();
+        const objectHeight = item.height * 0.16, objectWidth = objectHeight / 92 * 131;
+        const incubator = item.mashedPotatoComponent.incubateObject(item, {
+            height: objectHeight,
+            width: objectWidth,
+            x: potatoMine.x - (objectWidth - potatoMine.width) / 2,
+            y: potatoMine.y - (objectHeight - potatoMine.height) / 2,
+        });
+        daytimeGrass.judder();
+        potatoMineBomb.play();
 
-function initPea(pea, zombies) {
-    pea.xChanged.connect(function () {
-        if (pea.attackCount > 0) {
-            const x = pea.x + pea.width;
-            for (const zombie of zombies) {
-                const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
-                if (x >= left && x <= right) {
-                    --pea.attackCount;
-                    zombie.lifeValue -= pea.attackValue;
-                    if (pea.type === Plants.PeaType.Type.SnowPea)
-                        zombie.decelerate();
-                    pea.destroy();
-                    zombie.twinkle();
-                    if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
-                        zombie.playSplat();
-                    else
-                        zombie.playShieldHit();
-                }
-            }
+        function destroyMashedPotatoComponent() {
+            potatoMineBomb.playingChanged.disconnect(destroyMashedPotatoComponent);
+            incubator.object.destroy();
         }
+
+        potatoMineBomb.playingChanged.connect(destroyMashedPotatoComponent);
     });
 }
 
-function createZombie() {
+function produceZombie(zombieComponent) {
     let zombieHeight = null;
-    const zombieComponent = zombieProducer.zombieComponent;
     if (zombieComponent === zombieProducer.basicZombieComponent)
-        zombieHeight = image.height * 0.24;
+        zombieHeight = item.height * 0.24;
     else if (zombieComponent === zombieProducer.coneHeadZombieComponent)
-        zombieHeight = image.height * 0.26;
+        zombieHeight = item.height * 0.26;
     else
-        zombieHeight = image.height * 0.25;
+        zombieHeight = item.height * 0.25;
     const rowIndex = getRandomInt(0, 4);
-    const zombieY = plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight;
-    const incubator = zombieComponent.incubateObject(image, {
-        x: Qt.binding(function () {
-            return image.width - image.rightMargin;
-        }),
-        y: Qt.binding(function () {
-            return zombieY;
-        }),
-        height: Qt.binding(function () {
-            return zombieHeight;
-        }),
+    const incubator = zombieComponent.incubateObject(item, {
+        x: item.width,
+        y: plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight,
+        height: zombieHeight,
         paused: Qt.binding(function () {
-            return image.paused;
+            return item.paused;
         }),
-        endPositionX: Qt.binding(function () {
-            return image.leftMargin;
-        })
+        endPositionX: 0
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
             const zombie = incubator.object;
             const plantArray = plantArea.plantContainer[rowIndex];
             const zombieSet = zombieProducer.zombieContainer[rowIndex];
+            zombieSet.add(zombie);
+            for (const plant of plantArray) {
+                if (plant) {
+                    switch (plant.type) {
+                        case Plants.PlantType.Type.PeaShooter:
+                        case Plants.PlantType.Type.SnowPeaShooter:
+                        case Plants.PlantType.Type.Repeater:
+                            ++plant.zombieCount;
+                    }
+                }
+            }
             zombie.xChanged.connect(function () {
                 for (const plant of plantArray) {
-                    if (plant && zombie.x > plant.x && zombie.x < plant.x + plant.width * 0.5) {
+                    if (plant && zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5) {
                         switch (plant.type) {
                             case Plants.PlantType.Type.WallNut:
                                 ++plant.zombieCount;
                                 break;
                             case Plants.PlantType.Type.PotatoMine:
-                                plant.die();
-                                potatoMineBomb(plant, zombieSet, Qt.rect(plant.x, plant.y, plant.width, plant.height));
-                                image.judder();
-                                break;
+                                if (plant.ready) {
+                                    plant.explode();
+                                    return;
+                                } else
+                                    break;
                         }
                         zombie.startAttack();
+                        item.playChomp();
 
-                        function zombieAttackPlant() {
+                        function attackPlant() {
                             plant.lifeValue -= zombie.attackValue;
-                            plant.twinkle();
-                        }
-
-                        function zombieStopAttack() {
                             if (plant.lifeValue <= 0) {
-                                zombie.stopAttack();
-                                zombie.attacked.disconnect(zombieAttackPlant);
-                                plant.lifeValueChanged.disconnect(zombieStopAttack);
+                                item.stopChomp();
+                                gulp.play();
+                                zombie.attacked.disconnect(attackPlant);
                             }
                         }
 
-                        zombie.attacked.connect(zombieAttackPlant);
-                        plant.lifeValueChanged.connect(zombieStopAttack);
+                        zombie.attacked.connect(attackPlant);
                     }
                 }
+            });
+            zombie.froze.connect(function () {
+                frozen.play();
             });
             zombie.died.connect(function () {
                 for (const plant of plantArray) {
@@ -269,41 +270,8 @@ function createZombie() {
                         --plant.zombieCount;
                     }
                 }
-                zombieSet.delete(zombie)
+                zombieSet.delete(zombie);
             });
-            for (const plant of plantArray) {
-                if (plant) {
-                    switch (plant.type) {
-                        case Plants.PlantType.Type.PeaShooter:
-                        case Plants.PlantType.Type.SnowPeaShooter:
-                        case Plants.PlantType.Type.Repeater:
-                            ++plant.zombieCount;
-                    }
-                }
-            }
-            zombieSet.add(zombie);
         }
     };
-}
-
-function potatoMineBomb(potatoMine, zombieSet, plantProperty) {
-    for (const zombie of zombieSet)
-        if (zombie.x > potatoMine.x && zombie.x < potatoMine.x + potatoMine.width)
-            zombie.die();
-    const component = Qt.createComponent('../plants/MashedPotato.qml');
-    const objectHeight = image.height * 0.16, objectWidth = objectHeight / 92 * 131;
-    component.incubateObject(image, {
-        height: Qt.binding(function () {
-            return objectHeight;
-        }),
-        width: Qt.binding(function () {
-            return objectWidth;
-        }),
-        x: Qt.binding(function () {
-            return plantProperty.x - (objectWidth - plantProperty.width) / 2;
-        }),
-        y: Qt.binding(function () {
-            return plantProperty.y - (objectHeight - plantProperty.height) / 2;
-        }),
-    });
 }

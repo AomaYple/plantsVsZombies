@@ -7,7 +7,7 @@ AnimatedImage {
     signal rose
 
     function rise() {
-        source = '../../resources/scenes/zombieHandRise.gif';
+        source = '../../resources/scenes/risingZombieHand.gif';
         soundEffect.play();
     }
 

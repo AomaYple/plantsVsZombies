@@ -46,6 +46,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/plants/WallNut.qml
 
         src/scenes/DaytimeGrass.qml
+        src/scenes/GameScene.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
         src/scenes/MainMenu.qml
@@ -64,17 +65,17 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/Sunlight.qml
         src/scenes/SunlightProducer.qml
         src/scenes/SuspendableTimer.qml
-        src/scenes/ZombieHandRise.qml
+        src/scenes/ZombieHand.qml
         src/scenes/ZombieProducer.qml
 
         src/zombies/BasicZombie.qml
-        src/zombies/BasicZombieStand.qml
         src/zombies/BucketHeadZombie.qml
-        src/zombies/BucketHeadZombieStand.qml
         src/zombies/ConeHeadZombie.qml
-        src/zombies/ConeHeadZombieStand.qml
+        src/zombies/StandingBasicZombie.qml
+        src/zombies/StandingBucketHeadZombie.qml
+        src/zombies/StandingConeHeadZombie.qml
+        src/zombies/StandingZombie.qml
         src/zombies/Zombie.qml
-        src/zombies/ZombieStand.qml
         src/zombies/ZombieType.qml
 
         src/main.qml
@@ -84,26 +85,26 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/music/crazyDave.flac
         resources/music/grassWalk.flac
 
+        resources/plants/initializingPotatoMine.png
         resources/plants/mashedPotato.png
         resources/plants/pea.png
         resources/plants/peaShooter.gif
         resources/plants/peaShooter.png
         resources/plants/peaShooterSeed.png
-        resources/plants/peaShooterShooting.gif
         resources/plants/potatoMine.gif
         resources/plants/potatoMine.png
-        resources/plants/potatoMineInitializing.png
         resources/plants/potatoMineSeed.png
-        resources/plants/potatoMineUp.gif
         resources/plants/repeater.gif
         resources/plants/repeater.png
         resources/plants/repeaterSeed.png
-        resources/plants/repeaterShooting.gif
+        resources/plants/risingPotatoMine.gif
+        resources/plants/shootingPeaShooter.gif
+        resources/plants/shootingRepeater.gif
+        resources/plants/shootingSnowPeaShooter.gif
         resources/plants/snowPea.png
         resources/plants/snowPeaShooter.gif
         resources/plants/snowPeaShooter.png
         resources/plants/snowPeaShooterSeed.png
-        resources/plants/snowPeaShooterShooting.gif
         resources/plants/sunflower.gif
         resources/plants/sunflower.png
         resources/plants/sunflowerSeed.png
@@ -114,25 +115,25 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/button.png
         resources/scenes/daytimeGrass.png
         resources/scenes/favicon.ico
+        resources/scenes/highlightQuit.png
+        resources/scenes/highlightStartAdventure.png
         resources/scenes/loadBar.png
         resources/scenes/mainMenu.png
         resources/scenes/optionsMenuBackground.png
         resources/scenes/optionsMenuButton.png
         resources/scenes/popCapLogo.png
         resources/scenes/quit.png
-        resources/scenes/quitHighlight.png
+        resources/scenes/risingZombieHand.gif
         resources/scenes/seedBank.png
         resources/scenes/shadow.png
         resources/scenes/shovel.png
         resources/scenes/shovelBank.png
         resources/scenes/startAdventure.png
-        resources/scenes/startAdventureHighlight.png
         resources/scenes/startPlant.png
         resources/scenes/startReady.png
         resources/scenes/startSet.png
         resources/scenes/sunlight.gif
         resources/scenes/titleScreen.png
-        resources/scenes/zombieHandRise.gif
 
         resources/sounds/bleep.wav
         resources/sounds/buzzer.wav
@@ -163,21 +164,21 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/splat1.wav
         resources/sounds/splat2.wav
 
-        resources/zombies/basicZombieAttack.gif
-        resources/zombies/basicZombieStand0.gif
-        resources/zombies/basicZombieStand1.gif
-        resources/zombies/basicZombieWalk0.gif
-        resources/zombies/basicZombieWalk1.gif
-        resources/zombies/bucketHeadZombieAttack.gif
-        resources/zombies/bucketHeadZombieStand0.gif
-        resources/zombies/bucketHeadZombieStand1.gif
-        resources/zombies/bucketHeadZombieWalk0.gif
-        resources/zombies/bucketHeadZombieWalk1.gif
-        resources/zombies/coneHeadZombieAttack.gif
-        resources/zombies/coneHeadZombieStand0.gif
-        resources/zombies/coneHeadZombieStand1.gif
-        resources/zombies/coneHeadZombieWalk0.gif
-        resources/zombies/coneHeadZombieWalk1.gif
+        resources/zombies/attackingBasicZombie.gif
+        resources/zombies/attackingBucketHeadZombie.gif
+        resources/zombies/attackingConeHeadZombie.gif
+        resources/zombies/standingBasicZombie0.gif
+        resources/zombies/standingBasicZombie1.gif
+        resources/zombies/standingBucketHeadZombie0.gif
+        resources/zombies/standingBucketHeadZombie1.gif
+        resources/zombies/standingConeHeadZombie0.gif
+        resources/zombies/standingConeHeadZombie1.gif
+        resources/zombies/walkingBasicZombie0.gif
+        resources/zombies/walkingBasicZombie1.gif
+        resources/zombies/walkingBucketHeadZombie0.gif
+        resources/zombies/walkingBucketHeadZombie1.gif
+        resources/zombies/walkingConeHeadZombie0.gif
+        resources/zombies/walkingConeHeadZombie1.gif
 
         NO_RESOURCE_TARGET_PATH
 )
