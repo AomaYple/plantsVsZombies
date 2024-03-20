@@ -49,7 +49,7 @@ Column {
                             column.playPlant();
                             column.planted(Qt.rect(plantX, plantY, width * 0.9, height * 0.9), mouseArea);
                         } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
-                            column.plantContainer[index[0]][index[1]].die();
+                            column.plantContainer[index[0]][index[1]].shovel();
                             column.playPlant();
                             column.shovelled();
                         }

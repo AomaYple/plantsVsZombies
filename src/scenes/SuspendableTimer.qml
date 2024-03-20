@@ -4,7 +4,7 @@ Item {
     id: item
 
     property alias interval: numberAnimation.duration
-    property bool paused: false
+    property alias paused: numberAnimation.paused
     property bool repeat: false
     property alias running: numberAnimation.running
 

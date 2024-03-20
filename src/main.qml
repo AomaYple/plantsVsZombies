@@ -29,15 +29,15 @@ Window {
             id: mainMenu
 
             Scenes.MainMenu {
-                onAdventured: loader.sourceComponent = gameScene
+                onAdventured: loader.sourceComponent = daytimeGrass
                 onQuit: window.close()
             }
         }
 
         Component {
-            id: gameScene
+            id: daytimeGrass
 
-            Scenes.GameScene {
+            Scenes.DaytimeGrass {
                 Component.onCompleted: {
                     mediaPlayer.source = '../resources/music/chooseYourSeeds.flac';
                     mediaPlayer.play();

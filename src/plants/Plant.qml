@@ -15,10 +15,16 @@ Item {
 
     signal currentFrameChanged(int currentFrame, int frameCount)
     signal died
+    signal shovelled
 
     function die() {
         destroy();
         died();
+    }
+
+    function shovel() {
+        destroy();
+        shovelled();
     }
 
     function twinkle() {
@@ -53,6 +59,7 @@ Item {
         id: numberAnimation
 
         duration: 250
+        paused: running && item.paused
         properties: 'opacity'
         target: animatedImage
         to: 0.5
