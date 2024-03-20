@@ -242,8 +242,8 @@ function produceZombie(zombieComponent) {
                         item.playChomp();
 
                         function attackPlant() {
-                            plant.twinkle();
                             plant.lifeValue -= zombie.attackValue;
+                            plant.twinkle();
                         }
 
                         function stopAttack() {
@@ -277,7 +277,7 @@ function produceZombie(zombieComponent) {
                             case Plants.PlantType.Type.PeaShooter:
                             case Plants.PlantType.Type.SnowPeaShooter:
                             case Plants.PlantType.Type.Repeater:
-                                if (zombie.x >= plant.x + plant.width * 0.5)
+                                if (zombie.x > plant.x + plant.width * 0.5)
                                     break;
                             case Plants.PlantType.Type.WallNut:
                                 if (zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5)
