@@ -70,6 +70,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/zombies/BasicZombie.qml
         src/zombies/BucketHeadZombie.qml
         src/zombies/ConeHeadZombie.qml
+        src/zombies/DiedZombie.qml
         src/zombies/StandingBasicZombie.qml
         src/zombies/StandingBucketHeadZombie.qml
         src/zombies/StandingConeHeadZombie.qml
@@ -166,6 +167,9 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/attackingBasicZombie.gif
         resources/zombies/attackingBucketHeadZombie.gif
         resources/zombies/attackingConeHeadZombie.gif
+        resources/zombies/diedZombie0.gif
+        resources/zombies/diedZombie1.gif
+        resources/zombies/diedZombie2.gif
         resources/zombies/standingBasicZombie0.gif
         resources/zombies/standingBasicZombie1.gif
         resources/zombies/standingBucketHeadZombie0.gif

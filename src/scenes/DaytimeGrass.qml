@@ -62,6 +62,7 @@ Item {
     Image {
         id: image
 
+        readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
         readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
         property bool paused: true

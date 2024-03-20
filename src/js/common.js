@@ -138,30 +138,32 @@ function initPeaShooter(peaShooter, zombieSet) {
                 endPositionX: peaEndPositionX,
             });
             incubator.onStatusChanged = function (status) {
-                if (status === Component.Ready) {
-                    const pea = incubator.object;
-                    pea.xChanged.connect(function () {
-                        if (pea.attack) {
-                            const edge = pea.x + pea.width;
-                            for (const zombie of zombieSet) {
-                                const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
-                                if (edge >= left && edge <= right) {
-                                    pea.attack = false;
-                                    zombie.lifeValue -= pea.attackValue;
-                                    if (pea.type === Plants.PeaType.Type.SnowPea)
-                                        zombie.decelerate();
-                                    pea.destroy();
-                                    zombie.twinkle();
-                                    if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
-                                        item.playSplat();
-                                    else
-                                        item.playShieldHit();
-                                }
-                            }
-                        }
-                    });
-                }
+                if (status === Component.Ready)
+                    initPea(incubator.object, zombieSet);
             };
+        }
+    });
+}
+
+function initPea(pea, zombieSet) {
+    pea.xChanged.connect(function () {
+        if (pea.attack) {
+            const edge = pea.x + pea.width;
+            for (const zombie of zombieSet) {
+                const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
+                if (edge >= left && edge <= right) {
+                    pea.attack = false;
+                    zombie.lifeValue -= pea.attackValue;
+                    if (pea.type === Plants.PeaType.Type.SnowPea)
+                        zombie.decelerate();
+                    pea.destroy();
+                    zombie.twinkle();
+                    if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
+                        item.playSplat();
+                    else
+                        item.playShieldHit();
+                }
+            }
         }
     });
 }
@@ -225,70 +227,97 @@ function produceZombie(zombieComponent) {
                 }
             }
             zombie.xChanged.connect(function () {
-                for (const plant of plantArray) {
-                    if (plant && zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5) {
-                        switch (plant.type) {
-                            case Plants.PlantType.Type.WallNut:
-                                ++plant.zombieCount;
-                                break;
-                            case Plants.PlantType.Type.PotatoMine:
-                                if (plant.ready) {
-                                    plant.explode();
-                                    return;
-                                } else
-                                    break;
-                        }
-                        zombie.startAttack();
-                        item.playChomp();
-
-                        function attackPlant() {
-                            plant.lifeValue -= zombie.attackValue;
-                            plant.twinkle();
-                        }
-
-                        function stopAttack() {
-                            plant.died.disconnect(eatUp);
-                            plant.shovelled.disconnect(stopAttack);
-                            zombie.attacked.disconnect(attackPlant);
-                            zombie.died.disconnect(stopAttack);
-                            zombie.stopAttack();
-                            item.stopChomp();
-                        }
-
-                        function eatUp() {
-                            stopAttack();
-                            gulp.play();
-                        }
-
-                        plant.died.connect(eatUp);
-                        plant.shovelled.connect(stopAttack);
-                        zombie.attacked.connect(attackPlant);
-                        zombie.died.connect(stopAttack);
-                    }
-                }
+                zombieXChanged(zombie, plantArray);
             });
             zombie.froze.connect(function () {
                 frozen.play();
             });
             zombie.died.connect(function () {
-                for (const plant of plantArray) {
-                    if (plant) {
-                        switch (plant.type) {
-                            case Plants.PlantType.Type.PeaShooter:
-                            case Plants.PlantType.Type.SnowPeaShooter:
-                            case Plants.PlantType.Type.Repeater:
-                                if (zombie.x > plant.x + plant.width * 0.5)
-                                    break;
-                            case Plants.PlantType.Type.WallNut:
-                                if (zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5)
-                                    break;
-                            default:
-                                return;
-                        }
-                        --plant.zombieCount;
-                    }
-                }
-                zombieSet.delete(zombie);
+                zombieDied(zombie, plantArray, zombieSet);
+            });
+        }
+    };
+}
+
+function zombieXChanged(zombie, plantArray) {
+    for (const plant of plantArray) {
+        if (plant && zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5) {
+            switch (plant.type) {
+                case Plants.PlantType.Type.WallNut:
+                    ++plant.zombieCount;
+                    break;
+                case Plants.PlantType.Type.PotatoMine:
+                    if (plant.ready) {
+                        plant.explode();
+                        return;
+                    } else
+                        break;
+            }
+            zombie.startAttack();
+            item.playChomp();
+
+            function attackPlant() {
+                plant.lifeValue -= zombie.attackValue;
+                plant.twinkle();
+            }
+
+            function stopAttack() {
+                plant.died.disconnect(eatUp);
+                plant.shovelled.disconnect(stopAttack);
+                zombie.attacked.disconnect(attackPlant);
+                zombie.died.disconnect(stopAttack);
+                zombie.stopAttack();
+                item.stopChomp();
+            }
+
+            function eatUp() {
+                stopAttack();
+                gulp.play();
+            }
+
+            plant.died.connect(eatUp);
+            plant.shovelled.connect(stopAttack);
+            zombie.attacked.connect(attackPlant);
+            zombie.died.connect(stopAttack);
+        }
+    }
+}
+
+function zombieDied(zombie, plantArray, zombieSet) {
+    for (const plant of plantArray) {
+        if (plant) {
+            switch (plant.type) {
+                case Plants.PlantType.Type.PeaShooter:
+                case Plants.PlantType.Type.SnowPeaShooter:
+                case Plants.PlantType.Type.Repeater:
+                    if (zombie.x > plant.x + plant.width * 0.5)
+                        break;
+                case Plants.PlantType.Type.WallNut:
+                    if (zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5)
+                        break;
+                default:
+                    return;
+            }
+            --plant.zombieCount;
+        }
+    }
+    zombieSet.delete(zombie);
+    const diedZombieHeight = zombie.height, diedZombieWidth = diedZombieHeight / 136 * 180;
+    const incubator = image.diedZombieComponent.incubateObject(image, {
+        x: zombie.x + (zombie.width - diedZombieWidth) / 2,
+        y: zombie.y + (zombie.height - diedZombieHeight) / 2,
+        width: diedZombieWidth,
+        height: diedZombieHeight,
+        paused: Qt.binding(function () {
+            return image.paused;
+        })
+    });
+    incubator.onStatusChanged = function (status) {
+        if (status === Component.Ready) {
+            const diedZombie = incubator.object;
+            diedZombie.currentFrameChanged.connect(function () {
+                if (diedZombie.currentFrame === diedZombie.frameCount - 1)
+                    diedZombie.destroy();
             });
         }
     };
