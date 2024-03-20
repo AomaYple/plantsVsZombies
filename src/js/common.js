@@ -123,7 +123,7 @@ function initPeaShooter(peaShooter, zombieSet) {
     peaShooter.peaShot.connect(function (position) {
         const count = peaShooter.type === Plants.PlantType.Type.Repeater ? 2 : 1;
         for (let i = 0; i < count; ++i) {
-            const peaX = position.x + (i === 1 ? peaShooter.width * 0.1 : 0),
+            const peaHeight = image.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0),
                 peaEndPositionX = image.width - image.rightMargin;
             if (peaX >= peaEndPositionX)
                 return;
@@ -131,7 +131,7 @@ function initPeaShooter(peaShooter, zombieSet) {
             const incubator = peaComponent.incubateObject(image, {
                 x: peaX,
                 y: position.y,
-                height: image.height * 0.1,
+                height: peaHeight,
                 paused: Qt.binding(function () {
                     return image.paused;
                 }),
@@ -247,17 +247,23 @@ function produceZombie(zombieComponent) {
                         }
 
                         function stopAttack() {
+                            plant.died.disconnect(eatUp);
+                            plant.shovelled.disconnect(stopAttack);
                             zombie.attacked.disconnect(attackPlant);
+                            zombie.died.disconnect(stopAttack);
                             zombie.stopAttack();
                             item.stopChomp();
                         }
 
-                        zombie.attacked.connect(attackPlant);
-                        plant.died.connect(function () {
+                        function eatUp() {
                             stopAttack();
                             gulp.play();
-                        });
+                        }
+
+                        plant.died.connect(eatUp);
                         plant.shovelled.connect(stopAttack);
+                        zombie.attacked.connect(attackPlant);
+                        zombie.died.connect(stopAttack);
                     }
                 }
             });
