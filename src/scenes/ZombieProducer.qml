@@ -10,6 +10,8 @@ SuspendableTimer {
     property Component zombieComponent: null
     readonly property var zombieContainer: [new Set(), new Set(), new Set(), new Set(), new Set(), new Set(),]
 
+    signal hugeWaved
+
     function playGroan() {
         const groanIndex = Common.getRandomInt(0, 5);
         switch (groanIndex) {
@@ -37,6 +39,7 @@ SuspendableTimer {
     interval: 5000
     repeat: true
 
+    onHugeWaved: siren.play()
     onTriggered: {
         if (index % 2 === 0)
             zombieComponent = coneHeadZombieComponent;
@@ -46,6 +49,11 @@ SuspendableTimer {
             zombieComponent = basicZombieComponent;
         if (index === 1)
             siren.play();
+        if (index === 20) {
+            interval = 1000;
+            restart();
+            hugeWaved();
+        }
         ++index;
         playGroan();
     }

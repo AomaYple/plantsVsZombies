@@ -46,6 +46,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/plants/WallNut.qml
 
         src/scenes/DaytimeGrass.qml
+        src/scenes/HugeWave.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
         src/scenes/MainMenu.qml
@@ -117,6 +118,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/favicon.ico
         resources/scenes/highlightQuit.png
         resources/scenes/highlightStartAdventure.png
+        resources/scenes/hugeWave.png
         resources/scenes/loadBar.png
         resources/scenes/mainMenu.png
         resources/scenes/optionsMenuBackground.png
@@ -149,6 +151,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/groan4.wav
         resources/sounds/groan5.wav
         resources/sounds/gulp.wav
+        resources/sounds/hugeWave.wav
         resources/sounds/pause.wav
         resources/sounds/plant0.wav
         resources/sounds/plant1.wav

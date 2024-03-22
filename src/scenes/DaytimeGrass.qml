@@ -85,29 +85,6 @@ Item {
             timer.start();
         }
 
-        ReadySetPlant {
-            id: readySetPlant
-
-            anchors.verticalCenter: parent.verticalCenter
-            height: parent.height * 0.2
-            x: (item.width - width) / 2 + parent.leftMargin
-
-            onFinished: {
-                menuButton.visible = shovelBank.visible = true;
-                menuButton.forceActiveFocus();
-                mouseArea.enabled = Qt.binding(function () {
-                    return seedBank.plantingSeed || shovelBank.shoveling;
-                });
-                seedBank.enabled = Qt.binding(function () {
-                    return !shovelBank.shoveling;
-                });
-                sunlightProducer.start();
-                zombieProducer.start();
-                parent.paused = false;
-                item.started();
-            }
-        }
-
         MouseArea {
             id: mouseArea
 
@@ -172,27 +149,6 @@ Item {
             }
         }
 
-        ZombieProducer {
-            id: zombieProducer
-
-            paused: running && parent.paused
-
-            onTriggered: Common.produceZombie(zombieComponent)
-        }
-
-        SunlightProducer {
-            id: sunlightProducer
-
-            paused: running && parent.paused
-
-            onTriggered: {
-                const sunlightHeight = parent.height * 0.14;
-                const beginPosition = Qt.point(Common.getRandomFloat(image.leftMargin, parent.width - image.rightMargin - sunlightHeight), seedBank.height);
-                const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
-                Common.produceSunlight(beginPosition, endPositionY, true);
-            }
-        }
-
         PreviewPlant {
             id: previewPlant
 
@@ -206,36 +162,6 @@ Item {
             visible: shovelBank.visible
             x: shovelBank.x + (shovelBank.width - width) / 2
             y: shovelBank.y + (shovelBank.height - height) / 2
-        }
-
-        MenuButton {
-            id: menuButton
-
-            height: parent.height * 0.07
-            x: parent.width - image.rightMargin - width
-
-            onTriggered: {
-                parent.paused = true;
-                menuDialog.open();
-            }
-        }
-
-        MenuDialog {
-            id: menuDialog
-
-            height: parent.height * 0.8
-            x: (item.width - width) / 2 + parent.leftMargin
-            y: (parent.height - height) / 2
-
-            onBackToGame: {
-                close();
-                menuButton.forceActiveFocus();
-                parent.paused = false;
-            }
-            onBackToMainMenu: {
-                close();
-                item.backToMainMenu();
-            }
         }
     }
 
@@ -295,6 +221,89 @@ Item {
             to = 0
         else
             to = judderAnimator.gap
+    }
+
+    ReadySetPlant {
+        id: readySetPlant
+
+        anchors.verticalCenter: parent.verticalCenter
+        height: parent.height * 0.2
+        x: (parent.width - width) / 2
+
+        onFinished: {
+            menuButton.visible = shovelBank.visible = true;
+            menuButton.forceActiveFocus();
+            mouseArea.enabled = Qt.binding(function () {
+                return seedBank.plantingSeed || shovelBank.shoveling;
+            });
+            seedBank.enabled = Qt.binding(function () {
+                return !shovelBank.shoveling;
+            });
+            sunlightProducer.start();
+            zombieProducer.start();
+            image.paused = false;
+            parent.started();
+        }
+    }
+
+    ZombieProducer {
+        id: zombieProducer
+
+        paused: running && image.paused
+
+        onHugeWaved: hugeWave.play()
+        onTriggered: Common.produceZombie(zombieComponent)
+    }
+
+    SunlightProducer {
+        id: sunlightProducer
+
+        paused: running && image.paused
+
+        onTriggered: {
+            const sunlightHeight = parent.height * 0.14;
+            const beginPosition = Qt.point(Common.getRandomFloat(image.leftMargin, image.leftMargin + parent.width - sunlightHeight), seedBank.height);
+            const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
+            Common.produceSunlight(beginPosition, endPositionY, true);
+        }
+    }
+
+    HugeWave {
+        id: hugeWave
+
+        anchors.centerIn: parent
+        height: parent.height * 0.1
+        paused: image.paused
+    }
+
+    MenuButton {
+        id: menuButton
+
+        anchors.right: parent.right
+        height: parent.height * 0.07
+
+        onTriggered: {
+            image.paused = true;
+            menuDialog.open();
+        }
+    }
+
+    MenuDialog {
+        id: menuDialog
+
+        height: parent.height * 0.8
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        onBackToGame: {
+            close();
+            menuButton.forceActiveFocus();
+            image.paused = false;
+        }
+        onBackToMainMenu: {
+            close();
+            parent.backToMainMenu();
+        }
     }
 
     SoundEffect {
