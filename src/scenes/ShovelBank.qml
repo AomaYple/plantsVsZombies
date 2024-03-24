@@ -24,11 +24,11 @@ Image {
             soundEffect.play();
             parent.clicked();
         }
-    }
 
-    SoundEffect {
-        id: soundEffect
+        SoundEffect {
+            id: soundEffect
 
-        source: '../../resources/sounds/shovel.wav'
+            source: '../../resources/sounds/shovel.wav'
+        }
     }
 }
