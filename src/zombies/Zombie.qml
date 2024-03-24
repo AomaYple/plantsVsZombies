@@ -6,7 +6,6 @@ Item {
 
     required property int attackValue
     property bool attacking: false
-    required property real endPositionX
     required property int lifeValue
     property alias paused: animatedImage.paused
     property alias source: animatedImage.source
@@ -69,14 +68,14 @@ Item {
     NumberAnimation {
         id: moveAnimation
 
-        duration: Math.abs(item.x - item.endPositionX) / item.speed
-        paused: item.paused || item.attacking
+        duration: target.x / target.speed
+        paused: target.paused || target.attacking
         properties: 'x'
         running: true
         target: item
-        to: item.endPositionX - item.width
+        to: 0
 
-        onFinished: item.die()
+        onFinished: target.die()
     }
 
     Scenes.SuspendableTimer {
@@ -85,7 +84,7 @@ Item {
         interval: 600
         paused: running && parent.paused
         repeat: true
-        running: item.attacking
+        running: parent.attacking
 
         onTriggered: parent.attacked()
     }
@@ -94,9 +93,9 @@ Item {
         id: twinkleAnimation
 
         duration: 250
-        paused: running && item.paused
+        paused: running && target.paused
         properties: 'opacity'
-        target: animatedImage
+        target: item
         to: 0.5
 
         onFinished: if (to === 0.5) {

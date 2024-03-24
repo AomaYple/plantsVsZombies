@@ -207,8 +207,7 @@ function produceZombie(zombieComponent) {
         height: zombieHeight,
         paused: Qt.binding(function () {
             return item.paused;
-        }),
-        endPositionX: image.leftMargin
+        })
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
