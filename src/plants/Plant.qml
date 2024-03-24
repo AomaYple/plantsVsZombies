@@ -31,6 +31,7 @@ Item {
         numberAnimation.start();
     }
 
+    opacity: shoveling ? 0.8 : 1
     width: height
 
     onLifeValueChanged: if (lifeValue <= 0)
@@ -49,29 +50,28 @@ Item {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        opacity: parent.shoveling ? 0.8 : 1
         sourceSize: Qt.size(width, height)
 
         onCurrentFrameChanged: parent.currentFrameChanged(currentFrame, frameCount)
+    }
 
-        NumberAnimation {
-            id: numberAnimation
+    NumberAnimation {
+        id: numberAnimation
 
-            duration: 250
-            paused: running && item.paused
-            properties: 'opacity'
-            target: animatedImage
-            to: 0.5
+        duration: 250
+        paused: running && item.paused
+        properties: 'opacity'
+        target: item
+        to: 0.5
 
-            onFinished: if (to === 0.5) {
-                to = 1;
-                start();
-            } else {
-                to = 0.5;
-                item.opacity = Qt.binding(function () {
-                    return item.shoveling ? 0.8 : 1;
-                });
-            }
+        onFinished: if (to === 0.5) {
+            to = 1;
+            start();
+        } else {
+            to = 0.5;
+            target.opacity = Qt.binding(function () {
+                return target.shoveling ? 0.8 : 1;
+            });
         }
     }
 }
