@@ -85,6 +85,64 @@ Item {
             timer.start();
         }
 
+        Timer {
+            id: timer
+
+            interval: 1500
+
+            onTriggered: moveAnimator.start()
+        }
+
+        XAnimator {
+            id: moveAnimator
+
+            signal readied
+
+            duration: 2000
+            target: image
+            to: -image.leftMargin - image.rightMargin
+
+            onFinished: {
+                if (to === -image.leftMargin - image.rightMargin) {
+                    to = -image.leftMargin;
+                    timer.start();
+                } else {
+                    readySetPlant.start();
+                    seedBank.emerge();
+                    readied();
+                    item.chose();
+                }
+            }
+        }
+
+        XAnimator {
+            id: judderAnimator
+
+            readonly property real gap: -image.height * 0.01
+
+            duration: 200
+            target: image
+            to: gap - image.leftMargin
+
+            onFinished: if (to === gap - image.leftMargin) {
+                to = -image.leftMargin;
+                start();
+            } else
+                to = gap - image.leftMargin
+        }
+
+        YAnimator {
+            duration: judderAnimator.duration
+            running: judderAnimator.running
+            target: image
+            to: judderAnimator.gap
+
+            onFinished: if (to === judderAnimator.gap)
+                to = 0
+            else
+                to = judderAnimator.gap
+        }
+
         MouseArea {
             id: mouseArea
 
@@ -163,64 +221,6 @@ Item {
             x: shovelBank.x + (shovelBank.width - width) / 2
             y: shovelBank.y + (shovelBank.height - height) / 2
         }
-    }
-
-    Timer {
-        id: timer
-
-        interval: 1500
-
-        onTriggered: moveAnimator.start()
-    }
-
-    XAnimator {
-        id: moveAnimator
-
-        signal readied
-
-        duration: 2000
-        target: image
-        to: item.width - image.width
-
-        onFinished: {
-            if (to === item.width - image.width) {
-                to = -image.leftMargin;
-                timer.start();
-            } else {
-                readySetPlant.start();
-                seedBank.emerge();
-                readied();
-                item.chose();
-            }
-        }
-    }
-
-    XAnimator {
-        id: judderAnimator
-
-        readonly property real gap: -image.height * 0.01
-
-        duration: 200
-        target: image
-        to: gap - image.leftMargin
-
-        onFinished: if (to === gap - image.leftMargin) {
-            to = -image.leftMargin;
-            start();
-        } else
-            to = gap - image.leftMargin
-    }
-
-    YAnimator {
-        duration: judderAnimator.duration
-        running: judderAnimator.running
-        target: image
-        to: judderAnimator.gap
-
-        onFinished: if (to === judderAnimator.gap)
-            to = 0
-        else
-            to = judderAnimator.gap
     }
 
     ReadySetPlant {
