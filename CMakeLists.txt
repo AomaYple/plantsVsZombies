@@ -45,7 +45,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/plants/Sunflower.qml
         src/plants/WallNut.qml
 
-        src/scenes/DaytimeGrass.qml
+        src/scenes/GameScene.qml
         src/scenes/HugeWave.qml
         src/scenes/LoadBar.qml
         src/scenes/LoadScreen.qml
