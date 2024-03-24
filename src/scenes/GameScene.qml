@@ -7,6 +7,8 @@ import "../js/common.js" as Common
 Item {
     id: item
 
+    property bool paused: true
+
     signal backToMainMenu
     signal chose
     signal started
@@ -65,7 +67,6 @@ Item {
         readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
         readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
-        property bool paused: true
         readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
         readonly property real rightMargin: width - leftMargin - parent.width
         readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
@@ -164,7 +165,7 @@ Item {
                 id: seedBank
 
                 height: parent.height * 0.145
-                paused: image.paused
+                paused: item.paused
                 x: image.leftMargin + parent.width * 0.01
 
                 onPlantingSeedChanged: {
@@ -241,7 +242,7 @@ Item {
             });
             sunlightProducer.start();
             zombieProducer.start();
-            image.paused = false;
+            parent.paused = false;
             parent.started();
         }
     }
@@ -249,7 +250,7 @@ Item {
     ZombieProducer {
         id: zombieProducer
 
-        paused: running && image.paused
+        paused: running && parent.paused
 
         onHugeWaved: hugeWave.play()
         onTriggered: Common.produceZombie(zombieComponent)
@@ -258,7 +259,7 @@ Item {
     SunlightProducer {
         id: sunlightProducer
 
-        paused: running && image.paused
+        paused: running && parent.paused
 
         onTriggered: {
             const sunlightHeight = parent.height * 0.14;
@@ -273,7 +274,7 @@ Item {
 
         anchors.centerIn: parent
         height: parent.height * 0.1
-        paused: image.paused
+        paused: parent.paused
     }
 
     MenuButton {
@@ -283,7 +284,7 @@ Item {
         height: parent.height * 0.07
 
         onTriggered: {
-            image.paused = true;
+            parent.paused = true;
             menuDialog.open();
         }
     }
@@ -298,7 +299,7 @@ Item {
         onBackToGame: {
             close();
             menuButton.forceActiveFocus();
-            image.paused = false;
+            parent.paused = false;
         }
         onBackToMainMenu: {
             close();

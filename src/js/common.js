@@ -43,7 +43,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
         natural: natural,
         height: image.height * 0.14,
         paused: Qt.binding(function () {
-            return image.paused;
+            return item.paused;
         }),
         x: beginPosition.x,
         y: beginPosition.y,
@@ -79,7 +79,7 @@ function plant(property, subPlantArea) {
             const index = subPlantArea.index;
             const zombieSet = zombieProducer.zombieContainer[index[0]];
             let setPaused = Qt.binding(function () {
-                return image.paused;
+                return item.paused;
             });
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
@@ -94,7 +94,7 @@ function plant(property, subPlantArea) {
                     break;
                 case Plants.PlantType.Type.WallNut:
                     setPaused = Qt.binding(function () {
-                        return image.paused || plant.zombieCount > 0;
+                        return item.paused || plant.zombieCount > 0;
                     });
                     break;
                 case Plants.PlantType.Type.PotatoMine:
@@ -133,7 +133,7 @@ function initPeaShooter(peaShooter, zombieSet) {
                 y: position.y,
                 height: peaHeight,
                 paused: Qt.binding(function () {
-                    return image.paused;
+                    return item.paused;
                 }),
                 endPositionX: peaEndPositionX,
             });
@@ -206,7 +206,7 @@ function produceZombie(zombieComponent) {
         y: plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight,
         height: zombieHeight,
         paused: Qt.binding(function () {
-            return image.paused;
+            return item.paused;
         }),
         endPositionX: image.leftMargin
     });
@@ -309,7 +309,7 @@ function zombieDied(zombie, plantArray, zombieSet) {
         width: diedZombieWidth,
         height: diedZombieHeight,
         paused: Qt.binding(function () {
-            return image.paused;
+            return item.paused;
         })
     });
     incubator.onStatusChanged = function (status) {
