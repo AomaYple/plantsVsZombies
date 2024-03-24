@@ -26,8 +26,8 @@ Image {
                 to = 0;
                 start();
             } else {
-                image.opacity = 1;
-                image.source = '../resources/scenes/titleScreen.png';
+                target.opacity = 1;
+                target.source = '../resources/scenes/titleScreen.png';
             }
         }
     }
