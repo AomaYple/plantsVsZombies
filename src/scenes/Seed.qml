@@ -38,16 +38,16 @@ Image {
         color: '#000000'
         opacity: 0.8
         width: parent.width
-    }
 
-    NumberAnimation {
-        id: numberAnimation
+        NumberAnimation {
+            id: numberAnimation
 
-        duration: image.cooldownTime
-        paused: running && image.paused
-        properties: 'height'
-        target: deepCurtain
-        to: 0
+            duration: image.cooldownTime
+            paused: running && image.paused
+            properties: 'height'
+            target: deepCurtain
+            to: 0
+        }
     }
 
     MouseArea {
