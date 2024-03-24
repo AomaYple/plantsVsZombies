@@ -101,11 +101,11 @@ Item {
 
             duration: 2000
             target: image
-            to: -image.leftMargin - image.rightMargin
+            to: -target.leftMargin - target.rightMargin
 
             onFinished: {
-                if (to === -image.leftMargin - image.rightMargin) {
-                    to = -image.leftMargin;
+                if (to === -target.leftMargin - target.rightMargin) {
+                    to = -target.leftMargin;
                     timer.start();
                 } else {
                     readySetPlant.start();
@@ -119,17 +119,17 @@ Item {
         XAnimator {
             id: judderAnimator
 
-            readonly property real gap: -image.height * 0.01
+            readonly property real gap: -target.height * 0.01
 
             duration: 200
             target: image
-            to: gap - image.leftMargin
+            to: gap - target.leftMargin
 
-            onFinished: if (to === gap - image.leftMargin) {
-                to = -image.leftMargin;
+            onFinished: if (to === gap - target.leftMargin) {
+                to = -target.leftMargin;
                 start();
             } else
-                to = gap - image.leftMargin
+                to = gap - target.leftMargin
         }
 
         YAnimator {
