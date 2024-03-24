@@ -59,7 +59,7 @@ Item {
         id: numberAnimation
 
         duration: 250
-        paused: running && item.paused
+        paused: running && target.paused
         properties: 'opacity'
         target: item
         to: 0.5
