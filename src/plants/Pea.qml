@@ -35,12 +35,12 @@ Item {
     NumberAnimation {
         id: numberAnimation
 
-        duration: (item.endPositionX - item.x) / 0.3
+        duration: (target.endPositionX - target.x) / 0.3
         properties: 'x'
         running: true
         target: item
-        to: item.endPositionX
+        to: target.endPositionX
 
-        onFinished: item.destroy()
+        onFinished: target.destroy()
     }
 }
