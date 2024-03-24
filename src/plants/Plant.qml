@@ -53,25 +53,25 @@ Item {
         sourceSize: Qt.size(width, height)
 
         onCurrentFrameChanged: parent.currentFrameChanged(currentFrame, frameCount)
-    }
 
-    NumberAnimation {
-        id: numberAnimation
+        NumberAnimation {
+            id: numberAnimation
 
-        duration: 250
-        paused: running && item.paused
-        properties: 'opacity'
-        target: animatedImage
-        to: 0.5
+            duration: 250
+            paused: running && item.paused
+            properties: 'opacity'
+            target: animatedImage
+            to: 0.5
 
-        onFinished: if (to === 0.5) {
-            to = 1;
-            start();
-        } else {
-            to = 0.5;
-            item.opacity = Qt.binding(function () {
-                return item.shoveling ? 0.8 : 1;
-            });
+            onFinished: if (to === 0.5) {
+                to = 1;
+                start();
+            } else {
+                to = 0.5;
+                item.opacity = Qt.binding(function () {
+                    return item.shoveling ? 0.8 : 1;
+                });
+            }
         }
     }
 }
