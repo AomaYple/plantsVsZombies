@@ -31,22 +31,22 @@ Plant {
         radius: height / 2
         width: height
         y: parent.height * 0.15
-    }
 
-    NumberAnimation {
-        id: numberAnimation
+        NumberAnimation {
+            id: numberAnimation
 
-        duration: 1000
-        paused: running && plant.paused
-        properties: 'opacity'
-        target: rectangle
-        to: 0.5
+            duration: 1000
+            paused: running && plant.paused
+            properties: 'opacity'
+            target: rectangle
+            to: 0.5
 
-        onFinished: if (to === 0.5) {
-            to = 0;
-            start();
-            plant.sunlightProduced();
-        } else
-            to = 0.5
+            onFinished: if (to === 0.5) {
+                to = 0;
+                start();
+                plant.sunlightProduced();
+            } else
+                to = 0.5
+        }
     }
 }
