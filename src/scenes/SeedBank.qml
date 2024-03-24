@@ -34,6 +34,14 @@ Image {
             seedLift.play();
     }
 
+    YAnimator {
+        id: yAnimator
+
+        duration: 500
+        target: image
+        to: 0
+    }
+
     Text {
         id: sunlightSum
 
@@ -58,14 +66,6 @@ Image {
             bold: true
             pointSize: Math.max(parent.height * 0.1, 1)
         }
-    }
-
-    YAnimator {
-        id: yAnimator
-
-        duration: 500
-        target: image
-        to: 0
     }
 
     SoundEffect {
