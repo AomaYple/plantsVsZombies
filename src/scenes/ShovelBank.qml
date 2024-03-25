@@ -10,7 +10,6 @@ Image {
     mipmap: true
     source: '../../resources/scenes/shovelBank.png'
     sourceSize: Qt.size(width, height)
-    visible: false
     width: height / 72 * 70
 
     MouseArea {

@@ -8,60 +8,10 @@ Item {
     id: item
 
     property bool paused: true
-    readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
-    readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
 
     signal backToMainMenu
     signal chose
     signal started
-
-    function playChomp() {
-        const index = Common.getRandomInt(0, 2);
-        switch (index) {
-        case 0:
-            chomp0.play();
-            break;
-        case 1:
-            chomp1.play();
-            break;
-        case 2:
-            chomp2.play();
-            break;
-        }
-    }
-
-    function playShieldHit() {
-        const index = Math.round(Math.random());
-        switch (index) {
-        case 0:
-            shieldHit0.play();
-            break;
-        case 1:
-            shieldHit1.play();
-            break;
-        }
-    }
-
-    function playSplat() {
-        const index = Common.getRandomInt(0, 2);
-        switch (index) {
-        case 0:
-            splat0.play();
-            break;
-        case 1:
-            splat1.play();
-            break;
-        case 2:
-            splat2.play();
-            break;
-        }
-    }
-
-    function stopChomp() {
-        chomp0.stop();
-        chomp1.stop();
-        chomp2.stop();
-    }
 
     Image {
         id: image
@@ -69,10 +19,60 @@ Item {
         readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
         readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
+        readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
         readonly property real rightMargin: width - leftMargin - parent.width
+        readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
         readonly property Component standingBasicZombieComponent: Qt.createComponent('../zombies/StandingBasicZombie.qml')
         readonly property Component standingBucketHeadZombie: Qt.createComponent('../zombies/StandingBucketHeadZombie.qml')
         readonly property Component standingConeHeadZombie: Qt.createComponent('../zombies/StandingConeHeadZombie.qml')
+
+        function playChomp() {
+            const index = Common.getRandomInt(0, 2);
+            switch (index) {
+            case 0:
+                chomp0.play();
+                break;
+            case 1:
+                chomp1.play();
+                break;
+            case 2:
+                chomp2.play();
+                break;
+            }
+        }
+
+        function playShieldHit() {
+            const index = Math.round(Math.random());
+            switch (index) {
+            case 0:
+                shieldHit0.play();
+                break;
+            case 1:
+                shieldHit1.play();
+                break;
+            }
+        }
+
+        function playSplat() {
+            const index = Common.getRandomInt(0, 2);
+            switch (index) {
+            case 0:
+                splat0.play();
+                break;
+            case 1:
+                splat1.play();
+                break;
+            case 2:
+                splat2.play();
+                break;
+            }
+        }
+
+        function stopChomp() {
+            chomp0.stop();
+            chomp1.stop();
+            chomp2.stop();
+        }
 
         asynchronous: true
         height: parent.height
@@ -143,107 +143,183 @@ Item {
             else
                 to = judderAnimator.gap
         }
-    }
 
-    MouseArea {
-        id: mouseArea
+        MouseArea {
+            id: mouseArea
 
-        anchors.fill: parent
-        enabled: false
-        hoverEnabled: true
+            anchors.fill: parent
+            enabled: false
+            hoverEnabled: true
 
-        onPositionChanged: {
-            if (seedBank.plantingSeed) {
-                previewPlant.x = mouseX - previewPlant.width / 2;
-                previewPlant.y = mouseY - previewPlant.height / 2;
-            } else {
-                shovel.x = mouseX - shovel.width / 2;
-                shovel.y = mouseY - shovel.height / 2;
+            onPositionChanged: {
+                if (seedBank.plantingSeed) {
+                    previewPlant.x = mouseX - previewPlant.width / 2;
+                    previewPlant.y = mouseY - previewPlant.height / 2;
+                } else {
+                    shovel.x = mouseX - shovel.width / 2;
+                    shovel.y = mouseY - shovel.height / 2;
+                }
             }
-        }
 
-        SeedBank {
-            id: seedBank
+            SeedBank {
+                id: seedBank
 
-            height: parent.height * 0.145
-            paused: item.paused
-            x: parent.width * 0.011
+                height: parent.height * 0.145
+                paused: item.paused
+                x: image.leftMargin + parent.width * 0.01
 
-            onPlantingSeedChanged: {
-                if (plantingSeed)
-                    previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
+                onPlantingSeedChanged: {
+                    if (plantingSeed)
+                        previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
+                    else
+                        previewPlant.source = plantArea.previewPlantSource = '';
+                }
+            }
+
+            ShovelBank {
+                id: shovelBank
+
+                function fixShovel() {
+                    shoveling = false;
+                    shovel.x = x + (width - shovel.width) / 2;
+                    shovel.y = y + (height - shovel.height) / 2;
+                }
+
+                anchors.left: seedBank.right
+                enabled: !seedBank.plantingSeed
+                height: parent.height * 0.13
+                visible: menuButton.visible
+
+                onClicked: if (shoveling)
+                    fixShovel()
                 else
-                    previewPlant.source = plantArea.previewPlantSource = '';
+                    shoveling = true
+            }
+
+            PlantArea {
+                id: plantArea
+
+                shoveling: shovelBank.shoveling
+                subPlantAreaSize: Qt.size(parent.width * 0.06, parent.height * 0.16)
+                x: image.leftMargin + parent.width * 0.018
+                y: parent.height * 0.145
+
+                onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
+                onShovelled: shovelBank.fixShovel()
             }
         }
 
-        ShovelBank {
-            id: shovelBank
+        ZombieProducer {
+            id: zombieProducer
 
-            function fixShovel() {
-                shoveling = false;
-                shovel.x = x + (width - shovel.width) / 2;
-                shovel.y = y + (height - shovel.height) / 2;
+            paused: running && item.paused
+
+            onHugeWaved: hugeWave.play()
+            onTriggered: Common.produceZombie(zombieComponent)
+        }
+
+        SunlightProducer {
+            id: sunlightProducer
+
+            paused: running && item.paused
+
+            onTriggered: {
+                const sunlightHeight = parent.height * 0.14;
+                const beginPosition = Qt.point(Common.getRandomFloat(image.leftMargin, parent.width - image.rightMargin - sunlightHeight), seedBank.height);
+                const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
+                Common.produceSunlight(beginPosition, endPositionY, true);
             }
-
-            anchors.left: seedBank.right
-            enabled: !seedBank.plantingSeed
-            height: parent.height * 0.13
-
-            onClicked: if (shoveling)
-                fixShovel()
-            else
-                shoveling = true
         }
 
-        PlantArea {
-            id: plantArea
+        PreviewPlant {
+            id: previewPlant
 
-            shoveling: shovelBank.shoveling
-            subPlantAreaSize: Qt.size(parent.width * 0.105, parent.height * 0.16)
-            x: parent.width * 0.028
-            y: parent.height * 0.145
-
-            onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
-            onShovelled: shovelBank.fixShovel()
+            height: parent.height * 0.15
         }
-    }
 
-    ZombieProducer {
-        id: zombieProducer
+        Shovel {
+            id: shovel
 
-        paused: running && parent.paused
-
-        onHugeWaved: hugeWave.play()
-        onTriggered: Common.produceZombie(zombieComponent)
-    }
-
-    SunlightProducer {
-        id: sunlightProducer
-
-        paused: running && parent.paused
-
-        onTriggered: {
-            const sunlightHeight = parent.height * 0.14;
-            const beginPosition = Qt.point(Common.getRandomFloat(0, parent.width - sunlightHeight), seedBank.height);
-            const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
-            Common.produceSunlight(beginPosition, endPositionY, true);
+            height: shovelBank.height * 0.8
+            visible: shovelBank.visible
+            x: shovelBank.x + (shovelBank.width - width) / 2
+            y: shovelBank.y + (shovelBank.height - height) / 2
         }
-    }
 
-    PreviewPlant {
-        id: previewPlant
+        SoundEffect {
+            id: points
 
-        height: parent.height * 0.15
-    }
+            source: '../../resources/sounds/points.wav'
+        }
 
-    Shovel {
-        id: shovel
+        SoundEffect {
+            id: splat0
 
-        height: shovelBank.height * 0.8
-        visible: shovelBank.visible
-        x: shovelBank.x + (shovelBank.width - width) / 2
-        y: shovelBank.y + (shovelBank.height - height) / 2
+            source: '../../resources/sounds/splat0.wav'
+        }
+
+        SoundEffect {
+            id: splat1
+
+            source: '../../resources/sounds/splat1.wav'
+        }
+
+        SoundEffect {
+            id: splat2
+
+            source: '../../resources/sounds/splat2.wav'
+        }
+
+        SoundEffect {
+            id: shieldHit0
+
+            source: '../../resources/sounds/shieldHit0.wav'
+        }
+
+        SoundEffect {
+            id: shieldHit1
+
+            source: '../../resources/sounds/shieldHit1.wav'
+        }
+
+        SoundEffect {
+            id: potatoMineBomb
+
+            source: '../../resources/sounds/potatoMine.wav'
+        }
+
+        SoundEffect {
+            id: frozen
+
+            source: '../../resources/sounds/frozen.wav'
+        }
+
+        SoundEffect {
+            id: chomp0
+
+            loops: SoundEffect.Infinite
+            source: '../../resources/sounds/chomp0.wav'
+        }
+
+        SoundEffect {
+            id: chomp1
+
+            loops: SoundEffect.Infinite
+            source: '../../resources/sounds/chomp1.wav'
+        }
+
+        SoundEffect {
+            id: chomp2
+
+            loops: SoundEffect.Infinite
+            source: '../../resources/sounds/chomp2.wav'
+        }
+
+        SoundEffect {
+            id: gulp
+
+            source: '../../resources/sounds/gulp.wav'
+        }
     }
 
     ReadySetPlant {
@@ -254,7 +330,7 @@ Item {
         x: (parent.width - width) / 2
 
         onFinished: {
-            menuButton.visible = shovelBank.visible = true;
+            menuButton.visible = true;
             menuButton.forceActiveFocus();
             mouseArea.enabled = Qt.binding(function () {
                 return seedBank.plantingSeed || shovelBank.shoveling;
@@ -305,80 +381,5 @@ Item {
             close();
             parent.backToMainMenu();
         }
-    }
-
-    SoundEffect {
-        id: points
-
-        source: '../../resources/sounds/points.wav'
-    }
-
-    SoundEffect {
-        id: splat0
-
-        source: '../../resources/sounds/splat0.wav'
-    }
-
-    SoundEffect {
-        id: splat1
-
-        source: '../../resources/sounds/splat1.wav'
-    }
-
-    SoundEffect {
-        id: splat2
-
-        source: '../../resources/sounds/splat2.wav'
-    }
-
-    SoundEffect {
-        id: shieldHit0
-
-        source: '../../resources/sounds/shieldHit0.wav'
-    }
-
-    SoundEffect {
-        id: shieldHit1
-
-        source: '../../resources/sounds/shieldHit1.wav'
-    }
-
-    SoundEffect {
-        id: potatoMineBomb
-
-        source: '../../resources/sounds/potatoMine.wav'
-    }
-
-    SoundEffect {
-        id: frozen
-
-        source: '../../resources/sounds/frozen.wav'
-    }
-
-    SoundEffect {
-        id: chomp0
-
-        loops: SoundEffect.Infinite
-        source: '../../resources/sounds/chomp0.wav'
-    }
-
-    SoundEffect {
-        id: chomp1
-
-        loops: SoundEffect.Infinite
-        source: '../../resources/sounds/chomp1.wav'
-    }
-
-    SoundEffect {
-        id: chomp2
-
-        loops: SoundEffect.Infinite
-        source: '../../resources/sounds/chomp2.wav'
-    }
-
-    SoundEffect {
-        id: gulp
-
-        source: '../../resources/sounds/gulp.wav'
     }
 }

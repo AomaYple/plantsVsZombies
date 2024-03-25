@@ -39,16 +39,16 @@ function produceStandingZombies() {
 }
 
 function produceSunlight(beginPosition, endPositionY, natural) {
-    const incubator = sunlightProducer.sunlightComponent.incubateObject(item, {
+    const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
         natural: natural,
-        height: item.height * 0.14,
+        height: image.height * 0.14,
         paused: Qt.binding(function () {
             return item.paused;
         }),
         x: beginPosition.x,
         y: beginPosition.y,
         endPositionY: endPositionY,
-        collectedPosition: Qt.point(item.width * 0.006, -item.height * 0.01)
+        collectedPosition: Qt.point(image.leftMargin + image.width * 0.008, -image.height * 0.01)
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
@@ -66,7 +66,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
 function plant(property, subPlantArea) {
     const incubator = seedBank.plantingSeed.plantComponent.incubateObject(image, {
         height: property.height,
-        x: property.x + image.leftMargin,
+        x: property.x,
         y: property.y,
         shoveling: Qt.binding(function () {
             return shovelBank.shoveling && subPlantArea.containsMouse;
@@ -84,7 +84,7 @@ function plant(property, subPlantArea) {
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
                     plant.sunlightProduced.connect(function () {
-                        produceSunlight(Qt.point(plant.x - image.leftMargin, plant.y), plant.y + plant.height * 0.5, false);
+                        produceSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
                     });
                     break;
                 case Plants.PlantType.Type.PeaShooter:
@@ -123,12 +123,12 @@ function initPeaShooter(peaShooter, zombieSet) {
     peaShooter.peaShot.connect(function (position) {
         const count = peaShooter.type === Plants.PlantType.Type.Repeater ? 2 : 1;
         for (let i = 0; i < count; ++i) {
-            const peaHeight = item.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0) - image.leftMargin,
-                peaEndPositionX = item.width;
+            const peaHeight = image.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0),
+                peaEndPositionX = image.width - image.rightMargin;
             if (peaX >= peaEndPositionX)
                 return;
-            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? item.snowPeaComponent : item.peaComponent;
-            const incubator = peaComponent.incubateObject(item, {
+            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? image.snowPeaComponent : image.peaComponent;
+            const incubator = peaComponent.incubateObject(image, {
                 x: peaX,
                 y: position.y,
                 height: peaHeight,
@@ -148,7 +148,7 @@ function initPeaShooter(peaShooter, zombieSet) {
 function initPea(pea, zombieSet) {
     pea.xChanged.connect(function () {
         if (pea.attack) {
-            const edge = pea.x + pea.width + image.leftMargin;
+            const edge = pea.x + pea.width;
             for (const zombie of zombieSet) {
                 const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
                 if (edge >= left && edge <= right) {
@@ -159,9 +159,9 @@ function initPea(pea, zombieSet) {
                     pea.destroy();
                     zombie.twinkle();
                     if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
-                        item.playSplat();
+                        image.playSplat();
                     else
-                        item.playShieldHit();
+                        image.playShieldHit();
                 }
             }
         }
@@ -253,7 +253,7 @@ function zombieXChanged(zombie, plantArray) {
                         break;
             }
             zombie.startAttack();
-            item.playChomp();
+            image.playChomp();
 
             function attackPlant() {
                 plant.lifeValue -= zombie.attackValue;
@@ -266,7 +266,7 @@ function zombieXChanged(zombie, plantArray) {
                 zombie.attacked.disconnect(attackPlant);
                 zombie.died.disconnect(stopAttack);
                 zombie.stopAttack();
-                item.stopChomp();
+                image.stopChomp();
             }
 
             function eatUp() {
@@ -290,14 +290,14 @@ function zombieDied(zombie, plantArray, zombieSet) {
                 case Plants.PlantType.Type.SnowPeaShooter:
                 case Plants.PlantType.Type.Repeater:
                     if (zombie.x > plant.x + plant.width * 0.5)
-                        break;
+                        --plant.zombieCount;
+                    break;
                 case Plants.PlantType.Type.WallNut:
                     if (zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5)
-                        break;
-                default:
-                    return;
+                        --plant.zombieCount;
+                    break;
             }
-            --plant.zombieCount;
+
         }
     }
     zombieSet.delete(zombie);
