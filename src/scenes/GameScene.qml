@@ -238,7 +238,7 @@ Item {
 
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[0])
-                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
                         zombie.die();
             }
         }
@@ -252,7 +252,7 @@ Item {
 
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[1])
-                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
                         zombie.die();
             }
         }
@@ -266,7 +266,7 @@ Item {
 
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[2])
-                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
                         zombie.die();
             }
         }
@@ -280,7 +280,7 @@ Item {
 
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[3])
-                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
                         zombie.die();
             }
         }
@@ -294,7 +294,7 @@ Item {
 
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[4])
-                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
                         zombie.die();
             }
         }

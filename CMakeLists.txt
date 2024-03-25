@@ -157,6 +157,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/groan5.wav
         resources/sounds/gulp.wav
         resources/sounds/hugeWave.wav
+        resources/sounds/lawnMower.wav
         resources/sounds/loseSound.wav
         resources/sounds/pause.wav
         resources/sounds/plant0.wav

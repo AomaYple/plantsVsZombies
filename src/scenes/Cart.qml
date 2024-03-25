@@ -1,4 +1,5 @@
 import QtQuick
+import QtMultimedia
 
 AnimatedImage {
     id: animatedImage
@@ -14,6 +15,7 @@ AnimatedImage {
             paused = false;
             numberAnimation.to = endPositionX;
             numberAnimation.start();
+            soundEffect.play();
         }
     }
 
@@ -35,7 +37,7 @@ AnimatedImage {
     NumberAnimation {
         id: numberAnimation
 
-        duration: 5000
+        duration: 3000
         paused: running && target.paused
         properties: 'x'
         target: animatedImage
@@ -44,5 +46,11 @@ AnimatedImage {
             animatedImage.source = '';
             animatedImage.visible = false;
         }
+    }
+
+    SoundEffect {
+        id: soundEffect
+
+        source: '../../resources/sounds/lawnMower.wav'
     }
 }

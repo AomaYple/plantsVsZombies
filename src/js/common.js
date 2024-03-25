@@ -226,7 +226,7 @@ function produceZombie(zombieComponent) {
                 }
             }
             zombie.xChanged.connect(function () {
-                zombieXChanged(zombie, plantArray);
+                zombieXChanged(zombie, plantArray, rowIndex);
             });
             zombie.froze.connect(function () {
                 frozen.play();
@@ -238,7 +238,7 @@ function produceZombie(zombieComponent) {
     };
 }
 
-function zombieXChanged(zombie, plantArray) {
+function zombieXChanged(zombie, plantArray, rowIndex) {
     for (const plant of plantArray) {
         if (plant && zombie.x >= plant.x && zombie.x <= plant.x + plant.width * 0.5) {
             switch (plant.type) {
@@ -280,36 +280,29 @@ function zombieXChanged(zombie, plantArray) {
             zombie.died.connect(stopAttack);
         }
     }
-    const edge = zombie.x - zombie.width * 0.5;
-    if (edge <= cart0.x + cart0.width) {
-        cart0.paused = Qt.binding(function () {
-            return item.paused;
-        });
-        cart0.march(image.width - image.rightMargin);
+    const edge = zombie.x + zombie.width * 0.4, endPositionX = image.width - image.rightMargin;
+    const pausedSetting = Qt.binding(function () {
+        return item.paused;
+    });
+    if (rowIndex === 0 && edge <= cart0.x + cart0.width) {
+        cart0.march(endPositionX);
+        cart0.paused = pausedSetting;
     }
-    if (edge <= cart1.x + cart1.width) {
-        cart1.march(image.width - image.rightMargin);
-        cart1.paused = Qt.binding(function () {
-            return item.paused;
-        });
+    if (rowIndex === 1 && edge <= cart1.x + cart1.width) {
+        cart1.march(endPositionX);
+        cart1.paused = pausedSetting;
     }
-    if (edge <= cart2.x + cart2.width) {
-        cart2.march(image.width - image.rightMargin);
-        cart2.paused = Qt.binding(function () {
-            return item.paused;
-        });
+    if (rowIndex === 2 && edge <= cart2.x + cart2.width) {
+        cart2.march(endPositionX);
+        cart2.paused = pausedSetting;
     }
-    if (edge <= cart3.x + cart3.width) {
-        cart3.march(image.width - image.rightMargin);
-        cart3.paused = Qt.binding(function () {
-            return item.paused;
-        });
+    if (rowIndex === 3 && edge <= cart3.x + cart3.width) {
+        cart3.march(endPositionX);
+        cart3.paused = pausedSetting;
     }
-    if (edge <= cart4.x + cart4.width) {
-        cart4.march(image.width - image.rightMargin);
-        cart4.paused = Qt.binding(function () {
-            return item.paused;
-        });
+    if (rowIndex === 4 && edge <= cart4.x + cart4.width) {
+        cart4.march(endPositionX);
+        cart4.paused = pausedSetting;
     }
     if (zombie.x + zombie.width < image.leftMargin) {
         zombie.paused = false;
