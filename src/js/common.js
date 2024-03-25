@@ -48,7 +48,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
         x: beginPosition.x,
         y: beginPosition.y,
         endPositionY: endPositionY,
-        collectedPosition: Qt.point(item.width * 0.01, -item.height * 0.01)
+        collectedPosition: Qt.point(item.width * 0.008, -item.height * 0.01)
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
@@ -66,7 +66,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
 function plant(property, subPlantArea) {
     const incubator = seedBank.plantingSeed.plantComponent.incubateObject(image, {
         height: property.height,
-        x: property.x,
+        x: property.x + image.leftMargin,
         y: property.y,
         shoveling: Qt.binding(function () {
             return shovelBank.shoveling && subPlantArea.containsMouse;

@@ -143,84 +143,69 @@ Item {
             else
                 to = judderAnimator.gap
         }
+    }
 
-        MouseArea {
-            id: mouseArea
+    MouseArea {
+        id: mouseArea
 
-            anchors.fill: parent
-            enabled: false
-            hoverEnabled: true
+        anchors.fill: parent
+        enabled: false
+        hoverEnabled: true
 
-            onPositionChanged: {
-                if (seedBank.plantingSeed) {
-                    previewPlant.x = mouseX - previewPlant.width / 2;
-                    previewPlant.y = mouseY - previewPlant.height / 2;
-                } else {
-                    shovel.x = mouseX - shovel.width / 2;
-                    shovel.y = mouseY - shovel.height / 2;
-                }
+        onPositionChanged: {
+            if (seedBank.plantingSeed) {
+                previewPlant.x = mouseX - previewPlant.width / 2;
+                previewPlant.y = mouseY - previewPlant.height / 2;
+            } else {
+                shovel.x = mouseX - shovel.width / 2;
+                shovel.y = mouseY - shovel.height / 2;
             }
+        }
 
-            SeedBank {
-                id: seedBank
+        SeedBank {
+            id: seedBank
 
-                height: parent.height * 0.145
-                paused: item.paused
-                x: image.leftMargin + parent.width * 0.01
+            height: parent.height * 0.145
+            paused: item.paused
+            x: parent.width * 0.011
 
-                onPlantingSeedChanged: {
-                    if (plantingSeed)
-                        previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
-                    else
-                        previewPlant.source = plantArea.previewPlantSource = '';
-                }
-            }
-
-            ShovelBank {
-                id: shovelBank
-
-                function fixShovel() {
-                    shoveling = false;
-                    shovel.x = x + (width - shovel.width) / 2;
-                    shovel.y = y + (height - shovel.height) / 2;
-                }
-
-                anchors.left: seedBank.right
-                enabled: !seedBank.plantingSeed
-                height: parent.height * 0.13
-
-                onClicked: if (shoveling)
-                    fixShovel()
+            onPlantingSeedChanged: {
+                if (plantingSeed)
+                    previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
                 else
-                    shoveling = true
-            }
-
-            PlantArea {
-                id: plantArea
-
-                shoveling: shovelBank.shoveling
-                subPlantAreaSize: Qt.size(item.width * 0.105, parent.height * 0.16)
-                x: image.leftMargin + parent.width * 0.018
-                y: parent.height * 0.145
-
-                onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
-                onShovelled: shovelBank.fixShovel()
+                    previewPlant.source = plantArea.previewPlantSource = '';
             }
         }
 
-        PreviewPlant {
-            id: previewPlant
+        ShovelBank {
+            id: shovelBank
 
-            height: parent.height * 0.15
+            function fixShovel() {
+                shoveling = false;
+                shovel.x = x + (width - shovel.width) / 2;
+                shovel.y = y + (height - shovel.height) / 2;
+            }
+
+            anchors.left: seedBank.right
+            enabled: !seedBank.plantingSeed
+            height: parent.height * 0.13
+
+            onClicked: if (shoveling)
+                fixShovel()
+            else
+                shoveling = true
         }
 
-        Shovel {
-            id: shovel
+        PlantArea {
+            id: plantArea
 
-            height: shovelBank.height * 0.8
-            visible: shovelBank.visible
-            x: shovelBank.x + (shovelBank.width - width) / 2
-            y: shovelBank.y + (shovelBank.height - height) / 2
+            shoveling: shovelBank.shoveling
+            subPlantAreaSize: Qt.size(parent.width * 0.105, parent.height * 0.16)
+            x: parent.width * 0.028
+            y: parent.height * 0.145
+
+            onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
+            onShovelled: shovelBank.fixShovel()
         }
     }
 
@@ -244,6 +229,21 @@ Item {
             const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
             Common.produceSunlight(beginPosition, endPositionY, true);
         }
+    }
+
+    PreviewPlant {
+        id: previewPlant
+
+        height: parent.height * 0.15
+    }
+
+    Shovel {
+        id: shovel
+
+        height: shovelBank.height * 0.8
+        visible: shovelBank.visible
+        x: shovelBank.x + (shovelBank.width - width) / 2
+        y: shovelBank.y + (shovelBank.height - height) / 2
     }
 
     ReadySetPlant {
