@@ -253,11 +253,11 @@ function zombieXChanged(zombie, plantArray) {
                     break;
             }
             zombie.startAttack();
-            image.playChomp();
 
             function attackPlant() {
                 plant.lifeValue -= zombie.attackValue;
                 plant.twinkle();
+                image.playChomp();
             }
 
             function stopAttack() {
@@ -279,6 +279,10 @@ function zombieXChanged(zombie, plantArray) {
             zombie.attacked.connect(attackPlant);
             zombie.died.connect(stopAttack);
         }
+    }
+    if (zombie.x + zombie.width < image.leftMargin) {
+        zombie.paused = true;
+        image.lose();
     }
 }
 

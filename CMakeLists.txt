@@ -67,6 +67,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/SuspendableTimer.qml
         src/scenes/ZombieHand.qml
         src/scenes/ZombieProducer.qml
+        src/scenes/ZombieWon.qml
 
         src/zombies/BasicZombie.qml
         src/zombies/BucketHeadZombie.qml
@@ -136,7 +137,9 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/startSet.png
         resources/scenes/sunlight.gif
         resources/scenes/titleScreen.png
+        resources/scenes/zombieWon.png
 
+        resources/sounds/awooga.wav
         resources/sounds/bleep.wav
         resources/sounds/buzzer.wav
         resources/sounds/chomp0.wav
@@ -152,12 +155,14 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/sounds/groan5.wav
         resources/sounds/gulp.wav
         resources/sounds/hugeWave.wav
+        resources/sounds/loseSound.wav
         resources/sounds/pause.wav
         resources/sounds/plant0.wav
         resources/sounds/plant1.wav
         resources/sounds/points.wav
         resources/sounds/potatoMine.wav
         resources/sounds/readySetPlant.wav
+        resources/sounds/scream.wav
         resources/sounds/seedLift.wav
         resources/sounds/shieldHit0.wav
         resources/sounds/shieldHit1.wav

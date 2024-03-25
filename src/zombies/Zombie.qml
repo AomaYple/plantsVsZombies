@@ -74,8 +74,6 @@ Item {
         running: true
         target: item
         to: 0
-
-        onFinished: target.die()
     }
 
     Scenes.SuspendableTimer {

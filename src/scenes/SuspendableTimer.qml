@@ -18,6 +18,10 @@ Item {
         numberAnimation.start();
     }
 
+    function stop() {
+        numberAnimation.stop();
+    }
+
     visible: false
 
     NumberAnimation {

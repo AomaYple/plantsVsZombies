@@ -26,6 +26,16 @@ Item {
         readonly property Component standingBucketHeadZombie: Qt.createComponent('../zombies/StandingBucketHeadZombie.qml')
         readonly property Component standingConeHeadZombie: Qt.createComponent('../zombies/StandingConeHeadZombie.qml')
 
+        function lose() {
+            parent.paused = true;
+            menuButton.visible = mouseArea.enabled = plantArea.enabled = seedBank.visible = previewPlant.visible = false;
+            hugeWave.stop();
+            moveAnimator.to = 0;
+            moveAnimator.start();
+            loseSound.play();
+            parent.chose();
+        }
+
         function playChomp() {
             const index = Common.getRandomInt(0, 2);
             switch (index) {
@@ -70,8 +80,11 @@ Item {
 
         function stopChomp() {
             chomp0.stop();
+            chomp0.loops = 0;
             chomp1.stop();
+            chomp1.loops = 0;
             chomp2.stop();
+            chomp2.loops = 0;
         }
 
         asynchronous: true
@@ -107,7 +120,7 @@ Item {
                 if (to === -target.leftMargin - target.rightMargin) {
                     to = -target.leftMargin;
                     timer.start();
-                } else {
+                } else if (to === -target.leftMargin) {
                     readySetPlant.start();
                     seedBank.emerge();
                     readied();
@@ -297,21 +310,18 @@ Item {
         SoundEffect {
             id: chomp0
 
-            loops: SoundEffect.Infinite
             source: '../../resources/sounds/chomp0.wav'
         }
 
         SoundEffect {
             id: chomp1
 
-            loops: SoundEffect.Infinite
             source: '../../resources/sounds/chomp1.wav'
         }
 
         SoundEffect {
             id: chomp2
 
-            loops: SoundEffect.Infinite
             source: '../../resources/sounds/chomp2.wav'
         }
 
@@ -319,6 +329,17 @@ Item {
             id: gulp
 
             source: '../../resources/sounds/gulp.wav'
+        }
+
+        SoundEffect {
+            id: loseSound
+
+            source: '../../resources/sounds/loseSound.wav'
+
+            onPlayingChanged: if (!playing) {
+                zombieWon.start();
+                image.playChomp();
+            }
         }
     }
 
@@ -351,6 +372,15 @@ Item {
         anchors.centerIn: parent
         height: parent.height * 0.1
         paused: parent.paused
+    }
+
+    ZombieWon {
+        id: zombieWon
+
+        anchors.centerIn: parent
+        height: parent.height * 0.8
+
+        onZombieWon: parent.backToMainMenu()
     }
 
     MenuButton {

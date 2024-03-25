@@ -39,7 +39,6 @@ SuspendableTimer {
     interval: 5000
     repeat: true
 
-    onHugeWaved: siren.play()
     onTriggered: {
         if (index % 2 === 0)
             zombieComponent = coneHeadZombieComponent;
@@ -48,7 +47,7 @@ SuspendableTimer {
         else
             zombieComponent = basicZombieComponent;
         if (index === 1)
-            siren.play();
+            awooga.play();
         if (index === 20) {
             interval = 1000;
             restart();
@@ -59,9 +58,9 @@ SuspendableTimer {
     }
 
     SoundEffect {
-        id: siren
+        id: awooga
 
-        source: '../../resources/sounds/siren.wav'
+        source: '../../resources/sounds/awooga.wav'
     }
 
     SoundEffect {

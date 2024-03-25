@@ -9,7 +9,14 @@ Image {
     function play() {
         visible = true;
         numberAnimation.start();
-        soundEffect.play();
+        hugeWave.play();
+    }
+
+    function stop() {
+        visible = false;
+        numberAnimation.stop();
+        suspendableTimer.stop();
+        hugeWave.stop();
     }
 
     asynchronous: true
@@ -44,8 +51,17 @@ Image {
     }
 
     SoundEffect {
-        id: soundEffect
+        id: hugeWave
 
         source: '../../resources/sounds/hugeWave.wav'
+
+        onPlayingChanged: if (!playing)
+            siren.play()
+    }
+
+    SoundEffect {
+        id: siren
+
+        source: '../../resources/sounds/siren.wav'
     }
 }
