@@ -36,6 +36,7 @@ Item {
         id: numberAnimation
 
         duration: (target.endPositionX - target.x) / 0.3
+        paused: target.paused
         properties: 'x'
         running: true
         target: item
