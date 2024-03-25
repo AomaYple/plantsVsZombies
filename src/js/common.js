@@ -249,8 +249,8 @@ function zombieXChanged(zombie, plantArray) {
                     if (plant.ready) {
                         plant.explode();
                         return;
-                    } else
-                        break;
+                    }
+                    break;
             }
             zombie.startAttack();
             image.playChomp();
@@ -297,7 +297,6 @@ function zombieDied(zombie, plantArray, zombieSet) {
                         --plant.zombieCount;
                     break;
             }
-
         }
     }
     zombieSet.delete(zombie);
