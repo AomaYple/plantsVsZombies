@@ -50,7 +50,7 @@ Image {
         target: image
         to: 1.3
 
-        onStopped: image.scale = 1
+        onStopped: target.scale = 1
     }
 
     SoundEffect {

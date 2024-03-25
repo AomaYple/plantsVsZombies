@@ -78,7 +78,7 @@ function plant(property, subPlantArea) {
             const plant = incubator.object;
             const rowIndex = subPlantArea.index[0], columnIndex = subPlantArea.index[1];
             const zombieSet = zombieProducer.zombieContainer[rowIndex];
-            let setPaused = Qt.binding(function () {
+            let pausedSetting = Qt.binding(function () {
                 return item.paused;
             });
             switch (plant.type) {
@@ -93,7 +93,7 @@ function plant(property, subPlantArea) {
                     initPeaShooter(plant, zombieSet);
                     break;
                 case Plants.PlantType.Type.WallNut:
-                    setPaused = Qt.binding(function () {
+                    pausedSetting = Qt.binding(function () {
                         return item.paused || plant.zombieCount > 0;
                     });
                     break;
@@ -101,7 +101,7 @@ function plant(property, subPlantArea) {
                     initPotatoMine(plant, zombieSet);
                     break;
             }
-            plant.paused = setPaused;
+            plant.paused = pausedSetting;
             const plantArray = plantArea.plantContainer[rowIndex];
             plantArray[columnIndex] = plant;
 
