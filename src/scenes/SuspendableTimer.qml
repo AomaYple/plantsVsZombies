@@ -23,14 +23,14 @@ Item {
     NumberAnimation {
         id: numberAnimation
 
-        paused: running && item.paused
+        paused: running && target.paused
         properties: 'opacity'
         target: item
 
         onFinished: {
-            if (item.repeat)
+            if (target.repeat)
                 start();
-            item.triggered();
+            target.triggered();
         }
     }
 }

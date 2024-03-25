@@ -23,7 +23,7 @@ Image {
     NumberAnimation {
         id: numberAnimation
 
-        paused: running && image.paused
+        paused: running && target.paused
         properties: 'scale'
         target: image
         to: 1

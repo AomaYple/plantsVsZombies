@@ -36,11 +36,11 @@ Image {
         cursorShape: Qt.PointingHandCursor
 
         onClicked: trigger()
-    }
 
-    SoundEffect {
-        id: soundEffect
+        SoundEffect {
+            id: soundEffect
 
-        source: '../../resources/sounds/pause.wav'
+            source: '../../resources/sounds/pause.wav'
+        }
     }
 }

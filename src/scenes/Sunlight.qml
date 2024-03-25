@@ -61,10 +61,10 @@ AnimatedImage {
         id: xAnimation
 
         duration: 500
-        paused: running && animatedImage.paused
+        paused: running && target.paused
         properties: 'x'
         target: animatedImage
-        to: animatedImage.collectedPosition.x
+        to: target.collectedPosition.x
 
         onFinished: opacityAnimation.start()
     }
@@ -72,7 +72,7 @@ AnimatedImage {
     NumberAnimation {
         id: yAnimation
 
-        paused: running && animatedImage.paused
+        paused: running && target.paused
         properties: 'y'
         target: animatedImage
     }
@@ -81,7 +81,7 @@ AnimatedImage {
         id: scaleAnimation
 
         duration: 300
-        paused: running && animatedImage.paused
+        paused: running && target.paused
         properties: 'scale'
         target: animatedImage
         to: 1
@@ -96,15 +96,15 @@ AnimatedImage {
         id: opacityAnimation
 
         duration: 500
-        paused: running && animatedImage.paused
+        paused: running && target.paused
         properties: 'opacity'
         target: animatedImage
         to: 0
 
         onFinished: {
-            animatedImage.destroy();
-            if (animatedImage.picked)
-                animatedImage.collected();
+            target.destroy();
+            if (target.picked)
+                target.collected();
         }
     }
 }
