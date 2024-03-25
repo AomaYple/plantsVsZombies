@@ -48,7 +48,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
         x: beginPosition.x,
         y: beginPosition.y,
         endPositionY: endPositionY,
-        collectedPosition: Qt.point(item.width * 0.008, -item.height * 0.01)
+        collectedPosition: Qt.point(item.width * 0.006, -item.height * 0.01)
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
