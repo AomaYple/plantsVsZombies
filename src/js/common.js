@@ -39,16 +39,16 @@ function produceStandingZombies() {
 }
 
 function produceSunlight(beginPosition, endPositionY, natural) {
-    const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
+    const incubator = sunlightProducer.sunlightComponent.incubateObject(item, {
         natural: natural,
-        height: image.height * 0.14,
+        height: item.height * 0.14,
         paused: Qt.binding(function () {
             return item.paused;
         }),
         x: beginPosition.x,
         y: beginPosition.y,
         endPositionY: endPositionY,
-        collectedPosition: Qt.point(image.leftMargin + image.width * 0.008, -image.height * 0.01)
+        collectedPosition: Qt.point(item.width * 0.01, -item.height * 0.01)
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
@@ -84,7 +84,7 @@ function plant(property, subPlantArea) {
             switch (plant.type) {
                 case Plants.PlantType.Type.Sunflower:
                     plant.sunlightProduced.connect(function () {
-                        produceSunlight(Qt.point(plant.x, plant.y), plant.y + plant.height * 0.5, false);
+                        produceSunlight(Qt.point(plant.x - image.leftMargin, plant.y), plant.y + plant.height * 0.5, false);
                     });
                     break;
                 case Plants.PlantType.Type.PeaShooter:

@@ -240,7 +240,7 @@ Item {
 
         onTriggered: {
             const sunlightHeight = parent.height * 0.14;
-            const beginPosition = Qt.point(Common.getRandomFloat(image.leftMargin, image.leftMargin + parent.width - sunlightHeight), seedBank.height);
+            const beginPosition = Qt.point(Common.getRandomFloat(0, parent.width - sunlightHeight), seedBank.height);
             const endPositionY = Common.getRandomFloat(seedBank.height + parent.height * 0.1, parent.height - sunlightHeight);
             Common.produceSunlight(beginPosition, endPositionY, true);
         }
