@@ -304,10 +304,8 @@ function zombieXChanged(zombie, plantArray, rowIndex) {
         cart4.march(endPositionX);
         cart4.paused = pausedSetting;
     }
-    if (zombie.x + zombie.width < image.leftMargin) {
-        zombie.paused = false;
+    if (zombie.x + zombie.width < image.leftMargin)
         image.lose();
-    }
 }
 
 function zombieDied(zombie, plantArray, zombieSet) {
