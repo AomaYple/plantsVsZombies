@@ -8,7 +8,7 @@ SuspendableTimer {
     readonly property Component coneHeadZombieComponent: Qt.createComponent('../zombies/ConeHeadZombie.qml', Component.Asynchronous)
     property int index: 1
     property Component zombieComponent: null
-    readonly property var zombieContainer: [new Set(), new Set(), new Set(), new Set(), new Set(), new Set(),]
+    readonly property var zombieContainer: [new Set(), new Set(), new Set(), new Set(), new Set(), new Set()]
 
     signal hugeWaved
 

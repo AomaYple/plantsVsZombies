@@ -76,8 +76,8 @@ function plant(property, subPlantArea) {
         if (status === Component.Ready) {
             seedBank.plant();
             const plant = incubator.object;
-            const index = subPlantArea.index;
-            const zombieSet = zombieProducer.zombieContainer[index[0]];
+            const rowIndex = subPlantArea.index[0], columnIndex = subPlantArea.index[1];
+            const zombieSet = zombieProducer.zombieContainer[rowIndex];
             let setPaused = Qt.binding(function () {
                 return item.paused;
             });
@@ -102,11 +102,11 @@ function plant(property, subPlantArea) {
                     break;
             }
             plant.paused = setPaused;
-            const plantArray = plantArea.plantContainer[index[0]];
-            plantArray[index[1]] = plant;
+            const plantArray = plantArea.plantContainer[rowIndex];
+            plantArray[columnIndex] = plant;
 
             function clearFromContainer() {
-                plantArray[index[1]] = null;
+                plantArray[columnIndex] = null;
             }
 
             plant.died.connect(clearFromContainer);
