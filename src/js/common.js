@@ -281,7 +281,7 @@ function zombieXChanged(zombie, plantArray) {
         }
     }
     if (zombie.x + zombie.width < image.leftMargin) {
-        zombie.paused = true;
+        zombie.paused = false;
         image.lose();
     }
 }
