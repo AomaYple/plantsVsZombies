@@ -45,6 +45,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/plants/Sunflower.qml
         src/plants/WallNut.qml
 
+        src/scenes/Cart.qml
         src/scenes/GameScene.qml
         src/scenes/HugeWave.qml
         src/scenes/LoadBar.qml
@@ -115,6 +116,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/plants/wallNutSeed.png
 
         resources/scenes/button.png
+        resources/scenes/cart.gif
         resources/scenes/daytimeGrass.png
         resources/scenes/favicon.ico
         resources/scenes/highlightQuit.png

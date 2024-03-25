@@ -16,6 +16,8 @@ Item {
     Image {
         id: image
 
+        readonly property real areaY: height * 0.145
+        readonly property size chunkSize: Qt.size(width * 0.06, height * 0.16)
         readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
         readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
@@ -123,6 +125,11 @@ Item {
                 } else if (to === -target.leftMargin) {
                     readySetPlant.start();
                     seedBank.emerge();
+                    cart0.emerge(image.leftMargin - cart0.width * 0.4);
+                    cart1.emerge(image.leftMargin - cart1.width * 0.4);
+                    cart2.emerge(image.leftMargin - cart2.width * 0.4);
+                    cart3.emerge(image.leftMargin - cart3.width * 0.4);
+                    cart4.emerge(image.leftMargin - cart4.width * 0.4);
                     readied();
                     item.chose();
                 }
@@ -213,12 +220,82 @@ Item {
                 id: plantArea
 
                 shoveling: shovelBank.shoveling
-                subPlantAreaSize: Qt.size(parent.width * 0.06, parent.height * 0.16)
+                subPlantAreaSize: image.chunkSize
                 x: image.leftMargin + parent.width * 0.018
-                y: parent.height * 0.145
+                y: image.areaY
 
                 onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
                 onShovelled: shovelBank.fixShovel()
+            }
+        }
+
+        Cart {
+            id: cart0
+
+            height: parent.height * 0.1
+            x: parent.leftMargin - width
+            y: parent.areaY + parent.chunkSize.height - height
+
+            onXChanged: {
+                for (const zombie of zombieProducer.zombieContainer[0])
+                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                        zombie.die();
+            }
+        }
+
+        Cart {
+            id: cart1
+
+            height: parent.height * 0.1
+            x: parent.leftMargin - width
+            y: parent.areaY + parent.chunkSize.height * 2 - height
+
+            onXChanged: {
+                for (const zombie of zombieProducer.zombieContainer[1])
+                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                        zombie.die();
+            }
+        }
+
+        Cart {
+            id: cart2
+
+            height: parent.height * 0.1
+            x: parent.leftMargin - width
+            y: parent.areaY + parent.chunkSize.height * 3 - height
+
+            onXChanged: {
+                for (const zombie of zombieProducer.zombieContainer[2])
+                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                        zombie.die();
+            }
+        }
+
+        Cart {
+            id: cart3
+
+            height: parent.height * 0.1
+            x: parent.leftMargin - width
+            y: parent.areaY + parent.chunkSize.height * 4 - height
+
+            onXChanged: {
+                for (const zombie of zombieProducer.zombieContainer[3])
+                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                        zombie.die();
+            }
+        }
+
+        Cart {
+            id: cart4
+
+            height: parent.height * 0.1
+            x: parent.leftMargin - width
+            y: parent.areaY + parent.chunkSize.height * 5 - height
+
+            onXChanged: {
+                for (const zombie of zombieProducer.zombieContainer[4])
+                    if (x + width >= zombie.x && x <= zombie.x - zombie.width * 0.5)
+                        zombie.die();
             }
         }
 

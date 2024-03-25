@@ -280,6 +280,37 @@ function zombieXChanged(zombie, plantArray) {
             zombie.died.connect(stopAttack);
         }
     }
+    const edge = zombie.x - zombie.width * 0.5;
+    if (edge <= cart0.x + cart0.width) {
+        cart0.paused = Qt.binding(function () {
+            return item.paused;
+        });
+        cart0.march(image.width - image.rightMargin);
+    }
+    if (edge <= cart1.x + cart1.width) {
+        cart1.march(image.width - image.rightMargin);
+        cart1.paused = Qt.binding(function () {
+            return item.paused;
+        });
+    }
+    if (edge <= cart2.x + cart2.width) {
+        cart2.march(image.width - image.rightMargin);
+        cart2.paused = Qt.binding(function () {
+            return item.paused;
+        });
+    }
+    if (edge <= cart3.x + cart3.width) {
+        cart3.march(image.width - image.rightMargin);
+        cart3.paused = Qt.binding(function () {
+            return item.paused;
+        });
+    }
+    if (edge <= cart4.x + cart4.width) {
+        cart4.march(image.width - image.rightMargin);
+        cart4.paused = Qt.binding(function () {
+            return item.paused;
+        });
+    }
     if (zombie.x + zombie.width < image.leftMargin) {
         zombie.paused = false;
         image.lose();
