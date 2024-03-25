@@ -123,12 +123,12 @@ function initPeaShooter(peaShooter, zombieSet) {
     peaShooter.peaShot.connect(function (position) {
         const count = peaShooter.type === Plants.PlantType.Type.Repeater ? 2 : 1;
         for (let i = 0; i < count; ++i) {
-            const peaHeight = image.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0),
-                peaEndPositionX = image.width - image.rightMargin;
+            const peaHeight = item.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0) - image.leftMargin,
+                peaEndPositionX = item.width;
             if (peaX >= peaEndPositionX)
                 return;
-            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? image.snowPeaComponent : image.peaComponent;
-            const incubator = peaComponent.incubateObject(image, {
+            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? item.snowPeaComponent : item.peaComponent;
+            const incubator = peaComponent.incubateObject(item, {
                 x: peaX,
                 y: position.y,
                 height: peaHeight,
@@ -148,7 +148,7 @@ function initPeaShooter(peaShooter, zombieSet) {
 function initPea(pea, zombieSet) {
     pea.xChanged.connect(function () {
         if (pea.attack) {
-            const edge = pea.x + pea.width;
+            const edge = pea.x + pea.width + image.leftMargin;
             for (const zombie of zombieSet) {
                 const left = zombie.x + zombie.width * 0.3, right = zombie.x + zombie.width;
                 if (edge >= left && edge <= right) {

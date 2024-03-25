@@ -8,6 +8,8 @@ Item {
     id: item
 
     property bool paused: true
+    readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
+    readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
 
     signal backToMainMenu
     signal chose
@@ -67,9 +69,7 @@ Item {
         readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
         readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
-        readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
         readonly property real rightMargin: width - leftMargin - parent.width
-        readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
         readonly property Component standingBasicZombieComponent: Qt.createComponent('../zombies/StandingBasicZombie.qml')
         readonly property Component standingBucketHeadZombie: Qt.createComponent('../zombies/StandingBucketHeadZombie.qml')
         readonly property Component standingConeHeadZombie: Qt.createComponent('../zombies/StandingConeHeadZombie.qml')
