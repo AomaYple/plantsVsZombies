@@ -30,7 +30,7 @@ Item {
 
         function lose() {
             parent.paused = true;
-            menuButton.visible = mouseArea.enabled = plantArea.enabled = seedBank.visible = previewPlant.visible = false;
+            menuButton.enabled = menuButton.visible = mouseArea.enabled = seedBank.visible = shovelBank.visible = previewPlant.visible = false;
             hugeWave.stop();
             moveAnimator.to = 0;
             moveAnimator.start();
