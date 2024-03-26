@@ -4,6 +4,8 @@ import QtMultimedia
 AnimatedImage {
     id: animatedImage
 
+    signal emerged
+
     function emerge(positionX) {
         visible = true;
         xAnimator.to = positionX;
@@ -30,8 +32,10 @@ AnimatedImage {
     XAnimator {
         id: xAnimator
 
-        duration: 500
+        duration: 100
         target: animatedImage
+
+        onFinished: target.emerged()
     }
 
     NumberAnimation {

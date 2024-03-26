@@ -7,6 +7,8 @@ Image {
     required property bool paused
     property Seed plantingSeed: null
 
+    signal emerged
+
     function emerge() {
         yAnimator.start();
     }
@@ -40,6 +42,8 @@ Image {
         duration: 500
         target: image
         to: 0
+
+        onFinished: target.emerged()
     }
 
     Text {

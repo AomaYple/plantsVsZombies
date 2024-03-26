@@ -123,15 +123,8 @@ Item {
                     to = -target.leftMargin;
                     timer.start();
                 } else if (to === -target.leftMargin) {
-                    readySetPlant.start();
                     seedBank.emerge();
-                    cart0.emerge(image.leftMargin - cart0.width * 0.4);
-                    cart1.emerge(image.leftMargin - cart1.width * 0.4);
-                    cart2.emerge(image.leftMargin - cart2.width * 0.4);
-                    cart3.emerge(image.leftMargin - cart3.width * 0.4);
-                    cart4.emerge(image.leftMargin - cart4.width * 0.4);
                     readied();
-                    item.chose();
                 }
             }
         }
@@ -188,6 +181,7 @@ Item {
                 paused: item.paused
                 x: image.leftMargin + parent.width * 0.01
 
+                onEmerged: cart4.emerge(image.leftMargin - cart4.width * 0.4)
                 onPlantingSeedChanged: {
                     if (plantingSeed)
                         previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
@@ -236,6 +230,10 @@ Item {
             x: parent.leftMargin - width
             y: parent.areaY + parent.chunkSize.height - height
 
+            onEmerged: {
+                readySetPlant.start();
+                item.chose();
+            }
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[0])
                     if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
@@ -250,6 +248,7 @@ Item {
             x: parent.leftMargin - width
             y: parent.areaY + parent.chunkSize.height * 2 - height
 
+            onEmerged: cart0.emerge(image.leftMargin - cart0.width * 0.4)
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[1])
                     if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
@@ -264,6 +263,7 @@ Item {
             x: parent.leftMargin - width
             y: parent.areaY + parent.chunkSize.height * 3 - height
 
+            onEmerged: cart1.emerge(image.leftMargin - cart1.width * 0.4)
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[2])
                     if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
@@ -278,6 +278,7 @@ Item {
             x: parent.leftMargin - width
             y: parent.areaY + parent.chunkSize.height * 4 - height
 
+            onEmerged: cart2.emerge(image.leftMargin - cart2.width * 0.4)
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[3])
                     if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
@@ -292,6 +293,7 @@ Item {
             x: parent.leftMargin - width
             y: parent.areaY + parent.chunkSize.height * 5 - height
 
+            onEmerged: cart3.emerge(image.leftMargin - cart3.width * 0.4)
             onXChanged: {
                 for (const zombie of zombieProducer.zombieContainer[4])
                     if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
