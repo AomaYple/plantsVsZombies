@@ -54,7 +54,7 @@ function produceSunlight(beginPosition, endPositionY, natural) {
         if (status === Component.Ready) {
             const sunlight = incubator.object;
             sunlight.clicked.connect(function () {
-                points.play();
+                soundEffects.playPoints();
             });
             sunlight.collected.connect(function () {
                 seedBank.increaseSunlight();
@@ -159,9 +159,9 @@ function initPea(pea, zombieSet) {
                     pea.destroy();
                     zombie.twinkle();
                     if (zombie.type !== Zombies.ZombieType.Type.BucketHeadZombie)
-                        image.playSplat();
+                        soundEffects.playSplat();
                     else
-                        image.playShieldHit();
+                        soundEffects.playShieldHit();
                 }
             }
         }
@@ -181,7 +181,7 @@ function initPotatoMine(potatoMine, zombieSet) {
             y: potatoMine.y - (objectHeight - potatoMine.height) / 2,
         });
         judderAnimator.start();
-        potatoMineBomb.play();
+        soundEffects.playPotatoMine();
 
         function destroyMashedPotatoComponent() {
             potatoMineBomb.playingChanged.disconnect(destroyMashedPotatoComponent);
@@ -229,7 +229,7 @@ function produceZombie(zombieComponent) {
                 zombieXChanged(zombie, plantArray, rowIndex);
             });
             zombie.froze.connect(function () {
-                frozen.play();
+                soundEffects.playFrozen();
             });
             zombie.died.connect(function () {
                 zombieDied(zombie, plantArray, zombieSet);
@@ -257,7 +257,7 @@ function zombieXChanged(zombie, plantArray, rowIndex) {
             function attackPlant() {
                 plant.lifeValue -= zombie.attackValue;
                 plant.twinkle();
-                image.playChomp();
+                soundEffects.playChomp();
             }
 
             function stopAttack() {
@@ -266,12 +266,12 @@ function zombieXChanged(zombie, plantArray, rowIndex) {
                 zombie.attacked.disconnect(attackPlant);
                 zombie.died.disconnect(stopAttack);
                 zombie.stopAttack();
-                image.stopChomp();
+                soundEffects.stopChomp();
             }
 
             function eatUp() {
                 stopAttack();
-                gulp.play();
+                soundEffects.playGulp();
             }
 
             plant.died.connect(eatUp);

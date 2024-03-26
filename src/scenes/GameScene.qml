@@ -38,57 +38,6 @@ Item {
             parent.chose();
         }
 
-        function playChomp() {
-            const index = Common.getRandomInt(0, 2);
-            switch (index) {
-            case 0:
-                chomp0.play();
-                break;
-            case 1:
-                chomp1.play();
-                break;
-            case 2:
-                chomp2.play();
-                break;
-            }
-        }
-
-        function playShieldHit() {
-            const index = Math.round(Math.random());
-            switch (index) {
-            case 0:
-                shieldHit0.play();
-                break;
-            case 1:
-                shieldHit1.play();
-                break;
-            }
-        }
-
-        function playSplat() {
-            const index = Common.getRandomInt(0, 2);
-            switch (index) {
-            case 0:
-                splat0.play();
-                break;
-            case 1:
-                splat1.play();
-                break;
-            case 2:
-                splat2.play();
-                break;
-            }
-        }
-
-        function stopChomp() {
-            chomp0.stop();
-            chomp0.loops = 0;
-            chomp1.stop();
-            chomp1.loops = 0;
-            chomp2.stop();
-            chomp2.loops = 0;
-        }
-
         asynchronous: true
         height: parent.height
         mipmap: true
@@ -338,76 +287,9 @@ Item {
             y: shovelBank.y + (shovelBank.height - height) / 2
         }
 
-        SoundEffect {
-            id: points
+        SoundEffects {
+            id: soundEffects
 
-            source: '../../resources/sounds/points.wav'
-        }
-
-        SoundEffect {
-            id: splat0
-
-            source: '../../resources/sounds/splat0.wav'
-        }
-
-        SoundEffect {
-            id: splat1
-
-            source: '../../resources/sounds/splat1.wav'
-        }
-
-        SoundEffect {
-            id: splat2
-
-            source: '../../resources/sounds/splat2.wav'
-        }
-
-        SoundEffect {
-            id: shieldHit0
-
-            source: '../../resources/sounds/shieldHit0.wav'
-        }
-
-        SoundEffect {
-            id: shieldHit1
-
-            source: '../../resources/sounds/shieldHit1.wav'
-        }
-
-        SoundEffect {
-            id: potatoMineBomb
-
-            source: '../../resources/sounds/potatoMine.wav'
-        }
-
-        SoundEffect {
-            id: frozen
-
-            source: '../../resources/sounds/frozen.wav'
-        }
-
-        SoundEffect {
-            id: chomp0
-
-            source: '../../resources/sounds/chomp0.wav'
-        }
-
-        SoundEffect {
-            id: chomp1
-
-            source: '../../resources/sounds/chomp1.wav'
-        }
-
-        SoundEffect {
-            id: chomp2
-
-            source: '../../resources/sounds/chomp2.wav'
-        }
-
-        SoundEffect {
-            id: gulp
-
-            source: '../../resources/sounds/gulp.wav'
         }
 
         SoundEffect {
@@ -417,7 +299,7 @@ Item {
 
             onPlayingChanged: if (!playing) {
                 zombieWon.start();
-                image.playChomp();
+                soundEffects.playChomp();
             }
         }
     }

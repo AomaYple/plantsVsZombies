@@ -62,6 +62,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/scenes/Shadow.qml
         src/scenes/Shovel.qml
         src/scenes/ShovelBank.qml
+        src/scenes/SoundEffects.qml
         src/scenes/StartAdventure.qml
         src/scenes/Sunlight.qml
         src/scenes/SunlightProducer.qml
