@@ -24,7 +24,6 @@ Item {
             animatedImage.speed /= 2;
             moveAnimation.restart();
             attackTimer.interval *= 2;
-            attackTimer.restart();
             frozenTimer.start();
             froze();
         }
@@ -80,7 +79,7 @@ Item {
         id: attackTimer
 
         interval: 600
-        paused: running && parent.paused
+        paused: parent.paused
         repeat: true
         running: parent.attacking
 
@@ -107,13 +106,12 @@ Item {
         id: frozenTimer
 
         interval: 10000
-        paused: running && parent.paused
+        paused: parent.paused
 
         onTriggered: {
             parent.speed *= 2;
             moveAnimation.restart();
             attackTimer.interval /= 2;
-            attackTimer.restart();
             animatedImage.speed *= 2;
         }
     }

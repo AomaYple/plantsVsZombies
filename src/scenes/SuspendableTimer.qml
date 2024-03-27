@@ -1,40 +1,78 @@
 import QtQuick
 
 Item {
-    id: item
-
-    property alias interval: numberAnimation.duration
-    property alias paused: numberAnimation.paused
+    property int elapsed: interval
+    property int interval: 1000
+    property bool paused: false
     property bool repeat: false
-    property alias running: numberAnimation.running
+    property bool running: false
+    property int startTime: Date.now()
 
     signal triggered
 
+    function execute() {
+        startTime = Date.now();
+        timer.interval = elapsed;
+        timer.restart();
+    }
+
+    function pause() {
+        paused = true;
+    }
+
+    function reset() {
+        elapsed = interval;
+        execute();
+    }
+
     function restart() {
-        numberAnimation.restart();
+        stop();
+        start();
+    }
+
+    function resume() {
+        paused = false;
     }
 
     function start() {
-        numberAnimation.start();
+        running = true;
     }
 
     function stop() {
-        numberAnimation.stop();
+        running = false;
     }
 
     visible: false
 
-    NumberAnimation {
-        id: numberAnimation
-
-        paused: running && target.paused
-        properties: 'opacity'
-        target: item
-
-        onFinished: {
-            if (target.repeat)
-                start();
-            target.triggered();
+    onIntervalChanged: if (running)
+        reset()
+    onPausedChanged: if (running) {
+        if (paused) {
+            timer.stop();
+            elapsed -= Date.now() - startTime;
+        } else
+            execute();
+    }
+    onRepeatChanged: if (running)
+        reset()
+    onRunningChanged: {
+        if (running && !paused)
+            execute();
+        else {
+            timer.stop();
+            elapsed = interval;
         }
+    }
+    onTriggered: {
+        if (repeat)
+            reset();
+        else
+            stop();
+    }
+
+    Timer {
+        id: timer
+
+        onTriggered: parent.triggered()
     }
 }

@@ -253,7 +253,7 @@ Item {
         ZombieProducer {
             id: zombieProducer
 
-            paused: running && item.paused
+            paused: item.paused
 
             onHugeWaved: hugeWave.play()
             onTriggered: Common.produceZombie(zombieComponent)
@@ -262,7 +262,7 @@ Item {
         SunlightProducer {
             id: sunlightProducer
 
-            paused: running && item.paused
+            paused: item.paused
 
             onTriggered: {
                 const sunlightHeight = parent.height * 0.14;
@@ -320,9 +320,9 @@ Item {
             seedBank.enabled = Qt.binding(function () {
                 return !shovelBank.shoveling;
             });
+            parent.paused = false;
             sunlightProducer.start();
             zombieProducer.start();
-            parent.paused = false;
             parent.started();
         }
     }

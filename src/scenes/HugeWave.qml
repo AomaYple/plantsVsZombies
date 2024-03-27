@@ -42,7 +42,7 @@ Image {
         id: suspendableTimer
 
         interval: 3000
-        paused: running && parent.paused
+        paused: parent.paused
 
         onTriggered: {
             parent.source = '';

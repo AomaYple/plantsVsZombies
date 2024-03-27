@@ -30,7 +30,7 @@ AnimatedImage {
 
     SuspendableTimer {
         interval: 8000
-        paused: running && parent.paused
+        paused: parent.paused
         running: mouseArea.enabled
 
         onTriggered: {
