@@ -45,8 +45,8 @@ Image {
         paused: parent.paused
 
         onTriggered: {
-            parent.source = '';
             parent.visible = false;
+            parent.source = '';
         }
     }
 

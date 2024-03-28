@@ -40,15 +40,15 @@ function produceStandingZombies() {
 
 function produceSunlight(beginPosition, endPositionY, natural) {
     const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
-        natural: natural,
         height: image.height * 0.14,
-        paused: Qt.binding(function () {
-            return item.paused;
-        }),
         x: beginPosition.x,
         y: beginPosition.y,
         endPositionY: endPositionY,
-        collectedPosition: Qt.point(image.leftMargin + image.width * 0.008, -image.height * 0.01)
+        collectedPosition: Qt.point(image.leftMargin + image.width * 0.008, -image.height * 0.01),
+        paused: Qt.binding(function () {
+            return item.paused;
+        }),
+        natural: natural
     });
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
@@ -132,10 +132,10 @@ function initPeaShooter(peaShooter, zombieSet) {
                 x: peaX,
                 y: position.y,
                 height: peaHeight,
+                endPositionX: peaEndPositionX,
                 paused: Qt.binding(function () {
                     return item.paused;
-                }),
-                endPositionX: peaEndPositionX,
+                })
             });
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready)
@@ -175,20 +175,16 @@ function initPotatoMine(potatoMine, zombieSet) {
                 zombie.die();
         const objectHeight = image.height * 0.16, objectWidth = objectHeight / 92 * 131;
         const incubator = image.mashedPotatoComponent.incubateObject(image, {
-            height: objectHeight,
             width: objectWidth,
+            height: objectHeight,
             x: potatoMine.x - (objectWidth - potatoMine.width) / 2,
             y: potatoMine.y - (objectHeight - potatoMine.height) / 2,
+            paused: Qt.binding(function () {
+                return item.paused;
+            })
         });
         judderAnimator.start();
         soundEffects.playPotatoMine();
-
-        function destroyMashedPotatoComponent() {
-            potatoMineBomb.playingChanged.disconnect(destroyMashedPotatoComponent);
-            incubator.object.destroy();
-        }
-
-        potatoMineBomb.playingChanged.connect(destroyMashedPotatoComponent);
     });
 }
 
@@ -202,9 +198,9 @@ function produceZombie(zombieComponent) {
         zombieHeight = image.height * 0.25;
     const rowIndex = getRandomInt(0, 4);
     const incubator = zombieComponent.incubateObject(image, {
+        height: zombieHeight,
         x: image.width - image.rightMargin,
         y: plantArea.y + (rowIndex + 1) * plantArea.subPlantAreaSize.height - zombieHeight,
-        height: zombieHeight,
         paused: Qt.binding(function () {
             return item.paused;
         })
@@ -328,10 +324,10 @@ function zombieDied(zombie, plantArray, zombieSet) {
     zombieSet.delete(zombie);
     const diedZombieHeight = zombie.height, diedZombieWidth = diedZombieHeight / 136 * 180;
     const incubator = image.diedZombieComponent.incubateObject(image, {
-        x: zombie.x + (zombie.width - diedZombieWidth) / 2,
-        y: zombie.y + (zombie.height - diedZombieHeight) / 2,
         width: diedZombieWidth,
         height: diedZombieHeight,
+        x: zombie.x + (zombie.width - diedZombieWidth) / 2,
+        y: zombie.y + (zombie.height - diedZombieHeight) / 2,
         paused: Qt.binding(function () {
             return item.paused;
         })

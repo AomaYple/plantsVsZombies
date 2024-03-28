@@ -7,8 +7,8 @@ Image {
     signal zombieWon
 
     function start() {
-        visible = true;
         source = '../../resources/scenes/zombieWon.png';
+        visible = true;
         scream.play();
     }
 

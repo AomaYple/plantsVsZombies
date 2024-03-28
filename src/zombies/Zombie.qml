@@ -20,11 +20,12 @@ Item {
         if (frozenTimer.running)
             frozenTimer.restart();
         else {
-            speed /= 2;
-            animatedImage.speed /= 2;
-            moveAnimation.restart();
-            attackTimer.interval *= 2;
             frozenTimer.start();
+            speed /= 2;
+            if (!moveAnimation.paused)
+                moveAnimation.restart();
+            attackTimer.interval *= 2;
+            animatedImage.speed /= 2;
             froze();
         }
     }
@@ -73,6 +74,9 @@ Item {
         running: true
         target: item
         to: 0
+
+        onPausedChanged: if (!paused)
+            restart()
     }
 
     Scenes.SuspendableTimer {
@@ -109,10 +113,11 @@ Item {
         paused: parent.paused
 
         onTriggered: {
-            parent.speed *= 2;
-            moveAnimation.restart();
-            attackTimer.interval /= 2;
             animatedImage.speed *= 2;
+            attackTimer.interval /= 2;
+            parent.speed *= 2;
+            if (!moveAnimation.paused)
+                moveAnimation.restart();
         }
     }
 }

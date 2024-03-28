@@ -47,8 +47,8 @@ AnimatedImage {
         target: animatedImage
 
         onFinished: {
-            animatedImage.source = '';
             animatedImage.visible = false;
+            animatedImage.source = '';
         }
     }
 

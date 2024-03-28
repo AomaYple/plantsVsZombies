@@ -20,6 +20,11 @@ Item {
         paused = true;
     }
 
+    function propertyChanged() {
+        if (running)
+            reset();
+    }
+
     function reset() {
         elapsed = interval;
         execute();
@@ -44,8 +49,7 @@ Item {
 
     visible: false
 
-    onIntervalChanged: if (running)
-        reset()
+    onIntervalChanged: propertyChanged()
     onPausedChanged: if (running) {
         if (paused) {
             timer.stop();
@@ -53,8 +57,7 @@ Item {
         } else
             execute();
     }
-    onRepeatChanged: if (running)
-        reset()
+    onRepeatChanged: propertyChanged()
     onRunningChanged: {
         if (running && !paused)
             execute();
