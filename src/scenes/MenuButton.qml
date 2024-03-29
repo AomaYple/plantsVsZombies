@@ -4,6 +4,11 @@ import QtMultimedia
 Image {
     signal triggered
 
+    function trigger() {
+        soundEffect.play();
+        triggered();
+    }
+
     asynchronous: true
     mipmap: true
     source: '../../resources/scenes/button.png'
@@ -11,7 +16,7 @@ Image {
     visible: false
     width: height / 109 * 291
 
-    Keys.onEscapePressed: mouseArea.trigger()
+    Keys.onEscapePressed: trigger()
 
     Text {
         anchors.centerIn: parent
@@ -27,20 +32,15 @@ Image {
     MouseArea {
         id: mouseArea
 
-        function trigger() {
-            soundEffect.play();
-            parent.triggered();
-        }
-
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
 
-        onClicked: trigger()
+        onClicked: parent.trigger()
+    }
 
-        SoundEffect {
-            id: soundEffect
+    SoundEffect {
+        id: soundEffect
 
-            source: '../../resources/sounds/pause.wav'
-        }
+        source: '../../resources/sounds/pause.wav'
     }
 }

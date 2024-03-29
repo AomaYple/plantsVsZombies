@@ -4,9 +4,6 @@ import QtQuick.Controls
 Dialog {
     id: dialog
 
-    signal backToGame
-    signal backToMainMenu
-
     closePolicy: Popup.CloseOnEscape
     modal: true
     width: height / 479 * 402
@@ -17,8 +14,6 @@ Dialog {
         source: '../../resources/scenes/optionsMenuBackground.png'
         sourceSize: Qt.size(width, height)
     }
-
-    onClosed: backToGame()
 
     Image {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -45,7 +40,7 @@ Dialog {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
 
-            onClicked: dialog.backToMainMenu()
+            onClicked: dialog.accept()
         }
     }
 
@@ -74,7 +69,7 @@ Dialog {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
 
-            onClicked: dialog.backToGame()
+            onClicked: dialog.reject()
         }
     }
 }

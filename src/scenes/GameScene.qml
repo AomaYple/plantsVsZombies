@@ -363,14 +363,10 @@ Item {
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        onBackToGame: {
-            close();
+        onAccepted: parent.backToMainMenu()
+        onRejected: {
             menuButton.forceActiveFocus();
             parent.paused = false;
-        }
-        onBackToMainMenu: {
-            close();
-            parent.backToMainMenu();
         }
     }
 }
