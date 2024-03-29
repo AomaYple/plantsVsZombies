@@ -13,21 +13,22 @@ Item {
     function execute() {
         startTime = Date.now();
         timer.interval = elapsed;
-        timer.restart();
+        timer.start();
     }
 
     function pause() {
         paused = true;
     }
 
-    function propertyChanged() {
-        if (running)
-            reset();
-    }
-
     function reset() {
-        elapsed = interval;
-        execute();
+        if (running) {
+            elapsed = interval;
+            if (!paused) {
+                startTime = Date.now();
+                timer.interval = elapsed;
+                timer.restart();
+            }
+        }
     }
 
     function restart() {
@@ -49,7 +50,7 @@ Item {
 
     visible: false
 
-    onIntervalChanged: propertyChanged()
+    onIntervalChanged: reset()
     onPausedChanged: if (running) {
         if (paused) {
             timer.stop();
@@ -57,19 +58,21 @@ Item {
         } else
             execute();
     }
-    onRepeatChanged: propertyChanged()
+    onRepeatChanged: reset()
     onRunningChanged: {
-        if (running && !paused)
-            execute();
-        else {
+        if (running) {
+            if (!paused)
+                execute();
+        } else {
             timer.stop();
             elapsed = interval;
         }
     }
     onTriggered: {
-        if (repeat)
-            reset();
-        else
+        if (repeat) {
+            elapsed = interval;
+            execute();
+        } else
             stop();
     }
 
