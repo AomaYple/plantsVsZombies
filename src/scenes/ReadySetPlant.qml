@@ -38,6 +38,7 @@ Image {
                 start();
             } else {
                 parent.source = '';
+                parent.visible = false;
                 parent.finished();
             }
         }
