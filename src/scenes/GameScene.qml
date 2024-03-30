@@ -47,6 +47,7 @@ Item {
 
         onStatusChanged: if (status === Image.Ready) {
             Common.produceStandingZombies();
+            Common.initCart();
             timer.start();
         }
 
@@ -130,7 +131,6 @@ Item {
                 paused: item.paused
                 x: image.leftMargin + parent.width * 0.01
 
-                onEmerged: cart4.emerge(image.leftMargin - cart4.width * 0.4)
                 onPlantingSeedChanged: {
                     if (plantingSeed)
                         previewPlant.source = plantArea.previewPlantSource = plantingSeed.previewPlantSource;
@@ -169,84 +169,6 @@ Item {
 
                 onPlanted: (property, subPlantArea) => Common.plant(property, subPlantArea)
                 onShovelled: shovelBank.fixShovel()
-            }
-        }
-
-        Cart {
-            id: cart0
-
-            height: parent.height * 0.1
-            x: parent.leftMargin - width
-            y: parent.areaY + parent.chunkSize.height - height
-
-            onEmerged: {
-                readySetPlant.start();
-                item.chose();
-            }
-            onXChanged: {
-                for (const zombie of zombieProducer.zombieContainer[0])
-                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
-                        zombie.die();
-            }
-        }
-
-        Cart {
-            id: cart1
-
-            height: parent.height * 0.1
-            x: parent.leftMargin - width
-            y: parent.areaY + parent.chunkSize.height * 2 - height
-
-            onEmerged: cart0.emerge(image.leftMargin - cart0.width * 0.4)
-            onXChanged: {
-                for (const zombie of zombieProducer.zombieContainer[1])
-                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
-                        zombie.die();
-            }
-        }
-
-        Cart {
-            id: cart2
-
-            height: parent.height * 0.1
-            x: parent.leftMargin - width
-            y: parent.areaY + parent.chunkSize.height * 3 - height
-
-            onEmerged: cart1.emerge(image.leftMargin - cart1.width * 0.4)
-            onXChanged: {
-                for (const zombie of zombieProducer.zombieContainer[2])
-                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
-                        zombie.die();
-            }
-        }
-
-        Cart {
-            id: cart3
-
-            height: parent.height * 0.1
-            x: parent.leftMargin - width
-            y: parent.areaY + parent.chunkSize.height * 4 - height
-
-            onEmerged: cart2.emerge(image.leftMargin - cart2.width * 0.4)
-            onXChanged: {
-                for (const zombie of zombieProducer.zombieContainer[3])
-                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
-                        zombie.die();
-            }
-        }
-
-        Cart {
-            id: cart4
-
-            height: parent.height * 0.1
-            x: parent.leftMargin - width
-            y: parent.areaY + parent.chunkSize.height * 5 - height
-
-            onEmerged: cart3.emerge(image.leftMargin - cart3.width * 0.4)
-            onXChanged: {
-                for (const zombie of zombieProducer.zombieContainer[4])
-                    if (x + width >= zombie.x + zombie.width * 0.4 && x <= zombie.x + zombie.width)
-                        zombie.die();
             }
         }
 

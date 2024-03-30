@@ -46,10 +46,7 @@ AnimatedImage {
         properties: 'x'
         target: animatedImage
 
-        onFinished: {
-            animatedImage.visible = false;
-            animatedImage.source = '';
-        }
+        onFinished: animatedImage.destroy()
     }
 
     SoundEffect {

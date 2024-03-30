@@ -38,6 +38,44 @@ function produceStandingZombies() {
     }
 }
 
+function initCart() {
+    const cartComponent = Qt.createComponent('../scenes/Cart.qml');
+    const carts = [null, null, null, null, null];
+    const cartHeight = image.height * 0.1;
+    for (let i = 0; i < 5; --i) {
+        const incubator = cartComponent.incubateObject(image, {
+            height: cartHeight,
+            x: image.leftMargin - width,
+            y: image.areaY + image.chunkSize.height * (i + 1) - cartHeight
+        });
+        incubator.onStatusChanged = function (status) {
+            if (status === Component.Ready) {
+                const cart = incubator.object;
+                carts[i] = cart;
+                if (i === 0) {
+                    cart.emerged.connect(function () {
+                        readySetPlant.start();
+                        item.chose();
+                    });
+                } else if (i === 4) {
+                    seedBank.emerged.connect(function () {
+                        cart.emerge(image.leftMargin - cart.width * 0.4)
+                    });
+                } else {
+                    cart.emerged.connect(function () {
+                        carts[i - 1].emerge(image.leftMargin - carts[i - 1].width * 0.4);
+                    });
+                }
+                cart.xChanged.connect(function () {
+                    for (const zombie of zombieProducer.zombieContainer[i])
+                        if (cart.x + cart.width >= zombie.x + zombie.width * 0.4 && cart.x <= zombie.x + zombie.width)
+                            zombie.die();
+                });
+            }
+        };
+    }
+}
+
 function produceSunlight(beginPosition, endPositionY, natural) {
     const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
         height: image.height * 0.14,
