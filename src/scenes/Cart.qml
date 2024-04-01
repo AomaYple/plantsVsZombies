@@ -27,7 +27,6 @@ AnimatedImage {
     source: '../../resources/scenes/cart.gif'
     sourceSize: Qt.size(width, height)
     visible: false
-    width: height / 70 * 85
 
     XAnimator {
         id: xAnimator

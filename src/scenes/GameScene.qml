@@ -18,15 +18,8 @@ Item {
 
         readonly property real areaY: height * 0.145
         readonly property size chunkSize: Qt.size(width * 0.06, height * 0.16)
-        readonly property Component diedZombieComponent: Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
         readonly property real leftMargin: width * 0.157
-        readonly property Component mashedPotatoComponent: Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
-        readonly property Component peaComponent: Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
         readonly property real rightMargin: width - leftMargin - parent.width
-        readonly property Component snowPeaComponent: Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
-        readonly property Component standingBasicZombieComponent: Qt.createComponent('../zombies/StandingBasicZombie.qml')
-        readonly property Component standingBucketHeadZombie: Qt.createComponent('../zombies/StandingBucketHeadZombie.qml')
-        readonly property Component standingConeHeadZombie: Qt.createComponent('../zombies/StandingConeHeadZombie.qml')
 
         function lose() {
             parent.paused = true;

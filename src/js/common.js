@@ -1,3 +1,11 @@
+const carts = [null, null, null, null, null];
+const sunlightComponent = Qt.createComponent('../scenes/Sunlight.qml', Component.Asynchronous)
+const peaComponent = Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
+const snowPeaComponent = Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
+const mashedPotatoComponent = Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
+const zombieContainer = [new Set(), new Set(), new Set(), new Set(), new Set(), new Set()]
+const diedZombieComponent = Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
+
 function getRandomInt(n, m) {
     return Math.floor(Math.random() * (m - n + 1)) + n;
 }
@@ -10,15 +18,15 @@ function produceStandingZombies() {
     for (let i = 0; i < 9; ++i) {
         let standingZombieComponent = null, zombieHeight = null, zombieWidth = null;
         if (i < 4) {
-            standingZombieComponent = image.standingBasicZombieComponent;
+            standingZombieComponent = Qt.createComponent('../zombies/StandingBasicZombie.qml');
             zombieHeight = image.height * 0.23;
             zombieWidth = zombieHeight / 126 * 84;
         } else if (i >= 4 && i < 7) {
-            standingZombieComponent = image.standingConeHeadZombie;
+            standingZombieComponent = Qt.createComponent('../zombies/StandingConeHeadZombie.qml');
             zombieHeight = image.height * 0.25;
             zombieWidth = zombieHeight / 148 * 82;
         } else {
-            standingZombieComponent = image.standingBucketHeadZombie;
+            standingZombieComponent = Qt.createComponent('../zombies/StandingBucketHeadZombie.qml');
             zombieHeight = image.height * 0.24;
             zombieWidth = zombieHeight / 140 * 84;
         }
@@ -40,44 +48,43 @@ function produceStandingZombies() {
 
 function initCart() {
     const cartComponent = Qt.createComponent('../scenes/Cart.qml');
-    const carts = [null, null, null, null, null];
-    const cartHeight = image.height * 0.1;
-    for (let i = 0; i < 5; --i) {
+    const cartHeight = image.height * 0.1, cartWidth = cartHeight / 70 * 85;
+    for (let i = 0; i < 5; ++i) {
         const incubator = cartComponent.incubateObject(image, {
+            width: cartWidth,
             height: cartHeight,
-            x: image.leftMargin - width,
+            x: image.leftMargin - cartWidth,
             y: image.areaY + image.chunkSize.height * (i + 1) - cartHeight
         });
         incubator.onStatusChanged = function (status) {
             if (status === Component.Ready) {
                 const cart = incubator.object;
-                carts[i] = cart;
-                if (i === 0) {
+                if (i === 0)
                     cart.emerged.connect(function () {
                         readySetPlant.start();
                         item.chose();
                     });
-                } else if (i === 4) {
-                    seedBank.emerged.connect(function () {
-                        cart.emerge(image.leftMargin - cart.width * 0.4)
-                    });
-                } else {
+                else {
                     cart.emerged.connect(function () {
                         carts[i - 1].emerge(image.leftMargin - carts[i - 1].width * 0.4);
                     });
+                    if (i === 4) seedBank.emerged.connect(function () {
+                        cart.emerge(image.leftMargin - cart.width * 0.4)
+                    });
                 }
                 cart.xChanged.connect(function () {
-                    for (const zombie of zombieProducer.zombieContainer[i])
+                    for (const zombie of zombieContainer[i])
                         if (cart.x + cart.width >= zombie.x + zombie.width * 0.4 && cart.x <= zombie.x + zombie.width)
                             zombie.die();
                 });
+                carts[i] = cart;
             }
         };
     }
 }
 
 function produceSunlight(beginPosition, endPositionY, natural) {
-    const incubator = sunlightProducer.sunlightComponent.incubateObject(image, {
+    const incubator = sunlightComponent.incubateObject(image, {
         height: image.height * 0.14,
         x: beginPosition.x,
         y: beginPosition.y,
@@ -115,7 +122,7 @@ function plant(property, subPlantArea) {
             seedBank.plant();
             const plant = incubator.object;
             const rowIndex = subPlantArea.index[0], columnIndex = subPlantArea.index[1];
-            const zombieSet = zombieProducer.zombieContainer[rowIndex];
+            const zombieSet = zombieContainer[rowIndex];
             let pausedSetting = Qt.binding(function () {
                 return item.paused;
             });
@@ -165,8 +172,8 @@ function initPeaShooter(peaShooter, zombieSet) {
                 peaEndPositionX = image.width - image.rightMargin;
             if (peaX >= peaEndPositionX)
                 return;
-            const peaComponent = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? image.snowPeaComponent : image.peaComponent;
-            const incubator = peaComponent.incubateObject(image, {
+            const component = peaShooter.type === Plants.PlantType.Type.SnowPeaShooter ? snowPeaComponent : peaComponent;
+            const incubator = component.incubateObject(image, {
                 x: peaX,
                 y: position.y,
                 height: peaHeight,
@@ -212,7 +219,7 @@ function initPotatoMine(potatoMine, zombieSet) {
             if (zombie.x >= potatoMine.x && zombie.x <= potatoMine.x + potatoMine.width)
                 zombie.die();
         const objectHeight = image.height * 0.16, objectWidth = objectHeight / 92 * 131;
-        const incubator = image.mashedPotatoComponent.incubateObject(image, {
+        mashedPotatoComponent.incubateObject(image, {
             width: objectWidth,
             height: objectHeight,
             x: potatoMine.x - (objectWidth - potatoMine.width) / 2,
@@ -247,7 +254,7 @@ function produceZombie(zombieComponent) {
         if (status === Component.Ready) {
             const zombie = incubator.object;
             const plantArray = plantArea.plantContainer[rowIndex];
-            const zombieSet = zombieProducer.zombieContainer[rowIndex];
+            const zombieSet = zombieContainer[rowIndex];
             zombieSet.add(zombie);
             for (const plant of plantArray) {
                 if (plant) {
@@ -314,29 +321,11 @@ function zombieXChanged(zombie, plantArray, rowIndex) {
             zombie.died.connect(stopAttack);
         }
     }
-    const edge = zombie.x + zombie.width * 0.4, endPositionX = image.width - image.rightMargin;
-    const pausedSetting = Qt.binding(function () {
-        return item.paused;
-    });
-    if (rowIndex === 0 && edge <= cart0.x + cart0.width) {
-        cart0.march(endPositionX);
-        cart0.paused = pausedSetting;
-    }
-    if (rowIndex === 1 && edge <= cart1.x + cart1.width) {
-        cart1.march(endPositionX);
-        cart1.paused = pausedSetting;
-    }
-    if (rowIndex === 2 && edge <= cart2.x + cart2.width) {
-        cart2.march(endPositionX);
-        cart2.paused = pausedSetting;
-    }
-    if (rowIndex === 3 && edge <= cart3.x + cart3.width) {
-        cart3.march(endPositionX);
-        cart3.paused = pausedSetting;
-    }
-    if (rowIndex === 4 && edge <= cart4.x + cart4.width) {
-        cart4.march(endPositionX);
-        cart4.paused = pausedSetting;
+    if (zombie.x + zombie.width * 0.4 <= carts[rowIndex].x + carts[rowIndex].width) {
+        carts[rowIndex].march(image.width - image.rightMargin);
+        carts[rowIndex].paused = Qt.binding(function () {
+            return item.paused;
+        });
     }
     if (zombie.x + zombie.width < image.leftMargin)
         image.lose();
@@ -361,7 +350,7 @@ function zombieDied(zombie, plantArray, zombieSet) {
     }
     zombieSet.delete(zombie);
     const diedZombieHeight = zombie.height, diedZombieWidth = diedZombieHeight / 136 * 180;
-    const incubator = image.diedZombieComponent.incubateObject(image, {
+    const incubator = diedZombieComponent.incubateObject(image, {
         width: diedZombieWidth,
         height: diedZombieHeight,
         x: zombie.x + (zombie.width - diedZombieWidth) / 2,
