@@ -147,15 +147,16 @@ function plant(property, subPlantArea) {
                     break;
             }
             plant.paused = pausedSetting;
-            const plantArray = plantArea.plantArrays[rowIndex];
-            plantArray[columnIndex] = plant;
 
-            function clearFromContainer() {
+            const plantArray = plantArea.plantArrays[rowIndex];
+
+            function clearFromArrays() {
                 plantArray[columnIndex] = null;
             }
 
-            plant.died.connect(clearFromContainer);
-            plant.shovelled.connect(clearFromContainer);
+            plant.died.connect(clearFromArrays);
+            plant.shovelled.connect(clearFromArrays);
+            plantArray[columnIndex] = plant;
         }
     };
 }
@@ -254,8 +255,6 @@ function produceZombie(zombieComponent) {
         if (status === Component.Ready) {
             const zombie = incubator.object;
             const plantArray = plantArea.plantArrays[rowIndex];
-            const zombieSet = zombieSets[rowIndex];
-            zombieSet.add(zombie);
             for (const plant of plantArray) {
                 if (plant) {
                     switch (plant.type) {
@@ -272,9 +271,11 @@ function produceZombie(zombieComponent) {
             zombie.froze.connect(function () {
                 soundEffects.playFrozen();
             });
+            const zombieSet = zombieSets[rowIndex];
             zombie.died.connect(function () {
                 zombieDied(zombie, plantArray, zombieSet);
             });
+            zombieSet.add(zombie);
         }
     };
 }
@@ -332,6 +333,7 @@ function zombieXChanged(zombie, plantArray, rowIndex) {
 }
 
 function zombieDied(zombie, plantArray, zombieSet) {
+    zombieSet.delete(zombie);
     for (const plant of plantArray) {
         if (plant) {
             switch (plant.type) {
@@ -348,7 +350,6 @@ function zombieDied(zombie, plantArray, zombieSet) {
             }
         }
     }
-    zombieSet.delete(zombie);
     const diedZombieHeight = zombie.height, diedZombieWidth = diedZombieHeight / 136 * 180;
     const incubator = diedZombieComponent.incubateObject(image, {
         width: diedZombieWidth,
