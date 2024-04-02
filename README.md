@@ -2,6 +2,20 @@
 
 本项目是一个基于c++23和qt6 qml的windows植物大战僵尸游戏
 
+## 游戏内容展示
+
+![image](show/show0.png)
+![image](show/show1.png)
+![image](show/show2.png)
+![image](show/show3.png)
+![image](show/show4.png)
+![image](show/show5.png)
+![image](show/show6.png)
+![image](show/show7.png)
+![image](show/show8.png)
+![image](show/show9.png)
+![image](show/show10.png)
+
 ## 环境
 
 msvc，cmake，ninja，qt6
