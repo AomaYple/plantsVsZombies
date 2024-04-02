@@ -240,8 +240,10 @@ function produceZombie(zombieComponent) {
         zombieHeight = image.height * 0.24;
     else if (zombieComponent === zombieProducer.coneHeadZombieComponent)
         zombieHeight = image.height * 0.26;
-    else
+    else if (zombieComponent === zombieProducer.bucketHeadZombieComponent)
         zombieHeight = image.height * 0.25;
+    else
+        zombieHeight = image.height * 0.27;
     const rowIndex = getRandomInt(0, 4);
     const incubator = zombieComponent.incubateObject(image, {
         height: zombieHeight,
