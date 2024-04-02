@@ -7,12 +7,11 @@ Image {
     required property bool paused
 
     function play() {
-        visible = true;
-        numberAnimation.start();
-        hugeWave.play();
+        source = '../../resources/scenes/hugeWave.png';
     }
 
     function stop() {
+        source = '';
         visible = false;
         numberAnimation.stop();
         suspendableTimer.stop();
@@ -22,10 +21,15 @@ Image {
     asynchronous: true
     mipmap: true
     scale: 3
-    source: '../../resources/scenes/hugeWave.png'
     sourceSize: Qt.size(width, height)
     visible: false
     width: height / 58 * 471
+
+    onStatusChanged: if (status === Image.Ready) {
+        visible = true;
+        numberAnimation.start();
+        hugeWave.play();
+    }
 
     NumberAnimation {
         id: numberAnimation

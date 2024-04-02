@@ -3,7 +3,7 @@ const sunlightComponent = Qt.createComponent('../scenes/Sunlight.qml', Component
 const peaComponent = Qt.createComponent('../plants/Pea.qml', Component.Asynchronous)
 const snowPeaComponent = Qt.createComponent('../plants/SnowPea.qml', Component.Asynchronous)
 const mashedPotatoComponent = Qt.createComponent('../plants/MashedPotato.qml', Component.Asynchronous)
-const zombieContainer = [new Set(), new Set(), new Set(), new Set(), new Set(), new Set()]
+const zombieSets = [new Set(), new Set(), new Set(), new Set(), new Set(), new Set()]
 const diedZombieComponent = Qt.createComponent('../zombies/DiedZombie.qml', Component.Asynchronous)
 
 function getRandomInt(n, m) {
@@ -73,7 +73,7 @@ function initCart() {
                     });
                 }
                 cart.xChanged.connect(function () {
-                    for (const zombie of zombieContainer[i])
+                    for (const zombie of zombieSets[i])
                         if (cart.x + cart.width >= zombie.x + zombie.width * 0.4 && cart.x <= zombie.x + zombie.width)
                             zombie.die();
                 });
@@ -122,7 +122,7 @@ function plant(property, subPlantArea) {
             seedBank.plant();
             const plant = incubator.object;
             const rowIndex = subPlantArea.index[0], columnIndex = subPlantArea.index[1];
-            const zombieSet = zombieContainer[rowIndex];
+            const zombieSet = zombieSets[rowIndex];
             let pausedSetting = Qt.binding(function () {
                 return item.paused;
             });
@@ -147,7 +147,7 @@ function plant(property, subPlantArea) {
                     break;
             }
             plant.paused = pausedSetting;
-            const plantArray = plantArea.plantContainer[rowIndex];
+            const plantArray = plantArea.plantArrays[rowIndex];
             plantArray[columnIndex] = plant;
 
             function clearFromContainer() {
@@ -253,8 +253,8 @@ function produceZombie(zombieComponent) {
     incubator.onStatusChanged = function (status) {
         if (status === Component.Ready) {
             const zombie = incubator.object;
-            const plantArray = plantArea.plantContainer[rowIndex];
-            const zombieSet = zombieContainer[rowIndex];
+            const plantArray = plantArea.plantArrays[rowIndex];
+            const zombieSet = zombieSets[rowIndex];
             zombieSet.add(zombie);
             for (const plant of plantArray) {
                 if (plant) {

@@ -8,7 +8,6 @@ Image {
 
     function start() {
         source = '../../resources/scenes/startReady.png';
-        soundEffect.play();
     }
 
     asynchronous: true
@@ -20,6 +19,7 @@ Image {
         if (source.toString() !== '../../resources/scenes/startPlant.png')
             scaleAnimator.start();
         timer.start();
+        soundEffect.play();
     }
 
     Timer {

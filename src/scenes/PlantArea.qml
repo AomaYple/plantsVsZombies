@@ -4,7 +4,7 @@ import QtMultimedia
 Column {
     id: column
 
-    readonly property var plantContainer: Array(5).fill(null).map(() => Array(9).fill(null))
+    readonly property var plantArrays: Array(5).fill(null).map(() => Array(9).fill(null))
     property url previewPlantSource: ''
     required property bool shoveling
     required property size subPlantAreaSize
@@ -48,8 +48,8 @@ Column {
                             const plantY = column.y + index[0] * height;
                             column.playPlant();
                             column.planted(Qt.rect(plantX, plantY, width * 0.9, height * 0.9), mouseArea);
-                        } else if (column.shoveling && column.plantContainer[index[0]][index[1]]) {
-                            column.plantContainer[index[0]][index[1]].shovel();
+                        } else if (column.shoveling && column.plantArrays[index[0]][index[1]]) {
+                            column.plantArrays[index[0]][index[1]].shovel();
                             column.playPlant();
                             column.shovelled();
                         }
@@ -62,7 +62,7 @@ Column {
                         height: parent.height * 0.9
                         opacity: 0.3
                         source: column.previewPlantSource
-                        visible: parent.containsMouse && source.toString() !== '' && !column.plantContainer[parent.index[0]][parent.index[1]]
+                        visible: parent.containsMouse && source.toString() !== '' && !column.plantArrays[parent.index[0]][parent.index[1]]
                     }
                 }
             }

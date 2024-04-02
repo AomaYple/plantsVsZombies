@@ -7,9 +7,8 @@ AnimatedImage {
     signal emerged
 
     function emerge(positionX) {
-        visible = true;
         xAnimator.to = positionX;
-        xAnimator.start();
+        source = '../../resources/scenes/cart.gif';
     }
 
     function march(endPositionX) {
@@ -24,9 +23,13 @@ AnimatedImage {
     asynchronous: true
     mipmap: true
     paused: true
-    source: '../../resources/scenes/cart.gif'
     sourceSize: Qt.size(width, height)
     visible: false
+
+    onStatusChanged: if (status === Image.Ready) {
+        visible = true;
+        xAnimator.start();
+    }
 
     XAnimator {
         id: xAnimator

@@ -8,8 +8,6 @@ Image {
 
     function start() {
         source = '../../resources/scenes/zombieWon.png';
-        visible = true;
-        scream.play();
     }
 
     asynchronous: true
@@ -19,8 +17,11 @@ Image {
     visible: false
     width: height / 380 * 513
 
-    onStatusChanged: if (status === Image.Ready)
-        scaleAnimator.start()
+    onStatusChanged: if (status === Image.Ready) {
+        visible = true;
+        scaleAnimator.start();
+        scream.play();
+    }
 
     ScaleAnimator {
         id: scaleAnimator
