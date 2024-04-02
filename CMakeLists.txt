@@ -75,6 +75,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/zombies/BucketHeadZombie.qml
         src/zombies/ConeHeadZombie.qml
         src/zombies/DiedZombie.qml
+        src/zombies/FlagZombie.qml
         src/zombies/StandingBasicZombie.qml
         src/zombies/StandingBucketHeadZombie.qml
         src/zombies/StandingConeHeadZombie.qml
@@ -179,6 +180,7 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/attackingBasicZombie.gif
         resources/zombies/attackingBucketHeadZombie.gif
         resources/zombies/attackingConeHeadZombie.gif
+        resources/zombies/attackingFlagZombie.gif
         resources/zombies/diedZombie0.gif
         resources/zombies/diedZombie1.gif
         resources/zombies/diedZombie2.gif
@@ -194,6 +196,8 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/walkingBucketHeadZombie1.gif
         resources/zombies/walkingConeHeadZombie0.gif
         resources/zombies/walkingConeHeadZombie1.gif
+        resources/zombies/walkingFlagZombie0.gif
+        resources/zombies/walkingFlagZombie1.gif
 
         NO_RESOURCE_TARGET_PATH
 )

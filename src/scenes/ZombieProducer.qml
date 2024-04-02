@@ -6,7 +6,9 @@ SuspendableTimer {
     readonly property Component basicZombieComponent: Qt.createComponent('../zombies/BasicZombie.qml', Component.Asynchronous)
     readonly property Component bucketHeadZombieComponent: Qt.createComponent('../zombies/BucketHeadZombie.qml', Component.Asynchronous)
     readonly property Component coneHeadZombieComponent: Qt.createComponent('../zombies/ConeHeadZombie.qml', Component.Asynchronous)
-    property int index: 1
+    readonly property Component flagZombieComponent: Qt.createComponent('../zombies/FlagZombie.qml', Component.Asynchronous)
+    property bool hugeWave: false
+    property int index: 0
     property Component zombieComponent: null
 
     signal hugeWaved
@@ -35,25 +37,40 @@ SuspendableTimer {
         }
     }
 
-    interval: 5000
+    interval: 6000
     repeat: true
 
     onTriggered: {
-        if (index % 2 === 0)
-            zombieComponent = coneHeadZombieComponent;
-        else if (index % 5 === 0)
+        if (hugeWave) {
+            hugeWave = false;
+            zombieComponent = flagZombieComponent;
+        } else if (index === 8 || index === 9)
             zombieComponent = bucketHeadZombieComponent;
+        else if (index === 5 || index === 6 || index === 7)
+            zombieComponent = coneHeadZombieComponent;
         else
             zombieComponent = basicZombieComponent;
-        if (index === 1)
+        index = ++index % 10;
+        if (index === 0)
             awooga.play();
-        if (index === 20) {
-            interval = 1000;
-            restart();
-            hugeWaved();
-        }
-        ++index;
         playGroan();
+    }
+
+    SuspendableTimer {
+        interval: 60000
+        running: true
+
+        onTriggered: {
+            if (interval === 60000) {
+                interval = 20000;
+                parent.interval = 1000;
+                parent.hugeWave = true;
+                parent.hugeWaved();
+            } else {
+                interval = 60000;
+                parent.interval = 6000;
+            }
+        }
     }
 
     SoundEffect {

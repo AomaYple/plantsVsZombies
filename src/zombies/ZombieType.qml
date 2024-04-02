@@ -4,6 +4,7 @@ QtObject {
     enum Type {
         BasicZombie,
         ConeHeadZombie,
-        BucketHeadZombie
+        BucketHeadZombie,
+        FlagZombie
     }
 }
