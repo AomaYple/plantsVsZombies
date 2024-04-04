@@ -4,7 +4,7 @@ project(PlantsVsZombies)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
 
-qt_add_executable(${PROJECT_NAME})
+qt_add_executable(${PROJECT_NAME} resources/icon.rc)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD 23
@@ -120,7 +120,6 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/scenes/button.png
         resources/scenes/cart.gif
         resources/scenes/daytimeGrass.png
-        resources/scenes/favicon.ico
         resources/scenes/highlightQuit.png
         resources/scenes/highlightStartAdventure.png
         resources/scenes/hugeWave.png
@@ -198,6 +197,8 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/walkingConeHeadZombie1.gif
         resources/zombies/walkingFlagZombie0.gif
         resources/zombies/walkingFlagZombie1.gif
+
+        resources/favicon.ico
 
         NO_RESOURCE_TARGET_PATH
 )
