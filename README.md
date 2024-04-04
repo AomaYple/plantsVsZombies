@@ -4,17 +4,17 @@
 
 ## 游戏内容展示
 
-![image](show/show0.png)
-![image](show/show1.png)
-![image](show/show2.png)
-![image](show/show3.png)
-![image](show/show4.png)
-![image](show/show5.png)
-![image](show/show6.png)
-![image](show/show7.png)
-![image](show/show8.png)
-![image](show/show9.png)
-![image](show/show10.png)
+![image](resources/show/show0.png)
+![image](resources/show/show1.png)
+![image](resources/show/show2.png)
+![image](resources/show/show3.png)
+![image](resources/show/show4.png)
+![image](resources/show/show5.png)
+![image](resources/show/show6.png)
+![image](resources/show/show7.png)
+![image](resources/show/show8.png)
+![image](resources/show/show9.png)
+![image](resources/show/show10.png)
 
 ## 环境
 

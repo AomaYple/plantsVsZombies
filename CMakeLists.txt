@@ -198,7 +198,5 @@ qt_add_qml_module(${PROJECT_NAME}
         resources/zombies/walkingFlagZombie0.gif
         resources/zombies/walkingFlagZombie1.gif
 
-        resources/favicon.ico
-
         NO_RESOURCE_TARGET_PATH
 )
