@@ -1,64 +1,38 @@
 ## 介绍
 
-本项目是一个基于c++23和qt6 qml的windows植物大战僵尸游戏
-
-## 游戏内容展示
-
-![image](resources/show/show0.png)
-![image](resources/show/show1.png)
-![image](resources/show/show2.png)
-![image](resources/show/show3.png)
-![image](resources/show/show4.png)
-![image](resources/show/show5.png)
-![image](resources/show/show6.png)
-![image](resources/show/show7.png)
-![image](resources/show/show8.png)
-![image](resources/show/show9.png)
-![image](resources/show/show10.png)
+本项目是windows上一个基于c++23和qt6 qml的植物大战僵尸
 
 ## 环境
 
 msvc，cmake，ninja，qt6
 
-# 可暂停定时器
+## 可暂停定时器
 
-qml中的Timer组件是不可暂停的，本项目实现了一个可暂停的定时器，可以通过pause和resume方法来控制定时器的暂停和继续
+qml中的Timer组件是不可暂停的，本项目实现了一个可暂停的定时器
 
-# 起始界面
+## 全局暂停
 
-起始界面模仿原版的动画效果
+进入游戏后，当调出菜单时，游戏会暂停，菜单中有继续游戏和退出游戏两个选项
 
-# 主菜单
+## 植物
 
-主菜单有开始游戏，退出游戏等选项，可以通过点击按钮来选择
+实现了向日葵，豌豆射手，坚果墙，寒冰射手，双发射手，土豆雷，所有这些植物都继承自一个基类Plant
 
-# 种植
+## 僵尸
 
-对屏幕放置5x9的矩形区域，每个区域可以放置一个植物，植物有不同的种类，每个植物有不同的特性，例如射程，攻击力，生命值等等
+实现了普通僵尸，路障僵尸，铁桶僵尸，旗子僵尸，所有这些僵尸都继承自一个基类Zombie
 
-# 阳光
+## 动画
 
-本项目中阳光是动态生成的，具有接近原版的音效和动画，有一个定时器来判断阳光的自然产生和消失
+较为完整地实现了植物和僵尸的动画，以及阳光和小推车等的动画
 
-# 植物
+## 铲子
 
-所有的植物都是基于Plant实现的，具有许多基本的属性和方法，例如攻击，受伤，死亡等等
+实现了铲子，可以用铲子铲除植物
 
-# 植物攻击
+## 音效
 
-每次僵尸出现的时候，就会给植物的计数器加1，死亡时就会让计数器减1，当计数器为0时植物停止攻击，当计数器大于0时植物开始攻击，实现动态攻击，且只会对僵尸前面的植物生效
-
-# 僵尸
-
-所有的僵尸都是基于Zombie实现的，具有许多基本的属性和方法，例如攻击，受伤，死亡等等
-
-# 僵尸攻击
-
-每次僵尸移动时都会判断是否有植物在前面，如果有就会攻击植物，当植物死亡时会发出一个信号，僵尸就会停止攻击并继续移动
-
-# 游戏结束
-
-当僵尸移动到屏幕最左边时，呈现出一种游戏结束的效果，并返回到主界面
+实现了背景音乐和音效
 
 ## 编译
 
@@ -74,3 +48,17 @@ ninja
 cd build/PlantsVsZombies
 ./PlantsVsZombies
 ```
+
+## 演示
+
+![image](resources/show/show0.png)
+![image](resources/show/show1.png)
+![image](resources/show/show2.png)
+![image](resources/show/show3.png)
+![image](resources/show/show4.png)
+![image](resources/show/show5.png)
+![image](resources/show/show6.png)
+![image](resources/show/show7.png)
+![image](resources/show/show8.png)
+![image](resources/show/show9.png)
+![image](resources/show/show10.png)
