@@ -1,4 +1,4 @@
-## 介绍
+5555555555555555## 介绍
 
 本项目是windows上一个基于c++23和qt6 qml的植物大战僵尸游戏
 
@@ -45,8 +45,8 @@ ninja
 ## 运行
 
 ```shell
-cd build/PlantsVsZombies
-./PlantsVsZombies
+cd build/plantsVsZombies
+./plantsVsZombies
 ```
 
 ## 演示
