@@ -1,6 +1,6 @@
 ## 介绍
 
-本项目是windows上一个基于c++23和qt6 qml的植物大战僵尸游戏
+本项目是windows上一个基于qml的植物大战僵尸游戏
 
 ## 可暂停定时器
 
@@ -32,7 +32,7 @@ qml中的Timer组件是不可暂停的，本项目实现了一个可暂停的定
 
 ## 环境
 
-msvc，cmake，ninja，qt6
+msvc，cmake，ninja，qt
 
 ## 编译
 

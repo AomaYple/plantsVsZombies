@@ -1,12 +1,12 @@
-cmake_minimum_required(VERSION 3.29.1)
+cmake_minimum_required (VERSION 3.29.1)
 
-project(plantsVsZombies)
+project (plantsVsZombies)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
+find_package (Qt6 REQUIRED COMPONENTS Quick Multimedia)
 
-qt_add_executable(${PROJECT_NAME} resources/icon.rc)
+qt_add_executable (${PROJECT_NAME} resources/icon.rc)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties (${PROJECT_NAME} PROPERTIES
         CXX_STANDARD 23
         CXX_STANDARD_REQUIRED ON
         AUTOMOC ON
@@ -14,16 +14,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
 )
 
-target_compile_options(${PROJECT_NAME} PRIVATE
+target_compile_options (${PROJECT_NAME} PRIVATE
         /Wall
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries (${PROJECT_NAME} PRIVATE
         Qt6::Quick
         Qt6::Multimedia
 )
 
-qt_add_qml_module(${PROJECT_NAME}
+qt_add_qml_module (${PROJECT_NAME}
         URI ${PROJECT_NAME}
 
         SOURCES
