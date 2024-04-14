@@ -4,7 +4,7 @@ project (plantsVsZombies)
 
 find_package (Qt6 REQUIRED COMPONENTS Quick Multimedia)
 
-qt_add_executable (${PROJECT_NAME} resources/icon.rc)
+qt_add_executable (${PROJECT_NAME})
 
 set_target_properties (${PROJECT_NAME} PROPERTIES
         CXX_STANDARD 23
@@ -28,6 +28,7 @@ qt_add_qml_module (${PROJECT_NAME}
 
         SOURCES
         src/main.cpp
+        resources/icon.rc
 
         QML_FILES
         src/js/common.js
