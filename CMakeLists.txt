@@ -11,11 +11,17 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD_REQUIRED ON
         AUTOMOC ON
         WIN32_EXECUTABLE $<$<CONFIG:Debug>:TRUE,FALSE>
+        MACOSX_BUNDLE $<$<CONFIG:Debug>:TRUE,FALSE>
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
-        /Wall
+        $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic>
+        $<$<CXX_COMPILER_ID:Clang>:-Weverything>
+        $<$<CXX_COMPILER_ID:MSVC>:/Wall>
+
+        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og>
+        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:-Ofast>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -39,14 +45,12 @@ set(QML_FILES ${REPLACED_FILES})
 file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS resources/*)
 removePrefix("${RESOURCES}")
 set(RESOURCES ${REPLACED_FILES})
-list(REMOVE_ITEM RESOURCES "resources/icon.rc" "resources/favicon.ico")
 
 qt_add_qml_module(${PROJECT_NAME}
         URI ${PROJECT_NAME}
 
         SOURCES
         src/main.cpp
-        resources/icon.rc
 
         QML_FILES
         ${QML_FILES}
