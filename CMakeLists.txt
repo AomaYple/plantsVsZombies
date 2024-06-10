@@ -58,5 +58,9 @@ qt_add_qml_module(${PROJECT_NAME}
         RESOURCES
         ${RESOURCES}
 
+        DEPENDENCIES
+        QtQuick
+        QtMultimedia
+
         NO_RESOURCE_TARGET_PATH
 )
