@@ -15,7 +15,7 @@ function getRandomFloat(min, max) {
 }
 
 function produceStandingZombies() {
-    for (let i = 0; i < 9; ++i) {
+    for (let i = 0; i !== 9; ++i) {
         let standingZombieComponent = null, zombieHeight = null, zombieWidth = null;
         if (i < 4) {
             standingZombieComponent = Qt.createComponent('../zombies/StandingBasicZombie.qml');
@@ -49,7 +49,7 @@ function produceStandingZombies() {
 function initCart() {
     const cartComponent = Qt.createComponent('../scenes/Cart.qml');
     const cartHeight = image.height * 0.1, cartWidth = cartHeight / 70 * 85;
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i !== 5; ++i) {
         const incubator = cartComponent.incubateObject(image, {
             width: cartWidth,
             height: cartHeight,
@@ -168,7 +168,7 @@ function initPeaShooter(peaShooter, zombieSet) {
     }
     peaShooter.peaShot.connect(function (position) {
         const count = peaShooter.type === Plants.PlantType.Type.Repeater ? 2 : 1;
-        for (let i = 0; i < count; ++i) {
+        for (let i = 0; i !== count; ++i) {
             const peaHeight = image.height * 0.1, peaX = position.x + (i === 1 ? peaHeight : 0),
                 peaEndPositionX = image.width - image.rightMargin;
             if (peaX >= peaEndPositionX)
