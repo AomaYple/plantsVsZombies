@@ -1,10 +1,10 @@
 ## 介绍
 
-本项目是一个基于qml的跨平台植物大战僵尸游戏
+本项目是一个基于Qml的跨平台植物大战僵尸游戏
 
 ## 可暂停定时器
 
-qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，用于控制动画的播放
+Qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，用于控制动画的播放
 
 ## 全局暂停
 
@@ -20,7 +20,7 @@ qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，
 
 ## 动态创建对象
 
-利用js和qml的交互，实现了动态创建阳光、植物和僵尸
+利用JS和Qml的交互，实现了动态创建阳光、植物和僵尸
 
 ## 动画
 
@@ -32,11 +32,11 @@ qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，
 
 ## 音效
 
-利用qml multimedia实现了背景音乐和音效
+利用Qml Multimedia实现了背景音乐和音效
 
 ## 环境
 
-gcc or clang or msvc，cmake，ninja，qt6 quick，qt6 multimedia
+GCC or Clang or MSVC，CMake，Ninja，Qt6 Quick，Qt6 Multimedia
 
 ## 编译
 
