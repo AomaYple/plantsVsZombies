@@ -23,6 +23,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og>
         $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-Ofast>
         $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -ffast-math>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/Oi /Ob3 /GL>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
