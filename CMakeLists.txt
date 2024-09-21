@@ -21,7 +21,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:/Wall>
 
         $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og>
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:-Ofast>
+        $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-Ofast>
+        $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -ffast-math>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
