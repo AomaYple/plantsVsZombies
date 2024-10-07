@@ -13,6 +13,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         WIN32_EXECUTABLE $<$<CONFIG:Debug>:TRUE,FALSE>
         MACOSX_BUNDLE $<$<CONFIG:Debug>:TRUE,FALSE>
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+        INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
@@ -23,7 +24,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og>
         $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-Ofast>
         $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -ffast-math>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/Oi /Ob3 /GL>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/Ob3>
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
