@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.30.4)
+cmake_minimum_required(VERSION 3.30.5)
 
 project(plantsVsZombies)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
+qt_policy(SET QTP0004 NEW)
 
 qt_add_executable(${PROJECT_NAME})
 
