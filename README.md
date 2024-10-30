@@ -34,7 +34,7 @@ Qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，
 
 利用Qml Multimedia实现了背景音乐和音效
 
-## 环境
+## 依赖
 
 GCC or Clang or MSVC，CMake，Ninja，Qt6 Quick，Qt6 Multimedia
 
