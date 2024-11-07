@@ -7,17 +7,19 @@ qt_policy(SET QTP0004 NEW)
 
 qt_add_executable(${PROJECT_NAME})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties(${PROJECT_NAME}
+        PROPERTIES
         CXX_STANDARD 23
         CXX_STANDARD_REQUIRED ON
         AUTOMOC ON
+        INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE
         WIN32_EXECUTABLE $<$<CONFIG:Debug>:TRUE,FALSE>
         MACOSX_BUNDLE $<$<CONFIG:Debug>:TRUE,FALSE>
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-        INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE
 )
 
-target_compile_options(${PROJECT_NAME} PRIVATE
+target_compile_options(${PROJECT_NAME}
+        PRIVATE
         $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic>
         $<$<CXX_COMPILER_ID:Clang>:-Weverything>
         $<$<CXX_COMPILER_ID:MSVC>:/Wall>
@@ -28,7 +30,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/Ob3>
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE
         Qt6::Quick
         Qt6::Multimedia
 )
@@ -42,16 +45,22 @@ function(removePrefix FILES)
     set(REPLACED_FILES ${REPLACED_FILES} PARENT_SCOPE)
 endfunction()
 
-file(GLOB_RECURSE QML_FILES CONFIGURE_DEPENDS src/*.qml src/*.js)
+file(GLOB_RECURSE QML_FILES CONFIGURE_DEPENDS
+        src/*.qml
+        src/*.js
+)
 removePrefix("${QML_FILES}")
 set(QML_FILES ${REPLACED_FILES})
 
-file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS resources/*)
+file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS
+        resources/*
+)
 removePrefix("${RESOURCES}")
 set(RESOURCES ${REPLACED_FILES})
 
 qt_add_qml_module(${PROJECT_NAME}
-        URI ${PROJECT_NAME}
+        URI
+        ${PROJECT_NAME}
 
         SOURCES
         src/main.cpp
