@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.30)
 
 project(plantsVsZombies)
 
@@ -9,7 +9,7 @@ qt_add_executable(${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME}
         PROPERTIES
-        CXX_STANDARD 23
+        CXX_STANDARD ${CMAKE_CXX_STANDARD_LATEST}
         CXX_STANDARD_REQUIRED ON
         AUTOMOC ON
         INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE

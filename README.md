@@ -36,7 +36,7 @@ Qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，
 
 ## 依赖
 
-Qt6的Quick和Multimedia组件
+Qt6.8及以上，Quick和Multimedia组件
 
 ## 构建
 
