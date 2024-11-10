@@ -40,7 +40,7 @@ Qt6.8及以上，Quick和Multimedia组件
 
 ## 构建
 
-```shell 
+```shell
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cd build
 ninja
