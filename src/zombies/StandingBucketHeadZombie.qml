@@ -1,3 +1,3 @@
 StandingZombie {
-    source: '../../resources/zombies/standingBucketHeadZombie' + Math.round(Math.random()) + '.gif'
+    source: '../../res/zombies/standingBucketHeadZombie' + Math.round(Math.random()) + '.gif'
 }

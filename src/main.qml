@@ -39,17 +39,17 @@ Window {
 
             Scenes.GameScene {
                 Component.onCompleted: {
-                    mediaPlayer.source = '../resources/music/chooseYourSeeds.flac';
+                    mediaPlayer.source = '../res/music/chooseYourSeeds.flac';
                     mediaPlayer.play();
                 }
                 onBackToMainMenu: {
                     loader.sourceComponent = mainMenu;
-                    mediaPlayer.source = '../resources/music/crazyDave.flac';
+                    mediaPlayer.source = '../res/music/crazyDave.flac';
                     mediaPlayer.play();
                 }
                 onChose: mediaPlayer.stop()
                 onStarted: {
-                    mediaPlayer.source = '../resources/music/grassWalk.flac';
+                    mediaPlayer.source = '../res/music/grassWalk.flac';
                     mediaPlayer.play();
                 }
             }
@@ -60,7 +60,7 @@ Window {
         id: mediaPlayer
 
         loops: MediaPlayer.Infinite
-        source: '../resources/music/crazyDave.flac'
+        source: '../res/music/crazyDave.flac'
 
         audioOutput: AudioOutput {
             volume: 0.8

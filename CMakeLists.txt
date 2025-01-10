@@ -90,7 +90,7 @@ removePrefix("${QML_FILES}")
 set(QML_FILES ${REPLACED_FILES})
 
 file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS
-        resources/*
+        res/*
 )
 removePrefix("${RESOURCES}")
 set(RESOURCES ${REPLACED_FILES})

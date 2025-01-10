@@ -7,7 +7,7 @@ Image {
     required property bool paused
 
     function play() {
-        source = '../../resources/scenes/hugeWave.png';
+        source = '../../res/scenes/hugeWave.png';
     }
 
     function stop() {
@@ -57,7 +57,7 @@ Image {
     SoundEffect {
         id: hugeWave
 
-        source: '../../resources/sounds/hugeWave.wav'
+        source: '../../res/sounds/hugeWave.wav'
 
         onPlayingChanged: if (!playing)
             siren.play()
@@ -66,6 +66,6 @@ Image {
     SoundEffect {
         id: siren
 
-        source: '../../resources/sounds/siren.wav'
+        source: '../../res/sounds/siren.wav'
     }
 }

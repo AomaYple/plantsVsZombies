@@ -8,7 +8,7 @@ AnimatedImage {
 
     function emerge(positionX) {
         xAnimator.to = positionX;
-        source = '../../resources/scenes/cart.gif';
+        source = '../../res/scenes/cart.gif';
     }
 
     function march(endPositionX) {
@@ -54,6 +54,6 @@ AnimatedImage {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/lawnMower.wav'
+        source: '../../res/sounds/lawnMower.wav'
     }
 }

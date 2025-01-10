@@ -26,7 +26,7 @@ Image {
     asynchronous: true
     enabled: false
     mipmap: true
-    source: '../../resources/scenes/seedBank.png'
+    source: '../../res/scenes/seedBank.png'
     sourceSize: Qt.size(width, height)
     width: height / 87 * 446
     y: -height
@@ -75,13 +75,13 @@ Image {
     SoundEffect {
         id: seedLift
 
-        source: '../../resources/sounds/seedLift.wav'
+        source: '../../res/sounds/seedLift.wav'
     }
 
     SoundEffect {
         id: buzzer
 
-        source: '../../resources/sounds/buzzer.wav'
+        source: '../../res/sounds/buzzer.wav'
     }
 
     Seed {
@@ -93,8 +93,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/Sunflower.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/sunflower.png'
-        source: '../../resources/plants/sunflowerSeed.png'
+        previewPlantSource: '../../res/plants/sunflower.png'
+        source: '../../res/plants/sunflowerSeed.png'
         sunlightConsumption: 50
         sunlightSum: sunlightSum.sum()
         x: parent.width * 0.17
@@ -116,8 +116,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/PeaShooter.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/peaShooter.png'
-        source: '../../resources/plants/peaShooterSeed.png'
+        previewPlantSource: '../../res/plants/peaShooter.png'
+        source: '../../res/plants/peaShooterSeed.png'
         sunlightConsumption: 100
         sunlightSum: sunlightSum.sum()
 
@@ -143,8 +143,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/WallNut.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/wallNut.png'
-        source: '../../resources/plants/wallNutSeed.png'
+        previewPlantSource: '../../res/plants/wallNut.png'
+        source: '../../res/plants/wallNutSeed.png'
         sunlightConsumption: 50
         sunlightSum: sunlightSum.sum()
 
@@ -170,8 +170,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/SnowPeaShooter.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/snowPeaShooter.png'
-        source: '../../resources/plants/snowPeaShooterSeed.png'
+        previewPlantSource: '../../res/plants/snowPeaShooter.png'
+        source: '../../res/plants/snowPeaShooterSeed.png'
         sunlightConsumption: 175
         sunlightSum: sunlightSum.sum()
 
@@ -197,8 +197,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/Repeater.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/repeater.png'
-        source: '../../resources/plants/repeaterSeed.png'
+        previewPlantSource: '../../res/plants/repeater.png'
+        source: '../../res/plants/repeaterSeed.png'
         sunlightConsumption: 200
         sunlightSum: sunlightSum.sum()
 
@@ -224,8 +224,8 @@ Image {
         height: parent.height * 0.84
         paused: parent.paused
         plantComponent: Qt.createComponent('../plants/PotatoMine.qml', Component.Asynchronous)
-        previewPlantSource: '../../resources/plants/potatoMine.png'
-        source: '../../resources/plants/potatoMineSeed.png'
+        previewPlantSource: '../../res/plants/potatoMine.png'
+        source: '../../res/plants/potatoMineSeed.png'
         sunlightConsumption: 25
         sunlightSum: sunlightSum.sum()
 

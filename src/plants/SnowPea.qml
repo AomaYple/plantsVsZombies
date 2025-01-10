@@ -1,4 +1,4 @@
 Pea {
-    source: '../../resources/plants/snowPea.png'
+    source: '../../res/plants/snowPea.png'
     type: PeaType.Type.SnowPea
 }

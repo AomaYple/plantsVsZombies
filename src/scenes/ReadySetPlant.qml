@@ -7,7 +7,7 @@ Image {
     signal finished
 
     function start() {
-        source = '../../resources/scenes/startReady.png';
+        source = '../../res/scenes/startReady.png';
     }
 
     asynchronous: true
@@ -16,7 +16,7 @@ Image {
     width: height / 99 * 210
 
     onStatusChanged: if (status === Image.Ready) {
-        if (source.toString() !== '../../resources/scenes/startPlant.png')
+        if (source.toString() !== '../../res/scenes/startPlant.png')
             scaleAnimator.start();
         timer.start();
         soundEffect.play();
@@ -28,13 +28,13 @@ Image {
         interval: 700
 
         onTriggered: {
-            if (parent.source.toString() === '../../resources/scenes/startReady.png') {
+            if (parent.source.toString() === '../../res/scenes/startReady.png') {
                 scaleAnimator.stop();
-                parent.source = '../../resources/scenes/startSet.png';
+                parent.source = '../../res/scenes/startSet.png';
                 start();
-            } else if (parent.source.toString() === '../../resources/scenes/startSet.png') {
+            } else if (parent.source.toString() === '../../res/scenes/startSet.png') {
                 scaleAnimator.stop();
-                parent.source = '../../resources/scenes/startPlant.png';
+                parent.source = '../../res/scenes/startPlant.png';
                 start();
             } else {
                 parent.source = '';
@@ -57,6 +57,6 @@ Image {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/readySetPlant.wav'
+        source: '../../res/sounds/readySetPlant.wav'
     }
 }

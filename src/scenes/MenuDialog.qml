@@ -11,7 +11,7 @@ Dialog {
     background: Image {
         asynchronous: true
         mipmap: true
-        source: '../../resources/scenes/optionsMenuBackground.png'
+        source: '../../res/scenes/optionsMenuBackground.png'
         sourceSize: Qt.size(width, height)
     }
 
@@ -20,7 +20,7 @@ Dialog {
         asynchronous: true
         height: parent.height * 0.15
         mipmap: true
-        source: '../../resources/scenes/button.png'
+        source: '../../res/scenes/button.png'
         sourceSize: Qt.size(width, height)
         width: height / 109 * 291
         y: parent.height * 0.62
@@ -49,7 +49,7 @@ Dialog {
         asynchronous: true
         height: parent.height * 0.18
         mipmap: true
-        source: '../../resources/scenes/optionsMenuButton.png'
+        source: '../../res/scenes/optionsMenuButton.png'
         sourceSize: Qt.size(width, height)
         width: height / 79 * 341
         y: parent.height * 0.82

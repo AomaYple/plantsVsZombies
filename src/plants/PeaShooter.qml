@@ -8,7 +8,7 @@ Plant {
     lifeValue: 5
     shadowHeight: height * 0.52
     shadowPosition: Qt.point(width * 0.07, height * 0.55)
-    source: '../../resources/plants/' + (zombieCount > 0 ? 'shootingP' : 'p') + 'eaShooter.gif'
+    source: '../../res/plants/' + (zombieCount > 0 ? 'shootingP' : 'p') + 'eaShooter.gif'
     type: PlantType.Type.PeaShooter
 
     onCurrentFrameChanged: (currentFrame, frameCount) => {

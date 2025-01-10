@@ -8,7 +8,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/shovelBank.png'
+    source: '../../res/scenes/shovelBank.png'
     sourceSize: Qt.size(width, height)
     width: height / 72 * 70
 
@@ -27,7 +27,7 @@ Image {
         SoundEffect {
             id: soundEffect
 
-            source: '../../resources/sounds/shovel.wav'
+            source: '../../res/sounds/shovel.wav'
         }
     }
 }

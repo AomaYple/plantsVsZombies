@@ -5,7 +5,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/loadBar.png'
+    source: '../../res/scenes/loadBar.png'
     sourceSize: Qt.size(width, height)
     width: height / 94 * 332
 

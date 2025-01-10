@@ -6,7 +6,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/plants/mashedPotato.png'
+    source: '../../res/plants/mashedPotato.png'
     sourceSize: Qt.size(width, height)
 
     Scenes.SuspendableTimer {

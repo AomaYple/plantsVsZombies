@@ -8,7 +8,7 @@ Item {
     readonly property int attackValue: 1
     required property real endPositionX
     property alias paused: numberAnimation.paused
-    property url source: '../../resources/plants/pea.png'
+    property url source: '../../res/plants/pea.png'
     property int type: PeaType.Type.Pea
 
     width: height / 2

@@ -7,7 +7,7 @@ AnimatedImage {
     signal rose
 
     function rise() {
-        source = '../../resources/scenes/risingZombieHand.gif';
+        source = '../../res/scenes/risingZombieHand.gif';
         soundEffect.play();
     }
 
@@ -22,7 +22,7 @@ AnimatedImage {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/evilLaugh.wav'
+        source: '../../res/sounds/evilLaugh.wav'
 
         onPlayingChanged: if (!playing)
             animatedImage.rose()

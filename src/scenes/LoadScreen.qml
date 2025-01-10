@@ -8,10 +8,10 @@ Image {
     asynchronous: true
     mipmap: true
     opacity: 0
-    source: '../resources/scenes/popCapLogo.png'
+    source: '../res/scenes/popCapLogo.png'
     sourceSize: Qt.size(width, height)
 
-    onStatusChanged: if (source.toString() === '../resources/scenes/popCapLogo.png' && status === Image.Ready)
+    onStatusChanged: if (source.toString() === '../res/scenes/popCapLogo.png' && status === Image.Ready)
         opacityAnimator.start()
 
     OpacityAnimator {
@@ -27,7 +27,7 @@ Image {
                 start();
             } else {
                 target.opacity = 1;
-                target.source = '../resources/scenes/titleScreen.png';
+                target.source = '../res/scenes/titleScreen.png';
             }
         }
     }
@@ -35,7 +35,7 @@ Image {
     LoadBar {
         anchors.horizontalCenter: parent.horizontalCenter
         height: parent.height * 0.13
-        visible: parent.source.toString() === '../resources/scenes/titleScreen.png'
+        visible: parent.source.toString() === '../res/scenes/titleScreen.png'
         y: parent.height * 0.8
 
         onClicked: parent.loaded()

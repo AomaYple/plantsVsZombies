@@ -76,42 +76,42 @@ SuspendableTimer {
     SoundEffect {
         id: awooga
 
-        source: '../../resources/sounds/awooga.wav'
+        source: '../../res/sounds/awooga.wav'
     }
 
     SoundEffect {
         id: groan0
 
-        source: '../../resources/sounds/groan0.wav'
+        source: '../../res/sounds/groan0.wav'
     }
 
     SoundEffect {
         id: groan1
 
-        source: '../../resources/sounds/groan1.wav'
+        source: '../../res/sounds/groan1.wav'
     }
 
     SoundEffect {
         id: groan2
 
-        source: '../../resources/sounds/groan2.wav'
+        source: '../../res/sounds/groan2.wav'
     }
 
     SoundEffect {
         id: groan3
 
-        source: '../../resources/sounds/groan3.wav'
+        source: '../../res/sounds/groan3.wav'
     }
 
     SoundEffect {
         id: groan4
 
-        source: '../../resources/sounds/groan4.wav'
+        source: '../../res/sounds/groan4.wav'
     }
 
     SoundEffect {
         id: groan5
 
-        source: '../../resources/sounds/groan5.wav'
+        source: '../../res/sounds/groan5.wav'
     }
 }

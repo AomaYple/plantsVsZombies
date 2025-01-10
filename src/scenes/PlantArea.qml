@@ -72,12 +72,12 @@ Column {
     SoundEffect {
         id: plant0
 
-        source: '../../resources/sounds/plant0.wav'
+        source: '../../res/sounds/plant0.wav'
     }
 
     SoundEffect {
         id: plant1
 
-        source: '../../resources/sounds/plant1.wav'
+        source: '../../res/sounds/plant1.wav'
     }
 }

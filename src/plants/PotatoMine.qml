@@ -17,8 +17,8 @@ Plant {
     type: PlantType.Type.PotatoMine
 
     onCurrentFrameChanged: (currentFrame, frameCount) => {
-        if (source.toString() === '../../resources/plants/risingPotatoMine.gif' && currentFrame === frameCount - 1)
-            source = '../../resources/plants/potatoMine.gif';
+        if (source.toString() === '../../res/plants/risingPotatoMine.gif' && currentFrame === frameCount - 1)
+            source = '../../res/plants/potatoMine.gif';
     }
 
     Image {
@@ -27,7 +27,7 @@ Plant {
         anchors.fill: parent
         asynchronous: true
         mipmap: true
-        source: '../../resources/plants/initializingPotatoMine.png'
+        source: '../../res/plants/initializingPotatoMine.png'
         sourceSize: Qt.size(width, height)
     }
 
@@ -38,7 +38,7 @@ Plant {
 
         onTriggered: {
             image.source = '';
-            parent.source = '../../resources/plants/risingPotatoMine.gif';
+            parent.source = '../../res/plants/risingPotatoMine.gif';
             parent.ready = true;
         }
     }

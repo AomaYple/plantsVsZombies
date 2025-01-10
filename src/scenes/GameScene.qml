@@ -34,7 +34,7 @@ Item {
         asynchronous: true
         height: parent.height
         mipmap: true
-        source: '../../resources/scenes/daytimeGrass.png'
+        source: '../../res/scenes/daytimeGrass.png'
         sourceSize: Qt.size(width, height)
         width: height / 600 * 1400
 
@@ -210,7 +210,7 @@ Item {
         SoundEffect {
             id: loseSound
 
-            source: '../../resources/sounds/loseSound.wav'
+            source: '../../res/sounds/loseSound.wav'
 
             onPlayingChanged: if (!playing) {
                 zombieWon.start();

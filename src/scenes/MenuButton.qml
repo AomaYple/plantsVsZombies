@@ -11,7 +11,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/button.png'
+    source: '../../res/scenes/button.png'
     sourceSize: Qt.size(width, height)
     visible: false
     width: height / 109 * 291
@@ -41,6 +41,6 @@ Image {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/pause.wav'
+        source: '../../res/sounds/pause.wav'
     }
 }

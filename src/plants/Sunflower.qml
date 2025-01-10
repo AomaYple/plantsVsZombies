@@ -9,7 +9,7 @@ Plant {
     lifeValue: 5
     shadowHeight: height * 0.5
     shadowPosition: Qt.point((width - shadowWidth) / 2, height * 0.6)
-    source: '../../resources/plants/sunflower.gif'
+    source: '../../res/plants/sunflower.gif'
     type: PlantType.Type.Sunflower
 
     Scenes.SuspendableTimer {

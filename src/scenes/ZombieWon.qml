@@ -7,7 +7,7 @@ Image {
     signal zombieWon
 
     function start() {
-        source = '../../resources/scenes/zombieWon.png';
+        source = '../../res/scenes/zombieWon.png';
     }
 
     asynchronous: true
@@ -34,7 +34,7 @@ Image {
     SoundEffect {
         id: scream
 
-        source: '../../resources/sounds/scream.wav'
+        source: '../../res/sounds/scream.wav'
 
         onPlayingChanged: if (!playing)
             image.zombieWon()

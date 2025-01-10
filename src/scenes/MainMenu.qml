@@ -7,7 +7,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../resources/scenes/mainMenu.png'
+    source: '../res/scenes/mainMenu.png'
     sourceSize: Qt.size(width, height)
 
     StartAdventure {
@@ -46,6 +46,6 @@ Image {
     SoundEffect {
         id: soundEffect
 
-        source: '../../resources/sounds/bleep.wav'
+        source: '../../res/sounds/bleep.wav'
     }
 }

@@ -6,7 +6,7 @@ Image {
 
     asynchronous: true
     mipmap: true
-    source: '../../resources/scenes/' + (mouseArea.containsMouse ? 'highlightS' : 's') + 'tartAdventure.png'
+    source: '../../res/scenes/' + (mouseArea.containsMouse ? 'highlightS' : 's') + 'tartAdventure.png'
     sourceSize: Qt.size(width, height)
     width: height / 142 * 331
 
@@ -31,6 +31,6 @@ Image {
         interval: 100
         repeat: true
 
-        onTriggered: parent.source = '../../resources/scenes/' + (parent.source.toString() === '../../resources/scenes/startAdventure.png' ? 'highlightS' : 's') + 'tartAdventure.png'
+        onTriggered: parent.source = '../../res/scenes/' + (parent.source.toString() === '../../res/scenes/startAdventure.png' ? 'highlightS' : 's') + 'tartAdventure.png'
     }
 }

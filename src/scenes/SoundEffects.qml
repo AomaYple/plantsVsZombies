@@ -4,40 +4,40 @@ import "../js/common.js" as Common
 
 QtObject {
     readonly property SoundEffect chomp0: SoundEffect {
-        source: '../../resources/sounds/chomp0.wav'
+        source: '../../res/sounds/chomp0.wav'
     }
     readonly property SoundEffect chomp1: SoundEffect {
-        source: '../../resources/sounds/chomp1.wav'
+        source: '../../res/sounds/chomp1.wav'
     }
     readonly property SoundEffect chomp2: SoundEffect {
-        source: '../../resources/sounds/chomp2.wav'
+        source: '../../res/sounds/chomp2.wav'
     }
     readonly property SoundEffect frozen: SoundEffect {
-        source: '../../resources/sounds/frozen.wav'
+        source: '../../res/sounds/frozen.wav'
     }
     readonly property SoundEffect gulp: SoundEffect {
-        source: '../../resources/sounds/gulp.wav'
+        source: '../../res/sounds/gulp.wav'
     }
     readonly property SoundEffect points: SoundEffect {
-        source: '../../resources/sounds/points.wav'
+        source: '../../res/sounds/points.wav'
     }
     readonly property SoundEffect potatoMine: SoundEffect {
-        source: '../../resources/sounds/potatoMine.wav'
+        source: '../../res/sounds/potatoMine.wav'
     }
     readonly property SoundEffect shieldHit0: SoundEffect {
-        source: '../../resources/sounds/shieldHit0.wav'
+        source: '../../res/sounds/shieldHit0.wav'
     }
     readonly property SoundEffect shieldHit1: SoundEffect {
-        source: '../../resources/sounds/shieldHit1.wav'
+        source: '../../res/sounds/shieldHit1.wav'
     }
     readonly property SoundEffect splat0: SoundEffect {
-        source: '../../resources/sounds/splat0.wav'
+        source: '../../res/sounds/splat0.wav'
     }
     readonly property SoundEffect splat1: SoundEffect {
-        source: '../../resources/sounds/splat1.wav'
+        source: '../../res/sounds/splat1.wav'
     }
     readonly property SoundEffect splat2: SoundEffect {
-        source: '../../resources/sounds/splat2.wav'
+        source: '../../res/sounds/splat2.wav'
     }
 
     function playChomp() {
