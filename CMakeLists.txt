@@ -11,24 +11,55 @@ set_target_properties(${PROJECT_NAME}
         PROPERTIES
         CXX_STANDARD ${CMAKE_CXX_STANDARD_LATEST}
         CXX_STANDARD_REQUIRED ON
-        AUTOMOC ON
         INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE
-        WIN32_EXECUTABLE $<$<CONFIG:Debug>:TRUE,FALSE>
-        MACOSX_BUNDLE $<$<CONFIG:Debug>:TRUE,FALSE>
+        AUTOMOC ON
+        WIN32_EXECUTABLE $<$<CONFIG:Release>:TRUE>
+        MACOSX_BUNDLE $<$<CONFIG:Release>:TRUE>
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
 )
 
-target_compile_options(${PROJECT_NAME}
-        PRIVATE
-        $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic>
-        $<$<CXX_COMPILER_ID:Clang>:-Weverything>
-        $<$<CXX_COMPILER_ID:MSVC>:/Wall>
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(${PROJECT_NAME}
+            PRIVATE
+            -Wall -Wextra -Wpedantic
+            $<$<CONFIG:Debug>:-g3 -ggdb3 -Og -fsanitize=address -fsanitize=leak -fsanitize=undefined>
+            $<$<CONFIG:Release>:-Ofast>
+    )
+    target_link_options(${PROJECT_NAME}
+            PRIVATE
+            $<$<CONFIG:Debug>:-fsanitize=address -fsanitize=leak -fsanitize=undefined>
+    )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(${PROJECT_NAME}
+            PRIVATE
+            -Weverything
+            $<$<CONFIG:Debug>:-g3 -glldb3 -Og -fsanitize=address -fsanitize=leak -fsanitize=undefined>
+            $<$<CONFIG:Release>:-O3 -ffast-math>
+    )
+    target_link_options(${PROJECT_NAME}
+            PRIVATE
+            $<$<CONFIG:Debug>:-fsanitize=address -fsanitize=leak -fsanitize=undefined>
+    )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(${PROJECT_NAME}
+            PRIVATE
+            /utf-8 /Wall /MP /permissive-
+            $<$<CONFIG:Debug>:/sdl /fsanitize=address>
+            $<$<CONFIG:Release>:/Ob3 /GT /Gy /fp:fast>
+    )
 
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Debug>>:-Og>
-        $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-Ofast>
-        $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -ffast-math>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/Ob3>
-)
+    target_link_options(${PROJECT_NAME}
+            PRIVATE
+            $<$<CONFIG:Release>:/OPT:REF,ICF /LTCG:incremental>
+    )
+endif ()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release" AND DEFINED NATIVE AND NATIVE)
+    target_compile_options(${PROJECT_NAME}
+            PRIVATE
+            $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-march=native>
+    )
+endif ()
 
 target_link_libraries(${PROJECT_NAME}
         PRIVATE
@@ -44,6 +75,12 @@ function(removePrefix FILES)
     endforeach ()
     set(REPLACED_FILES ${REPLACED_FILES} PARENT_SCOPE)
 endfunction()
+
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+        src/*.cpp
+)
+removePrefix("${SOURCES}")
+set(SOURCES ${REPLACED_FILES})
 
 file(GLOB_RECURSE QML_FILES CONFIGURE_DEPENDS
         src/*.qml
@@ -63,7 +100,7 @@ qt_add_qml_module(${PROJECT_NAME}
         ${PROJECT_NAME}
 
         SOURCES
-        src/main.cpp
+        ${SOURCES}
 
         QML_FILES
         ${QML_FILES}
