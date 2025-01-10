@@ -1,42 +1,12 @@
 ## 介绍
 
-本项目是一个基于Qml的跨平台植物大战僵尸游戏
-
-## 可暂停定时器
-
-Qml中的Timer组件是不可暂停的，实现了一个可暂停的定时器，用于控制动画的播放
-
-## 全局暂停
-
-进入游戏后，当调出菜单时，游戏和所有动画会暂停，点击继续按钮后，游戏和所有动画会继续
-
-## 植物
-
-实现了向日葵，豌豆射手，坚果墙，寒冰射手，双发射手和土豆雷，所有这些植物都继承自一个基类Plant
-
-## 僵尸
-
-实现了普通僵尸，路障僵尸，铁桶僵尸和旗子僵尸，所有这些僵尸都继承自一个基类Zombie
-
-## 动态创建对象
-
-利用JS和Qml的交互，实现了动态创建阳光、植物和僵尸
-
-## 动画
-
-较为完整地实现了植物和僵尸的动画，以及阳光和小推车等的动画
-
-## 铲子
-
-实现了铲子，可以用铲子铲除植物
-
-## 音效
-
-利用Qml Multimedia实现了背景音乐和音效
+本项目是一个基于`Qt QML`的跨平台植物大战僵尸游戏
 
 ## 依赖
 
-Qt6.8及以上，Quick和Multimedia组件
+- [Qt](https://www.qt.io/zh-cn) >= 6.8
+- [CMake](https://cmake.org) >= 3.30
+- [Ninja](https://ninja-build.org) >= 1.8.2
 
 ## 构建
 
@@ -46,23 +16,13 @@ cd build
 ninja
 ```
 
+额外CMake选项
+
+- `-DNATIVE=ON` 启用本机指令集（只在`Release`下生效）
+
 ## 运行
 
 ```shell
-cd build/plantsVsZombies
+cd plantsVsZombies
 ./plantsVsZombies
 ```
-
-## 演示
-
-![image](show/show0.png)
-![image](show/show1.png)
-![image](show/show2.png)
-![image](show/show3.png)
-![image](show/show4.png)
-![image](show/show5.png)
-![image](show/show6.png)
-![image](show/show7.png)
-![image](show/show8.png)
-![image](show/show9.png)
-![image](show/show10.png)
