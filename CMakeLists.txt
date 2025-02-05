@@ -58,13 +58,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     )
 endif ()
 
-if (CMAKE_BUILD_TYPE STREQUAL "Release" AND DEFINED NATIVE AND NATIVE)
-    target_compile_options(${PROJECT_NAME}
-            PRIVATE
-            $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-march=native>
-    )
-endif ()
-
 target_link_libraries(${PROJECT_NAME}
         PRIVATE
         Qt6::Quick
