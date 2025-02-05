@@ -18,12 +18,14 @@ set_target_properties(${PROJECT_NAME}
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
 )
 
+option(NATIVE "Enable native optimization")
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(${PROJECT_NAME}
             PRIVATE
             -Wall -Wextra -Wpedantic
             $<$<CONFIG:Debug>:-g3 -ggdb3 -Og -fsanitize=address -fsanitize=leak -fsanitize=undefined>
             $<$<CONFIG:Release>:-Ofast>
+            $<$<AND:$<CONFIG:Release>,$<BOOL:${NATIVE}>>:-march=native>
     )
     target_link_options(${PROJECT_NAME}
             PRIVATE
@@ -32,9 +34,11 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME}
             PRIVATE
-            -Weverything
-            $<$<CONFIG:Debug>:-g3 -glldb3 -Og -fsanitize=address -fsanitize=leak -fsanitize=undefined>
+            -stdlib=libc++
+            -Wall -Wextra -Wpedantic
+            $<$<CONFIG:Debug>:-g3 -ggdb3 -glldb -Og -fsanitize=address -fsanitize=leak -fsanitize=undefined>
             $<$<CONFIG:Release>:-O3 -ffast-math>
+            $<$<AND:$<CONFIG:Release>,$<BOOL:${NATIVE}>>:-march=native>
     )
     target_link_options(${PROJECT_NAME}
             PRIVATE
@@ -43,7 +47,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT_NAME}
             PRIVATE
-            /utf-8 /Wall /MP /permissive-
+            /permissive- /utf-8 /W4 /MP
             $<$<CONFIG:Debug>:/sdl /fsanitize=address>
             $<$<CONFIG:Release>:/Ob3 /GT /Gy /fp:fast>
     )
