@@ -2,7 +2,7 @@
 #include <QIcon>
 #include <QQmlApplicationEngine>
 
-auto main(int argc, char *argv[]) -> int {
+[[nodiscard]] auto main(int argc, char *argv[]) -> int {
     const QGuiApplication application{argc, argv};
     QGuiApplication::setWindowIcon(QIcon{"res/favicon.ico"});
 
